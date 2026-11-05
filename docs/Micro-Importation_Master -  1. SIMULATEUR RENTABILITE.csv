@@ -1,0 +1,48 @@
+,SIMULATEUR DE RENTABILITÉ & COÛTS PAR VOYAGE,,
+,,,
+,HYPOTHÈSES DE VOYAGE (CELLULES COLORÉES À REMPLIR),,
+,Taux de change bancaire / douanier (DZD pour 1€),"151,67",🇩🇿
+,Taux de change parallèle —(DZD pour 1€),275,🇩🇿
+,"Prix d'achat unitaire (dzd, hors frais)","143 000,00",🇩🇿
+,Prix unitaire réel après les charges,"157 375,92",🇩🇿
+,"Prix d'achat unitaire (€, hors frais)","520,00",🇪🇺
+,Quantité (unités maximales transportées ce voyage est : 22),22,📦
+,Objectif gros: couvrir les frais pour commencer à dégager du bénéfice.,"19,9",📦
+,Objectif detail: couvrir les frais pour commencer à dégager du bénéfice.,"18,8",📦
+,Prix d'achat unitaire (inclus les frais),"572,3",🇪🇺
+,Prix de vente unitaire (En super gros aux clients B2B),582,🇪🇺
+,Prix de vente unitaire ( En gros aux clients B2B ),633,🇪🇺
+,Prix de vente unitaire ( Au détail aux consommateurs finaux ),669,🇪🇺
+,"Prix de vente unitaire (DZD, en super gros aux clients B2B)",160 000,🇩🇿
+,"Prix de vente unitaire (DZD, en gros aux revendeur)",174 000,🇩🇿
+,"Prix de vente du marché (DZD, en detail aux clients) , Apartir de :",184000,🇩🇿
+,Marge du vente en super gros,"1,7",%
+,Marge du vente en gros,"10,6",%
+,Marge du vente en détail ,"16,9",%
+,Marge de vente pour les revendeurs ,"5,7",%
+,"CHARGES FIXES DU VOYAGE (€, à modifier selon la saison )",,
+,"Billet ferry (véhicule + chauffeur, A/R)",650,🇪🇺
+,Carburant ,15,🇪🇺
+,Hebergement ( 2- 3 nuitees ),60,🇪🇺
+,"Séjour (repas, frais divers)",40,🇪🇺
+,Total charges fixes (€),765,🇪🇺
+,CALCUL DES RESULTATS & RETOUR SUR INVESTISSEMENT,,
+,Coût d'achat reel marchandise (€) mentionné dans la facture,11 440,🇪🇺
+,Coût d'achat reel marchandise DZD,3 146 000,🇩🇿
+,Coût total du voyage (€) = achat + charges fixes + imprevus,12 205,🇪🇺
+,Valeur déclarée en douane (DZD) en taux bancaire,1 735 105,🇩🇿
+,Plafond légal par voyage (DZD),1 800 000,🇩🇿
+,Plafond légal par voyage (EURO),12 000,🇪🇺
+,Marge restante avant plafond (DZD),64 895,🇩🇿
+,Marge restante avant plafond (EURO),560,🇪🇺
+,"Taxe douanière (5% de la valeur déclarée, DZD)",86 755,🇩🇿
+,Chiffre d'affaires (DZD) = quantité × prix de vente,3 828 000,🇩🇿
+,"Taxe IFU (0,5% du CA, DZD)",19 140,🇩🇿
+,Charges fixes converties en DZD ( taux parallèle ),210 375,🇩🇿
+,Coût marchandise en DZD (taux parallèle),3 146 000,🇩🇿
+,COÛT TOTAL ( marchandise + charges + douane + IFU),3 462 270,🇩🇿
+,COÛT TOTAL ( marchandise + charges + douane + IFU),12 590,🇪🇺
+,BÉNÉFICE NET (DZD),365 730,🇩🇿
+,ROI (%) = bénéfice net / coût total,"10,56",%
+,Bénéfice net converti en € (au taux bancaire),2 411,🇪🇺
+,Bénéfice net converti en € (au taux parallele),1 330,🇪🇺

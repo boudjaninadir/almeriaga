@@ -1,83 +1,110 @@
-import { LeadForm } from '@/components/LeadForm';
-import { Ar } from '@/components/Ar';
+import type { Metadata } from 'next';
+import { LeadCaptureForm } from '@/components/lead/LeadCaptureForm';
 import { Badge } from '@/components/ui/Badge';
 import { Card, CardBody } from '@/components/ui/Card';
 import { Icon } from '@/components/ui/Icons';
-import { SITE, whatsappLink } from '@/lib/site';
+import { Reveal } from '@/components/ui/Reveal';
+import { BRAND_NAME, whatsappLink } from '@/lib/site-config';
 
-export const metadata = {
-  title: 'Achat en gros & Revendeurs',
-  description: 'Approvisionnement en gros pour les boutiques de jeux vidéo et revendeurs en Algérie. Tarifs préférentiels et accompagnement.',
+export const metadata: Metadata = {
+  title: 'Gros — approvisionnement professionnel',
+  description:
+    'Approvisionnement pour les commerces : conditions étudiées au cas par cas, en dinars. Aucun prix public, aucun catalogue en ligne.',
+  alternates: { canonical: '/gros' },
 };
 
+const POINTS = [
+  {
+    icon: 'layers' as const,
+    title: 'Lots constitués sur demande',
+    body: 'Nous partons de vos besoins : familles de produits, quantités et rythme de réassort. Aucun catalogue public n’est publié.',
+  },
+  {
+    icon: 'route' as const,
+    title: 'Circuit Espagne → Algérie',
+    body: 'Les produits sont achetés en Espagne puis importés dans le cadre de la micro-importation déclarée.',
+  },
+  {
+    icon: 'receipt' as const,
+    title: 'Conditions écrites, en dinars',
+    body: 'Les conditions commerciales sont communiquées après échange, en dinars, et confirmées avant tout engagement.',
+  },
+];
+
+/** Page grossiste : aucun prix public, aucun catalogue. Deux canaux : WhatsApp ou formulaire. */
 export default function GrosPage() {
-  const whatsapp = whatsappLink(`Bonjour ${SITE.name}, je suis revendeur et souhaite des informations sur l'achat en gros.`);
+  const whatsapp = whatsappLink(`Bonjour ${BRAND_NAME}, je souhaite des informations sur l’achat en gros.`);
 
   return (
-    <div className="py-12 md:py-20">
-      <div className="container-page space-y-12">
-        <div className="mx-auto max-w-2xl text-center space-y-4">
-          <Badge>Espace B2B / Revendeurs</Badge>
-          <h1 className="text-3xl font-extrabold tracking-tight text-ink sm:text-4xl">
-            Approvisionnement en gros <Ar>البيع بالجملة</Ar>
-          </h1>
-          <p className="text-ink-soft">
-            Vous possédez une boutique de jeux vidéo ou êtes revendeur ? Bénéficiez de conditions privilégiées et d'un approvisionnement direct et régulier.
-          </p>
-        </div>
+    <div className="container-page py-14 md:py-20">
+      <Reveal>
+        <Badge tone="mint">Professionnels</Badge>
+        <h1 className="section-title mt-4">Achat en gros</h1>
+        <p className="section-lead">
+          Vous gérez une boutique et souhaitez un approvisionnement régulier ? Décrivez votre besoin : nous revenons
+          vers vous avec une proposition adaptée, en dinars.
+        </p>
+      </Reveal>
 
-        <div className="grid gap-6 md:grid-cols-3">
-          <Card>
-            <CardBody className="space-y-4">
-              <div className="inline-flex rounded-2xl bg-brand-soft p-3 text-brand"><Icon name="store" className="h-6 w-6" /></div>
-              <h3 className="font-bold text-ink">Tarifs dégressifs</h3>
-              <p className="text-sm text-ink-soft leading-relaxed">
-                Marges attractives pour les boutiques partenaires selon les volumes commandés (à partir de 5 unités).
+      <div className="mt-10 grid gap-6 md:grid-cols-3">
+        {POINTS.map((point, index) => (
+          <Reveal key={point.title} delay={index * 80}>
+            <Card className="h-full">
+              <CardBody className="space-y-3">
+                <span className="inline-flex h-11 w-11 items-center justify-center rounded-xl bg-accent-soft text-accent-ink">
+                  <Icon name={point.icon} className="h-5 w-5" />
+                </span>
+                <h2 className="text-base font-semibold tracking-tightish text-ink">{point.title}</h2>
+                <p className="text-sm leading-relaxed text-ink-soft">{point.body}</p>
+              </CardBody>
+            </Card>
+          </Reveal>
+        ))}
+      </div>
+
+      <div className="mt-12 grid gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
+        <Reveal>
+          <div className="space-y-4">
+            <h2 className="text-2xl font-semibold tracking-tightish text-ink">Deux façons de nous joindre</h2>
+            <p className="text-sm leading-relaxed text-ink-soft">
+              Le plus rapide reste WhatsApp. Si vous préférez poser votre besoin par écrit, le formulaire ci-contre
+              enregistre votre demande avec votre société, votre wilaya, votre volume et les produits visés.
+            </p>
+            {whatsapp ? (
+              <a
+                href={whatsapp}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex h-12 items-center justify-center gap-2 rounded-xl bg-mint px-6 text-base font-semibold text-mint-ink transition duration-200 ease-out-soft hover:-translate-y-0.5 hover:bg-mint/70 active:translate-y-0"
+              >
+                <Icon name="whatsapp" className="h-5 w-5" />
+                WhatsApp direct
+              </a>
+            ) : (
+              <p className="rounded-xl border border-line bg-surface-2 p-4 text-xs text-ink-faint">
+                WhatsApp non configuré (TODO) : renseignez NEXT_PUBLIC_CONTACT_WHATSAPP pour activer ce bouton.
               </p>
-            </CardBody>
-          </Card>
+            )}
+            <p className="text-xs leading-relaxed text-ink-faint">
+              Aucun prix n’est affiché sur cette page : les conditions dépendent des volumes et de la disponibilité au
+              moment de la commande.
+            </p>
+          </div>
+        </Reveal>
 
+        <Reveal delay={80}>
           <Card>
-            <CardBody className="space-y-4">
-              <div className="inline-flex rounded-2xl bg-brand-soft p-3 text-brand"><Icon name="shield" className="h-6 w-6" /></div>
-              <h3 className="font-bold text-ink">Produits vérifiés</h3>
-              <p className="text-sm text-ink-soft leading-relaxed">
-                Consoles neuves d'origine, emballées et garanties. Traçabilité et conformité assurées.
-              </p>
-            </CardBody>
-          </Card>
-
-          <Card>
-            <CardBody className="space-y-4">
-              <div className="inline-flex rounded-2xl bg-brand-soft p-3 text-brand"><Icon name="phone" className="h-6 w-6" /></div>
-              <h3 className="font-bold text-ink">Suivi dédié</h3>
-              <p className="text-sm text-ink-soft leading-relaxed">
-                Un interlocuteur unique pour vos commandes, vos plannings de livraison et vos questions logistiques.
-              </p>
-            </CardBody>
-          </Card>
-        </div>
-
-        <div className="mx-auto max-w-xl">
-          <Card className="border-brand/20 shadow-lift">
-            <CardBody className="space-y-8 p-8 sm:p-10">
-              <div className="space-y-2 text-center">
-                <Badge>Rappel B2B</Badge>
-                <h2 className="text-2xl font-bold tracking-tight text-ink">Demander un rappel <Ar>طلب اتصال</Ar></h2>
-                <p className="text-sm text-ink-soft">Indiquez vos coordonnées et votre volume prévisionnel.</p>
+            <CardBody className="space-y-5">
+              <div className="space-y-1">
+                <h2 className="text-xl font-semibold tracking-tightish text-ink">Demande gros</h2>
+                <p className="text-sm text-ink-soft">Sans engagement. Réponse par téléphone.</p>
               </div>
-
-              <LeadForm kind="wholesale" />
-
-              {whatsapp && (
-                <p className="text-center text-xs text-ink-faint pt-2">
-                  Contact direct : <a href={whatsapp} target="_blank" rel="noopener noreferrer" className="text-brand underline">WhatsApp <Ar>واتساب</Ar></a>
-                </p>
-              )}
+              <LeadCaptureForm type="gros" />
             </CardBody>
           </Card>
-        </div>
+        </Reveal>
       </div>
     </div>
   );
 }
+

@@ -16,8 +16,11 @@ export function formatNumber(value: number, decimals = 0): string {
 }
 
 export const formatDzd = (amount: number): string => `${formatNumber(Math.round(amount))}${NBSP}DA`;
-export const formatEur = (amount: number, decimals = 0): string => `${formatNumber(amount, decimals)}${NBSP}€`;
-export const formatPct = (value: number, decimals = 1): string => `${formatNumber(value, decimals)}${NBSP}%`;
+/**
+ * Les conversions euro et pourcentage vivent dans lib/format-private.ts :
+ * le symbole « € » ne doit jamais apparaître dans un rendu public.
+ */
+
 
 /** Lit "151,67" ou "151.67" ou "1 800 000". Retourne 0 si illisible. */
 export function parseNumber(input: string): number {

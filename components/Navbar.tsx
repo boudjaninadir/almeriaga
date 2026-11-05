@@ -1,4 +1,8 @@
+'use client';
+
 import Link from 'next/link';
+import { useState } from 'react';
+import { AuthModal } from '@/components/auth/AuthModal';
 import { Logo } from '@/components/Logo';
 import { ButtonLink } from '@/components/ui/Button';
 import { SITE } from '@/lib/site';
@@ -13,6 +17,8 @@ const LINKS = [
 ] as const;
 
 export function Navbar() {
+  const [authOpen, setAuthOpen] = useState(false);
+
   return (
     <header className="sticky top-0 z-40 border-b border-line/80 bg-canvas/90 backdrop-blur">
       <div className="container-page flex h-16 items-center justify-between gap-4">
@@ -28,9 +34,19 @@ export function Navbar() {
           ))}
         </nav>
 
-        <ButtonLink href="/#reserver" size="md">
-          Réserver
-        </ButtonLink>
+        <div className="flex items-center gap-3">
+          <button
+            type="button"
+            onClick={() => setAuthOpen(true)}
+            className="hidden text-sm font-medium text-ink-soft transition hover:text-brand sm:inline-flex"
+          >
+            Connexion
+          </button>
+          <ButtonLink href="/#reserver" size="md">
+            Réserver
+          </ButtonLink>
+        </div>
+        <AuthModal isOpen={authOpen} onClose={() => setAuthOpen(false)} />
       </div>
     </header>
   );

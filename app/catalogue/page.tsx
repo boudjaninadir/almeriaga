@@ -15,8 +15,8 @@ export default async function CataloguePage() {
     <div className="bg-white py-12 md:py-20">
       <div className="container-page space-y-10">
         <header className="space-y-4 text-center md:text-left">
-          <p className="text-xs font-semibold uppercase tracking-[0.16em] text-amber-600">Catalogue</p>
-          <h1 className="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">Sourcing Espagne, livraison Algérie</h1>
+          <p className="text-xs font-semibold uppercase tracking-[0.16em] text-gold-ink">Catalogue</p>
+          <h1 className="text-3xl font-semibold tracking-tightish text-ink sm:text-5xl">Sourcing Espagne, livraison Algérie</h1>
           <p dir="rtl" lang="ar" className="text-sm text-slate-500">شريكك الموثوق في الاستيراد والخدمات اللوجستية إسبانيا-الجزائر</p>
         </header>
         <CatalogGrid products={products} source={source} />

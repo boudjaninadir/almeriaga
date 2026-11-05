@@ -54,7 +54,7 @@ export function CatalogGrid({ products, source }: { products: Product[]; source:
         {visible.map((p) => (
           <article
             key={p.id}
-            className="group flex flex-col rounded-3xl border border-slate-200 bg-white p-5 transition duration-300 hover:-translate-y-1 hover:border-emerald-800/30 hover:shadow-xl motion-reduce:transform-none motion-reduce:transition-none"
+            className="group flex flex-col rounded-2xl border border-line bg-white p-5 shadow-soft transition duration-300 hover:-translate-y-1 hover:border-gold/60 hover:shadow-lift motion-reduce:transform-none motion-reduce:transition-none"
           >
             <div className="flex aspect-[4/3] items-center justify-center rounded-2xl bg-[#F8FAFC] text-xs text-slate-400">
               {p.image_url ? (

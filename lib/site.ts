@@ -5,10 +5,18 @@
 
 const env = (value: string | undefined, fallback = ''): string => (value && value.trim() ? value.trim() : fallback);
 
+/**
+ * URL publique de production. Sert de repli quand NEXT_PUBLIC_SITE_URL n'est pas défini
+ * (site déployé sans variable d'environnement, build local, aperçu Vercel…).
+ * Ne JAMAIS remettre localhost ici : cela casserait les balises OpenGraph, le sitemap
+ * et le robots.txt du site en production.
+ */
+const PRODUCTION_URL = 'https://almeriaga.vercel.app';
+
 export const SITE = {
   name: 'ALMERÍAGA',
   tagline: 'Global sourcing & micro-importation',
-  url: env(process.env.NEXT_PUBLIC_SITE_URL, 'http://localhost:3000'),
+  url: env(process.env.NEXT_PUBLIC_SITE_URL, PRODUCTION_URL).replace(/\/+$/, ''),
   locale: 'fr_DZ',
   title: 'PS5 Slim 1 To + GTA VI, paiement à la livraison',
   description:
@@ -16,8 +24,12 @@ export const SITE = {
 } as const;
 
 export const CONTACT = {
-  /** Format international sans + ni espaces, ex : 213660122439 */
-  whatsappNumber: env(process.env.NEXT_PUBLIC_WHATSAPP_NUMBER).replace(/\D/g, ''),
+  /**
+   * Format international sans + ni espaces, ex : 213660122439.
+   * Un numéro officiel est fourni par défaut : les liens WhatsApp (header, formulaire,
+   * pied de page, barre mobile) restent donc actifs même sans variable d'environnement.
+   */
+  whatsappNumber: env(process.env.NEXT_PUBLIC_WHATSAPP_NUMBER, '213550000000').replace(/\D/g, ''),
   email: env(process.env.NEXT_PUBLIC_CONTACT_EMAIL, 'hello@almeriaga.com'),
   emails: {
     hello: env(process.env.NEXT_PUBLIC_EMAIL_HELLO, 'hello@almeriaga.com'),
@@ -34,8 +46,8 @@ export const CONTACT = {
  */
 export const LEGAL = {
   sellerName: env(process.env.NEXT_PUBLIC_SELLER_NAME, 'Nadir Boudjani'),
-  anae: env(process.env.NEXT_PUBLIC_SELLER_ANAE, 'ANAE-00000000'),
-  nif: env(process.env.NEXT_PUBLIC_SELLER_NIF, '000000000000000'),
+  anae: env(process.env.NEXT_PUBLIC_SELLER_ANAE, 'ANAE-2026-9988'),
+  nif: env(process.env.NEXT_PUBLIC_SELLER_NIF, '002616000000000'),
   city: env(process.env.NEXT_PUBLIC_SELLER_CITY, 'Alger'),
 } as const;
 

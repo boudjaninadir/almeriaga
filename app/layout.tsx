@@ -1,4 +1,4 @@
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 import { GeistSans } from 'geist/font/sans';
 import { GeistMono } from 'geist/font/mono';
 import { Analytics } from '@/components/Analytics';
@@ -14,6 +14,14 @@ export const metadata: Metadata = {
     template: `%s | ${SITE.name}`,
   },
   description: SITE.description,
+  alternates: { canonical: '/' },
+  // Favicon vectoriel (app/icon.svg) + repli .ico pour les navigateurs qui le demandent d'office.
+  icons: {
+    icon: [
+      { url: '/favicon.ico', sizes: '16x16 32x32 48x48' },
+      { url: '/icon.svg', type: 'image/svg+xml' },
+    ],
+  },
   openGraph: {
     type: 'website',
     locale: SITE.locale,
@@ -22,6 +30,12 @@ export const metadata: Metadata = {
     title: SITE.title,
     description: SITE.description,
   },
+};
+
+export const viewport: Viewport = {
+  themeColor: '#0B3D2E',
+  width: 'device-width',
+  initialScale: 1,
 };
 
 export default function RootLayout({

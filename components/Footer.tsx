@@ -4,8 +4,11 @@ import { CONTACT, LEGAL, SITE, displayPhone, whatsappLink } from '@/lib/site';
 
 const LINKS = [
   { href: '/#produits', label: 'Produits' },
+  { href: '/catalogue', label: 'Catalogue' },
   { href: '/simulateur', label: 'Simulateur' },
+  { href: '/gros', label: 'Achat en gros' },
   { href: '/#fournisseurs', label: 'Fournisseurs' },
+  { href: '/espace-fournisseurs', label: 'Espace fournisseurs' },
   { href: '/#suivi', label: 'Suivi de dossier' },
   { href: '/#a-propos', label: 'À propos' },
   { href: '/mentions-legales', label: 'Mentions légales' },

@@ -4,14 +4,41 @@
 1. Ouvrir le dossier du projet dans VS Code.
 2. Installer les dépendances : `npm install`
 3. Configurer les variables d'environnement : copiez `.env.example` en `.env.local` et remplissez vos clés (`LEADS_WEBHOOK_URL`, `LEADS_WEBHOOK_SECRET`, etc.).
+   → `NEXT_PUBLIC_SITE_URL` doit valoir `https://almeriaga.vercel.app` en production (ou votre domaine définitif).
+     Sans cette variable, le code retombe sur cette même URL de production : les balises OpenGraph, le
+     `sitemap.xml` et le `robots.txt` restent donc corrects.
+   → `NEXT_PUBLIC_WHATSAPP_NUMBER` (format international sans `+`, ex. `213550000000`) active tous les liens WhatsApp.
+   → `NEXT_PUBLIC_SELLER_ANAE` / `NEXT_PUBLIC_SELLER_NIF` alimentent le pied de page et `/mentions-legales`.
+   → `NEXT_PUBLIC_META_PIXEL_ID` / `NEXT_PUBLIC_TIKTOK_PIXEL_ID` : laisser vide désactive le pixel concerné.
 4. Lancer le serveur de développement : `npm run dev` (http://localhost:3000)
+
 
 ## 2. Commandes de vérification
 - Typecheck : `npm run typecheck`
 - Tests : `npm test`
 - Build de production : `npm run build`
 
-## 3. Comment ajouter un produit (`lib/catalog.ts`)
+## 3. Structure de la page d'accueil (`app/page.tsx`)
+L'accueil assemble les sections dans cet ordre. Chaque ancre du menu doit exister **une seule fois** ici :
+
+| Ancre | Composant |
+| --- | --- |
+| — (hero) | `components/sections/HeroBrandSection.tsx` |
+| `#produits` | `components/sections/ProductsSection.tsx` |
+| `#pack` | `components/sections/PackSection.tsx` |
+| `#reserver` | `components/sections/ReserveSection.tsx` (formulaire `LeadForm`) |
+| `#comment-ca-marche` | `components/sections/HowItWorksSection.tsx` |
+| `#simulateur` | `components/sections/SimulatorPreviewSection.tsx` |
+| `#fournisseurs` | `components/sections/SuppliersDemoSection.tsx` |
+| `#suivi` | `components/sections/FileTrackingSection.tsx` |
+| `#a-propos` | `components/sections/AboutSection.tsx` |
+| `#faq` | `components/sections/FaqSection.tsx` |
+
+La barre d'action fixe sur mobile est `components/MobileCtaBar.tsx`, le menu hamburger
+(avec `/catalogue`, `/simulateur`, `/gros`, `/espace-fournisseurs`) est dans `components/Navbar.tsx`.
+
+## 3 bis. Comment ajouter un produit (`lib/catalog.ts`)
+
 Ouvrez `lib/catalog.ts` et ajoutez un nouvel objet dans le tableau `PRODUCTS` :
 ```ts
 {

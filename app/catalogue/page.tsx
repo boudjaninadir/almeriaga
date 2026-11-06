@@ -1,26 +1,47 @@
 import type { Metadata } from 'next';
-import { CatalogGrid } from '@/components/catalog/CatalogGrid';
-import { getProducts } from '@/lib/supabase';
-import { SITE } from '@/lib/site';
+import { CatalogueGrid } from '@/components/catalogue/CatalogueGrid';
+import { Reveal } from '@/components/ui/Reveal';
+import { getPublishedProducts } from '@/lib/products';
+import { BRAND_NAME } from '@/lib/site-config';
 
 export const metadata: Metadata = {
-  title: `Catalogue — ${SITE.name}`,
-  description: 'Sourcing et micro-importation Espagne-Algérie. Prix Espagne et estimation livrée en Algérie.',
+  title: 'Catalogue',
+  description:
+    'Produits disponibles et sur commande, prix affichés en dinars algériens. Chaque produit renvoie vers sa fiche dédiée.',
+  alternates: { canonical: '/catalogue' },
 };
 
+export const revalidate = 300;
+
 export default async function CataloguePage() {
-  const { products, source } = await getProducts();
+  const { products, source } = await getPublishedProducts();
 
   return (
-    <div className="bg-white py-12 md:py-20">
-      <div className="container-page space-y-10">
-        <header className="space-y-4 text-center md:text-left">
-          <p className="text-xs font-semibold uppercase tracking-[0.16em] text-gold-ink">Catalogue</p>
-          <h1 className="text-3xl font-semibold tracking-tightish text-ink sm:text-5xl">Sourcing Espagne, livraison Algérie</h1>
-          <p dir="rtl" lang="ar" className="text-sm text-slate-500">شريكك الموثوق في الاستيراد والخدمات اللوجستية إسبانيا-الجزائر</p>
-        </header>
-        <CatalogGrid products={products} source={source} />
+    <div className="container-page py-14 md:py-20">
+      <Reveal>
+        <span className="eyebrow">Catalogue</span>
+        <h1 className="section-title mt-3">Les produits Almeríaga</h1>
+        <p className="section-lead">
+          Chaque fiche indique le statut du produit et son prix en dinars. Quand le prix n’est pas encore fixé, la
+          mention « sur devis » s’applique et un formulaire dédié permet de demander une offre.
+        </p>
+      </Reveal>
+
+      {source === 'fallback' && (
+        <p className="mt-6 rounded-xl border border-warn/25 bg-warn/5 p-4 text-xs leading-relaxed text-warn">
+          Catalogue de démonstration (TODO) : la base Supabase n’est pas configurée ou aucun produit n’est publié.
+          Publiez vos fiches depuis la table products pour les voir apparaître ici.
+        </p>
+      )}
+
+      <div className="mt-10">
+        <CatalogueGrid products={products} />
       </div>
+
+      <p className="mt-10 text-xs text-ink-faint">
+        {BRAND_NAME} — prix en dinars algériens (DZD). Aucun paiement n’est demandé en ligne.
+      </p>
     </div>
   );
 }
+

@@ -1,43 +1,41 @@
 import Link from 'next/link';
 import { Logo } from '@/components/Logo';
-import { CONTACT, LEGAL, SITE, displayPhone, whatsappLink } from '@/lib/site';
+import { Icon } from '@/components/ui/Icons';
+import { BRAND_NAME, CONTACT_EMAIL, CONTACT_WHATSAPP, displayPhone, whatsappLink } from '@/lib/site-config';
 
+/**
+ * Pied de page clair, sans fond sombre.
+ * Aucun lien vers /gros ni /revendeurs ici : la landing ne doit pas les exposer.
+ */
 const LINKS = [
-  { href: '/#produits', label: 'Produits' },
   { href: '/catalogue', label: 'Catalogue' },
-  { href: '/simulateur', label: 'Simulateur' },
-  { href: '/gros', label: 'Achat en gros' },
-  { href: '/#fournisseurs', label: 'Fournisseurs' },
-  { href: '/espace-fournisseurs', label: 'Espace fournisseurs' },
-  { href: '/#suivi', label: 'Suivi de dossier' },
-  { href: '/#a-propos', label: 'À propos' },
+  { href: '/cadre-legal', label: 'Cadre légal' },
+  { href: '/contact', label: 'Contact' },
   { href: '/mentions-legales', label: 'Mentions légales' },
 ] as const;
 
 export function Footer() {
   const year = new Date().getFullYear();
-  const whatsapp = whatsappLink(`Bonjour ${SITE.name}, j’ai une question.`);
+  const whatsapp = whatsappLink(`Bonjour ${BRAND_NAME}, j’ai une question.`);
 
   return (
-    <footer className="bg-dark-block pb-28 pt-14 text-white/80 md:pb-14">
-      <div className="container-page grid gap-10 md:grid-cols-[1.2fr_1fr_1.2fr]">
+    <footer className="mt-24 border-t border-line bg-surface">
+      <div className="container-page grid gap-10 py-14 md:grid-cols-[1.4fr_1fr_1.2fr]">
         <div className="space-y-4">
-          <Logo light gradientId="almeriaga-gold-footer" />
-          <div className="space-y-1 text-sm">
-            {LEGAL.sellerName && <p className="font-medium text-white">{LEGAL.sellerName}</p>}
-            <p>Auto-entrepreneur · Micro-importateur</p>
-            {LEGAL.anae && <p>N° ANAE : {LEGAL.anae}</p>}
-            {LEGAL.nif && <p>NIF : {LEGAL.nif}</p>}
-            {LEGAL.city && <p>{LEGAL.city}, Algérie</p>}
-          </div>
+          <Logo />
+          <p className="max-w-sm text-sm leading-relaxed text-ink-soft">
+            Micro-importation depuis l’Espagne vers Oran, Tlemcen et Sidi Bel Abbès. Commande sans paiement en ligne,
+            confirmation par téléphone.
+          </p>
+          <p className="text-xs text-ink-faint">Prix affichés en dinars algériens (DZD).</p>
         </div>
 
-        <nav aria-label="Pied de page" className="space-y-2 text-sm">
-          <p className="text-xs font-semibold uppercase tracking-[0.14em] text-gold-light">Navigation</p>
+        <nav aria-label="Pied de page" className="space-y-3 text-sm">
+          <p className="text-xs font-semibold uppercase tracking-[0.14em] text-ink-faint">Navigation</p>
           <ul className="space-y-2">
             {LINKS.map((link) => (
               <li key={link.href}>
-                <Link href={link.href} className="transition hover:text-white">
+                <Link href={link.href} className="text-ink-soft transition-colors hover:text-accent-ink">
                   {link.label}
                 </Link>
               </li>
@@ -46,36 +44,43 @@ export function Footer() {
         </nav>
 
         <div className="space-y-3 text-sm">
-          <p className="text-xs font-semibold uppercase tracking-[0.14em] text-gold-light">Contact par pôle</p>
-          <div className="space-y-1.5 text-xs">
-            <p><span className="text-white/60">Général :</span> <a href={`mailto:${CONTACT.emails.hello}`} className="hover:text-gold-light underline">{CONTACT.emails.hello}</a></p>
-            <p><span className="text-white/60">Commandes :</span> <a href={`mailto:${CONTACT.emails.commandes}`} className="hover:text-gold-light underline">{CONTACT.emails.commandes}</a></p>
-            <p><span className="text-white/60">Revendeurs :</span> <a href={`mailto:${CONTACT.emails.gros}`} className="hover:text-gold-light underline">{CONTACT.emails.gros}</a></p>
-            <p><span className="text-white/60">Fournisseurs :</span> <a href={`mailto:${CONTACT.emails.fournisseurs}`} className="hover:text-gold-light underline">{CONTACT.emails.fournisseurs}</a></p>
-            <p><span className="text-white/60">Support :</span> <a href={`mailto:${CONTACT.emails.support}`} className="hover:text-gold-light underline">{CONTACT.emails.support}</a></p>
-          </div>
-          {CONTACT.whatsappNumber && (
-            <p className="pt-2">
-              {whatsapp ? (
-                <a className="transition hover:text-white font-semibold text-gold-light" href={whatsapp} target="_blank" rel="noopener noreferrer">
-                  WhatsApp {displayPhone(CONTACT.whatsappNumber)}
-                </a>
-              ) : (
-                displayPhone(CONTACT.whatsappNumber)
-              )}
-            </p>
+          <p className="text-xs font-semibold uppercase tracking-[0.14em] text-ink-faint">Contact</p>
+          {whatsapp ? (
+            <a
+              href={whatsapp}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 text-mint-ink transition-colors hover:text-accent-ink"
+            >
+              <Icon name="whatsapp" className="h-4 w-4" />
+              WhatsApp {displayPhone(CONTACT_WHATSAPP)}
+            </a>
+          ) : (
+            <p className="text-xs text-ink-faint">WhatsApp : non configuré (TODO).</p>
           )}
+          {CONTACT_EMAIL ? (
+            <a
+              href={`mailto:${CONTACT_EMAIL}`}
+              className="flex items-center gap-2 break-all text-ink-soft transition-colors hover:text-accent-ink"
+            >
+              <Icon name="mail" className="h-4 w-4 shrink-0" />
+              {CONTACT_EMAIL}
+            </a>
+          ) : (
+            <p className="text-xs text-ink-faint">E-mail : non configuré (TODO).</p>
+          )}
+          <p className="pt-2 text-xs leading-relaxed text-ink-faint">
+            Les informations légales présentées sur ce site ne constituent pas un conseil juridique : vérifiez-les
+            auprès de l’ANAE et des Douanes avant publication.
+          </p>
         </div>
       </div>
 
-      <div className="container-page mt-10 border-t border-white/15 pt-6 text-xs leading-relaxed text-white/60">
-        <p>
-          © {year} {SITE.name}. Tous droits réservés. PlayStation et PS5 sont des marques de Sony Interactive Entertainment ;
-          {' '}
-          {SITE.name} n’est pas affilié à Sony. Grand Theft Auto est une marque de Take-Two Interactive.
-        </p>
+      <div className="container-page border-t border-line py-6 text-xs text-ink-faint">
+        © {year} {BRAND_NAME}. Tous droits réservés.
       </div>
     </footer>
   );
 }
+
 

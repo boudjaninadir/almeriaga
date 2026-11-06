@@ -1,59 +1,106 @@
+import type { Metadata } from 'next';
+import Link from 'next/link';
 import { Badge } from '@/components/ui/Badge';
 import { Card, CardBody } from '@/components/ui/Card';
-import { LEGAL, SITE } from '@/lib/site';
+import { BRAND_NAME, CONTACT_EMAIL } from '@/lib/site-config';
 
-export const metadata = {
+export const metadata: Metadata = {
   title: 'Mentions légales',
-  description: 'Mentions légales et informations réglementaires d’ALMERÍAGA.',
+  description: 'Statut de l’éditeur, activité déclarée, propriété intellectuelle et données personnelles.',
+  alternates: { canonical: '/mentions-legales' },
 };
 
+/**
+ * Mentions légales.
+ * Aucun identifiant personnel (nom, NIF, ANAE, CASNOS, RIB) n'est codé en dur :
+ * ces mentions doivent être complétées par l'exploitant, puis validées.
+ */
 export default function MentionsLegalesPage() {
   return (
-    <div className="py-12 md:py-20">
-      <div className="container-page max-w-3xl space-y-8">
-        <div className="space-y-4 text-center">
-          <Badge>Conformité</Badge>
-          <h1 className="text-3xl font-extrabold tracking-tight text-ink">Mentions légales</h1>
-          <p className="text-sm text-ink-soft">Informations obligatoires conformément à la législation en vigueur.</p>
-        </div>
-
-        <Card>
-          <CardBody className="space-y-6 text-sm text-ink-soft leading-relaxed">
-            <div className="space-y-2">
-              <h2 className="font-bold text-ink text-base">1. Éditeur du site</h2>
-              <p>Le site <strong className="text-ink">{SITE.name}</strong> est édité par :</p>
-              <ul className="list-disc pl-5 space-y-1">
-                {LEGAL.sellerName && <li>Nom / Raison sociale : <strong className="text-ink">{LEGAL.sellerName}</strong></li>}
-                <li>Statut : Auto-entrepreneur · Micro-importateur</li>
-                {LEGAL.anae && <li>N° ANAE : <strong className="text-ink">{LEGAL.anae}</strong></li>}
-                {LEGAL.nif && <li>NIF : <strong className="text-ink">{LEGAL.nif}</strong></li>}
-                {LEGAL.city && <li>Localisation : <strong className="text-ink">{LEGAL.city}, Algérie</strong></li>}
-              </ul>
-            </div>
-
-            <div className="space-y-2">
-              <h2 className="font-bold text-ink text-base">2. Propriété intellectuelle</h2>
-              <p>
-                PlayStation et PS5 sont des marques déposées de Sony Interactive Entertainment. ALMERÍAGA n’est pas affilié à Sony. Grand Theft Auto est une marque de Take-Two Interactive. Tous les autres noms de marques et logos appartiennent à leurs propriétaires respectifs.
-              </p>
-            </div>
-
-            <div className="space-y-2">
-              <h2 className="font-bold text-ink text-base">3. Données personnelles</h2>
-              <p>
-                Les informations recueillies via les formulaires de réservation ou de contact servent exclusivement au traitement de votre demande et à la confirmation par téléphone. Aucune donnée n'est cédée à des tiers.
-              </p>
-            </div>
-
-            <div className="space-y-2">
-              <h2 className="font-bold text-ink text-base">4. Hébergement</h2>
-              <p>
-                Ce site est hébergé par Vercel Inc. (340 S Lemon Ave #4133, Walnut, CA 91789, USA).
-              </p>
-            </div>
-          </CardBody>
-        </Card>
+    <div className="container-page max-w-3xl py-14 md:py-20">
+      <div className="space-y-3">
+        <Badge tone="neutral">Informations légales</Badge>
+        <h1 className="section-title">Mentions légales</h1>
+        <p className="text-sm leading-relaxed text-ink-soft">
+          Informations relatives à l’éditeur du site et au traitement des données.
+        </p>
       </div>
+
+      <Card className="mt-8">
+        <CardBody className="space-y-7 text-sm leading-relaxed text-ink-soft">
+          <section className="space-y-2">
+            <h2 className="text-base font-semibold text-ink">1. Éditeur du site</h2>
+            <p>
+              Le site <strong className="text-ink">{BRAND_NAME}</strong> est édité par un auto-entrepreneur exerçant une
+              activité déclarée de micro-importation (décret exécutif n° 25-170).
+            </p>
+            <p className="rounded-lg border border-line bg-surface-2 p-3 text-xs text-ink-faint">
+              TODO — avant publication : compléter ici les mentions obligatoires (identité de l’exploitant, numéro
+              d’immatriculation, adresse professionnelle, contact). Ces informations ne sont volontairement pas
+              intégrées au code afin qu’aucun identifiant personnel ne soit exposé par erreur.
+            </p>
+          </section>
+
+          <section className="space-y-2">
+            <h2 className="text-base font-semibold text-ink">2. Activité et périmètre</h2>
+            <p>
+              L’activité consiste à sélectionner des produits en Espagne et à les importer dans le cadre du régime de la
+              micro-importation, pour une remise dans les wilayas desservies. Les prix publics sont exprimés en dinars
+              algériens (DZD) ; aucun paiement n’est effectué en ligne.
+            </p>
+          </section>
+
+          <section className="space-y-2">
+            <h2 className="text-base font-semibold text-ink">3. Propriété intellectuelle</h2>
+            <p>
+              Les marques et noms commerciaux cités sur ce site appartiennent à leurs propriétaires respectifs. Les
+              visuels de produits proviennent du catalogue de l’éditeur ou de ses fournisseurs ; toute reproduction
+              sans autorisation est interdite.
+            </p>
+          </section>
+
+          <section className="space-y-2">
+            <h2 className="text-base font-semibold text-ink">4. Données personnelles</h2>
+            <p>
+              Les formulaires du site collectent uniquement le nom, le téléphone et la wilaya, ainsi que, pour les
+              professionnels, le nom de la société, le volume estimé et le message. Ces données servent exclusivement au
+              traitement de la demande et à la confirmation téléphonique. Elles ne sont ni cédées ni revendues.
+            </p>
+            <p>
+              Pour demander la consultation ou la suppression de vos données, écrivez à{' '}
+              {CONTACT_EMAIL ? (
+                <a href={`mailto:${CONTACT_EMAIL}`} className="font-medium text-accent-ink underline underline-offset-2">
+                  {CONTACT_EMAIL}
+                </a>
+              ) : (
+                <span className="font-medium text-ink">l’adresse de contact (TODO : non configurée)</span>
+              )}
+              .
+            </p>
+          </section>
+
+          <section className="space-y-2">
+            <h2 className="text-base font-semibold text-ink">5. Hébergement</h2>
+            <p>Le site est hébergé par Vercel Inc. (340 S Lemon Ave #4133, Walnut, CA 91789, États-Unis).</p>
+          </section>
+
+          <section className="space-y-2">
+            <h2 className="text-base font-semibold text-ink">6. Responsabilité</h2>
+            <p>
+              Les informations légales présentées sur ce site (ANAE, décret n° 25-170, démarches, droits et taxes) sont
+              fournies à titre indicatif et ne constituent pas un conseil juridique. Elles doivent être vérifiées auprès
+              des administrations compétentes avant toute décision.
+            </p>
+          </section>
+        </CardBody>
+      </Card>
+
+      <p className="mt-6 text-xs text-ink-faint">
+        <Link href="/cadre-legal" className="underline underline-offset-2 hover:text-accent-ink">
+          Voir la démarche de micro-importation
+        </Link>
+      </p>
     </div>
   );
 }
+

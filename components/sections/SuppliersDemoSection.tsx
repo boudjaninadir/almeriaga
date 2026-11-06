@@ -55,7 +55,7 @@ export function SuppliersDemoSection() {
 
         <div className="pt-4 border-t border-white/15 flex flex-col sm:flex-row items-center justify-between gap-4">
           <p className="text-xs text-white/70">Restez informé du lancement de l'annuaire vérifié.</p>
-          <ButtonLink href="#reserver" variant="gold" size="md">
+          <ButtonLink href="#reserver" variant="secondary" size="md">
             S'inscrire à la liste d'attente
           </ButtonLink>
         </div>

@@ -21,8 +21,8 @@ const POINTS = [
   },
   {
     icon: 'route' as const,
-    title: 'Circuit Espagne → Algérie',
-    body: 'Les produits sont achetés en Espagne puis importés dans le cadre de la micro-importation déclarée.',
+    title: 'Circuit Europe → Algérie',
+    body: 'Les produits sont achetés en Europe puis importés dans le cadre de la micro-importation déclarée.',
   },
   {
     icon: 'receipt' as const,

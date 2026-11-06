@@ -38,7 +38,6 @@ export const SITE_URL = (env(process.env.NEXT_PUBLIC_SITE_URL) || 'https://almer
  * Slug du produit pilote : première fiche publiée et lien envoyé dans Meta Ads.
  * TODO : le remplacer par le slug réellement publié dans la table products.
  */
-export const PILOT_PRODUCT_SLUG = 'produit-pilote';
 
 /** Marqueur visuel des informations encore manquantes. */
 export const TODO_MARK = 'TODO';

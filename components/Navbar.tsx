@@ -10,15 +10,17 @@ import { BRAND_NAME, whatsappLink } from '@/lib/site-config';
 
 
 /**
- * Navigation publique.
- * Aucun lien vers /gros ni /revendeurs : ces parcours restent accessibles
- * par lien direct et par le bloc discret en bas de /contact.
+ * Navigation publique (spec V4 §2) : Produits, Procédure ANAE, Fournisseur EU/DZ,
+ * Cadre légal, Contact. Libellés localisés passés par le layout.
  */
 const LINKS = [
-  { href: '/', label: 'Accueil' },
-  { href: '/catalogue', label: 'Catalogue' },
-  { href: '/cadre-legal', label: 'Cadre légal' },
-  { href: '/contact', label: 'Contact' },
+  { href: '/', key: 'nav_home' },
+  { href: '/produits', key: 'nav_products' },
+  { href: '/anne-procedure', key: 'nav_procedure' },
+  { href: '/fournisseur-eu', key: 'nav_suppliers_eu' },
+  { href: '/fournisseur-dz', key: 'nav_suppliers_dz' },
+  { href: '/cadre-legal', key: 'nav_legal' },
+  { href: '/contact', key: 'nav_contact' },
 ] as const;
 
 function isActive(pathname: string, href: string): boolean {
@@ -27,7 +29,7 @@ function isActive(pathname: string, href: string): boolean {
 }
 
 
-export function Navbar({ ctaHref }: { ctaHref: string }) {
+export function Navbar({ ctaHref, labels }: { ctaHref: string; labels: Record<string, string> }) {
   const pathname = usePathname() ?? '/';
   const [menuOpen, setMenuOpen] = useState(false);
   const menuId = useId();
@@ -79,8 +81,7 @@ export function Navbar({ ctaHref }: { ctaHref: string }) {
                   active ? 'text-[#D4AF37]' : 'text-ink-soft hover:text-[#F7F5EF]',
                 )}
               >
-                {link.label}
-                <span
+                {labels[link.key]}                <span
                   aria-hidden="true"
                   className={cn(
                     'absolute inset-x-3 -bottom-px h-0.5 rounded-full bg-[#D4AF37] transition-opacity duration-200',
@@ -95,8 +96,7 @@ export function Navbar({ ctaHref }: { ctaHref: string }) {
 
         <div className="flex items-center gap-2">
           <ButtonLink href={ctaHref} size="md" className="hidden sm:inline-flex">
-            Commander
-          </ButtonLink>
+            {labels.cta_start}          </ButtonLink>
 
           <button
             type="button"
@@ -136,8 +136,7 @@ export function Navbar({ ctaHref }: { ctaHref: string }) {
                   active ? 'text-[#D4AF37]' : 'text-[#F7F5EF]',
                 )}
               >
-                {link.label}
-                <svg
+                {labels[link.key]}                <svg
                   viewBox="0 0 24 24"
                   className="h-4 w-4 text-ink-faint"
                   fill="none"
@@ -158,8 +157,7 @@ export function Navbar({ ctaHref }: { ctaHref: string }) {
 
         <div className="container-page flex flex-col gap-3 pb-5">
           <ButtonLink href={ctaHref} size="lg" className="w-full" onClick={() => setMenuOpen(false)}>
-            Commander
-          </ButtonLink>
+            {labels.cta_start}          </ButtonLink>
 
           {whatsapp && (
             <a

@@ -44,7 +44,7 @@ export default function MentionsLegalesPage() {
           <section className="space-y-2">
             <h2 className="text-base font-semibold text-[#F7F5EF]">2. Activité et périmètre</h2>
             <p>
-              L’activité consiste à sélectionner des produits en Espagne et à les importer dans le cadre du régime de la
+              L’activité consiste à sélectionner des produits en Europe et à les importer dans le cadre du régime de la
               micro-importation, pour une remise dans les wilayas desservies. Les prix publics sont exprimés en dinars
               algériens (DZD) ; aucun paiement n’est effectué en ligne.
             </p>
@@ -54,7 +54,7 @@ export default function MentionsLegalesPage() {
             <h2 className="text-base font-semibold text-[#F7F5EF]">3. Propriété intellectuelle</h2>
             <p>
               Les marques et noms commerciaux cités sur ce site appartiennent à leurs propriétaires respectifs. Les
-              visuels de produits proviennent du catalogue de l’éditeur ou de ses fournisseurs ; toute reproduction
+              visuels de produits proviennent des produits de l’éditeur ou de ses fournisseurs ; toute reproduction
               sans autorisation est interdite.
             </p>
           </section>

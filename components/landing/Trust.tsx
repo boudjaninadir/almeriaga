@@ -13,7 +13,7 @@ const PILLARS: ReadonlyArray<{ icon: IconName; title: string; body: string }> = 
   {
     icon: 'truck',
     title: 'Livraison dans trois wilayas',
-    body: 'Oran, Tlemcen et Sidi Bel Abbès. Le lieu et le créneau exacts sont confirmés par téléphone avant la remise.',
+    body: 'toutes les wilayas d’Algérie. Le lieu et le créneau exacts sont confirmés par téléphone avant la remise.',
   },
   {
     icon: 'receipt',
@@ -23,7 +23,7 @@ const PILLARS: ReadonlyArray<{ icon: IconName; title: string; body: string }> = 
 ];
 
 const STATS: ReadonlyArray<{ value: number; suffix?: string; label: string }> = [
-  { value: 3, label: 'wilayas desservies' },
+  { value: 68, label: 'wilayas desservies' },
   { value: 3, label: 'étapes pour commander' },
   { value: 12, label: 'familles de produits autorisées' },
 ];
@@ -67,7 +67,7 @@ export function Trust() {
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src="/brand/algeria-dots.svg"
-              alt="Carte pointillée de l'Algérie : Oran, Tlemcen et Sidi Bel Abbès"
+              alt="Carte pointillée de l'Algérie : toutes les wilayas d’Algérie"
               className="mx-auto h-56 w-auto"
             />
             <p className="mt-3 text-center text-xs font-semibold uppercase tracking-[0.14em] text-[#D4AF37]">

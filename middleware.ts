@@ -1,4 +1,5 @@
 import { NextResponse, type NextRequest } from 'next/server';
+import { localeFromCountry } from '@/lib/i18n';
 
 /**
  * Protection des modules internes (/simulateur et /admin/suivi).
@@ -39,10 +40,19 @@ function safeEqual(a: string, b: string): boolean {
 
 export function middleware(request: NextRequest): NextResponse {
   const { pathname } = request.nextUrl;
+
+  // Spec V4 §6 : locale déduite de l'IP (header Vercel), transmise via x-locale.
+  const locale = localeFromCountry(request.headers.get('x-vercel-ip-country'));
+  const requestHeaders = new Headers(request.headers);
+  requestHeaders.set('x-locale', locale);
+  const next = (response: NextResponse) => response;
+
   const isProtected = PROTECTED_PREFIXES.some(
     (prefix) => pathname === prefix || pathname.startsWith(`${prefix}/`),
   );
-  if (!isProtected) return NextResponse.next();
+  if (!isProtected) {
+    return next(NextResponse.next({ request: { headers: requestHeaders } }));
+  }
 
   const expectedUser = (process.env.ADMIN_USER ?? '').trim();
   const expectedPassword = (process.env.ADMIN_PASSWORD ?? '').trim();
@@ -66,11 +76,12 @@ export function middleware(request: NextRequest): NextResponse {
 
   if (!safeEqual(user, expectedUser) || !safeEqual(password, expectedPassword)) return unauthorized();
 
-  const response = NextResponse.next();
+  const response = NextResponse.next({ request: { headers: requestHeaders } });
   response.headers.set('X-Robots-Tag', 'noindex, nofollow');
   return response;
 }
 
 export const config = {
-  matcher: ['/simulateur', '/simulateur/:path*', '/admin', '/admin/:path*'],
+  matcher: ['/((?!_next/static|_next/image|favicon.ico|icon.svg|brand/).*)'],
 };
+

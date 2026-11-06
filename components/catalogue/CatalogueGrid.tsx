@@ -8,7 +8,7 @@ import type { Product } from '@/types/product';
 const ALL = 'Tous';
 
 /**
- * Grille du catalogue avec filtres par catégorie.
+ * Grille des produits avec filtres par catégorie.
  * Les catégories sont déduites des produits publiés : aucune liste codée en dur.
  */
 export function CatalogueGrid({ products }: { products: Product[] }) {

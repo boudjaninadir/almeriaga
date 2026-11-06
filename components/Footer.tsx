@@ -1,6 +1,8 @@
 import Link from 'next/link';
 import { Logo } from '@/components/Logo';
 import { Icon } from '@/components/ui/Icons';
+import { t } from '@/lib/i18n';
+import { currentLocale } from '@/lib/locale-server';
 import { BRAND_NAME, CONTACT_EMAIL, CONTACT_WHATSAPP, displayPhone, whatsappLink } from '@/lib/site-config';
 
 /**
@@ -9,7 +11,7 @@ import { BRAND_NAME, CONTACT_EMAIL, CONTACT_WHATSAPP, displayPhone, whatsappLink
  * Aucun lien vers /gros ni /revendeurs ici : la landing ne doit pas les exposer.
  */
 const LINKS = [
-  { href: '/catalogue', label: 'Catalogue' },
+  { href: '/produits', label: 'Produits' },
   { href: '/cadre-legal', label: 'Cadre légal' },
   { href: '/contact', label: 'Contact' },
   { href: '/mentions-legales', label: 'Mentions légales' },
@@ -26,8 +28,7 @@ export function Footer() {
         <div className="space-y-4">
           <Logo />
           <p className="max-w-sm text-sm leading-relaxed text-ink-soft">
-            Micro-importation depuis l’Espagne vers Oran, Tlemcen et Sidi Bel Abbès. Commande sans paiement en ligne,
-            confirmation par téléphone.
+            {t(currentLocale(), 'footer_tagline')}
           </p>
           <p className="text-xs text-ink-faint">Prix affichés en dinars algériens (DZD).</p>
         </div>

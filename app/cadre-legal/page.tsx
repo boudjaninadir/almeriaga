@@ -5,6 +5,7 @@ import { Card, CardBody } from '@/components/ui/Card';
 import { Icon } from '@/components/ui/Icons';
 import { Reveal } from '@/components/ui/Reveal';
 import { LEGAL_DISCLAIMER, LEGAL_PHASES } from '@/lib/cadre-legal';
+import { ANAE_LEGAL_MATRIX } from '@/lib/data/anae-legal';
 
 export const metadata: Metadata = {
   title: 'Cadre légal de la micro-importation',
@@ -54,6 +55,37 @@ export default function CadreLegalPage() {
           </Reveal>
         ))}
       </div>
+
+      <Reveal delay={100}>
+        <h2 className="mt-14 text-xl font-semibold text-[#D4AF37]">
+          Produits légaux vs illégaux (ANAE, décret 25-170 art. 9)
+        </h2>
+        <div className="mt-5 grid gap-4 md:grid-cols-2">
+          {ANAE_LEGAL_MATRIX.map((row) => (
+            <div
+              key={row.category}
+              className={
+                row.status === 'illegal'
+                  ? 'rounded-xl border border-danger/30 bg-danger/5 p-4'
+                  : row.status === 'licence'
+                    ? 'rounded-xl border border-warn/25 bg-warn/5 p-4'
+                    : 'rounded-xl border border-[#D4AF37]/25 bg-[#0E4635] p-4'
+              }
+            >
+              <p className="text-sm font-semibold text-[#F7F5EF]">{row.category}</p>
+              <p className="mt-1 text-xs leading-relaxed text-ink-soft">{row.detail}</p>
+              <p
+                className={
+                  'mt-2 text-[11px] font-semibold uppercase tracking-[0.12em] ' +
+                  (row.status === 'illegal' ? 'text-danger' : row.status === 'licence' ? 'text-warn' : 'text-[#D4AF37]')
+                }
+              >
+                {row.status === 'illegal' ? 'Interdit' : row.status === 'licence' ? 'Licence spéciale' : 'Autorisé'}
+              </p>
+            </div>
+          ))}
+        </div>
+      </Reveal>
 
       <Reveal delay={120}>
         <div className="mt-10 rounded-xl3 border border-warn/25 bg-warn/5 p-6">

@@ -1,6 +1,5 @@
 import { notFound } from 'next/navigation';
 import { LeadForm } from '@/components/LeadForm';
-import { Ar } from '@/components/Ar';
 import { Badge } from '@/components/ui/Badge';
 import { Card, CardBody } from '@/components/ui/Card';
 import { Icon } from '@/components/ui/Icons';
@@ -23,7 +22,7 @@ export default function EspaceFournisseursPage() {
         <div className="mx-auto max-w-2xl text-center space-y-4">
           <Badge>Bientôt disponible</Badge>
           <h1 className="text-3xl font-extrabold tracking-tight text-[#F7F5EF] sm:text-4xl">
-            Espace fournisseurs & micro-importateurs <Ar>فضاء الموردين</Ar>
+            Espace fournisseurs & micro-importateurs
           </h1>
           <p className="text-ink-soft">
             Guides pratiques (ANAE, CASNOS, douanes), annuaire de sourcing et bonnes pratiques pour réussir votre micro-importation en toute légalité.
@@ -77,7 +76,7 @@ export default function EspaceFournisseursPage() {
             <CardBody className="space-y-8 p-8 sm:p-10">
               <div className="space-y-2 text-center">
                 <Badge>Liste d'attente</Badge>
-                <h2 className="text-2xl font-bold tracking-tight text-[#F7F5EF]">Être prévenu(e) du lancement <Ar>سجل الآن</Ar></h2>
+                <h2 className="text-2xl font-bold tracking-tight text-[#F7F5EF]">Être prévenu(e) du lancement</h2>
                 <p className="text-sm text-ink-soft">Inscrivez-vous pour recevoir l'accès dès l'ouverture des ressources.</p>
               </div>
 
@@ -85,7 +84,7 @@ export default function EspaceFournisseursPage() {
 
               {whatsapp && (
                 <p className="text-center text-xs text-ink-faint pt-2">
-                  Contact : <a href={whatsapp ?? undefined} target="_blank" rel="noopener noreferrer" className="text-[#D4AF37] underline">WhatsApp <Ar>واتساب</Ar></a>
+                  Contact : <a href={whatsapp ?? undefined} target="_blank" rel="noopener noreferrer" className="text-[#D4AF37] underline">WhatsApp</a>
                 </p>
               )}
             </CardBody>

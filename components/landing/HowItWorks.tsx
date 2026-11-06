@@ -6,7 +6,7 @@ const STEPS: ReadonlyArray<{ icon: IconName; title: string; body: string }> = [
   {
     icon: 'tag',
     title: 'Vous choisissez',
-    body: 'Parcourez le catalogue et ouvrez la fiche du produit qui vous intéresse. Le prix est affiché en dinars ; sans prix, la mention « sur devis » s’applique.',
+    body: 'Parcourez les produits et ouvrez la fiche du produit qui vous intéresse. Le prix est affiché en dinars ; sans prix, la mention « sur devis » s’applique.',
   },
   {
     icon: 'phone',

@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { rateLimit } from '@/lib/rate-limit';
+import { appendRow, isSheetsConfigured, LEAD_SHEETS } from '@/lib/sheets';
 import { SITE_URL } from '@/lib/site-config';
 import { validateLead } from '@/lib/validation';
 
@@ -128,6 +129,25 @@ export async function POST(req: Request) {
     );
   }
   const { lead } = result;
+
+  // Spec V4 §4 : écriture Google Sheets (onglet par type de lead) si configuré.
+  if (isSheetsConfigured()) {
+    const tab = LEAD_SHEETS[lead.type];
+    const ok = await appendRow(tab, [
+      new Date().toISOString(),
+      lead.name,
+      lead.prenom,
+      lead.phone,
+      lead.wilaya,
+      lead.business_name,
+      lead.volume,
+      lead.product_slug,
+      lead.utm_source,
+      lead.utm_campaign,
+    ]);
+    if (ok) return reply({ ok: true, sheet: tab });
+    console.error('[leads] écriture Sheets impossible, repli Supabase.');
+  }
 
   if (process.env.LEADS_DRY_RUN === 'true') {
     console.info(

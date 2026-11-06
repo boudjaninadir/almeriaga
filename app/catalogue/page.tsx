@@ -1,26 +1,30 @@
 import type { Metadata } from 'next';
-import { CatalogGrid } from '@/components/catalog/CatalogGrid';
-import { getProducts } from '@/lib/supabase';
-import { SITE } from '@/lib/site';
+import { CatalogueGrid } from '@/components/catalogue/CatalogueGrid';
+import { getLocaleContext } from '@/lib/i18n/server';
 
 export const metadata: Metadata = {
-  title: `Catalogue — ${SITE.name}`,
-  description: 'Sourcing et micro-importation Espagne-Algérie. Prix Espagne et estimation livrée en Algérie.',
+  title: 'Catalogue',
+  description: 'Sélection multiproduits achetée en Espagne, remise en Algérie. Prix en DZD et disponibilité confirmés par un conseiller.',
 };
 
-export default async function CataloguePage() {
-  const { products, source } = await getProducts();
+export default function CataloguePage() {
+  const { dict } = getLocaleContext();
+  const catalogue = dict.shop.catalogue;
 
   return (
-    <div className="bg-white py-12 md:py-20">
-      <div className="container-page space-y-10">
-        <header className="space-y-4 text-center md:text-left">
-          <p className="text-xs font-semibold uppercase tracking-[0.16em] text-gold-ink">Catalogue</p>
-          <h1 className="text-3xl font-semibold tracking-tightish text-ink sm:text-5xl">Sourcing Espagne, livraison Algérie</h1>
-          <p dir="rtl" lang="ar" className="text-sm text-slate-500">شريكك الموثوق في الاستيراد والخدمات اللوجستية إسبانيا-الجزائر</p>
-        </header>
-        <CatalogGrid products={products} source={source} />
+    <div className="container-page pb-20 pt-6 lg:pb-24 lg:pt-8">
+      <p className="eyebrow">{catalogue.eyebrow}</p>
+      <h1 className="mt-6 display-1">{catalogue.title}</h1>
+      <p className="mt-6 max-w-[760px] font-sans text-[16px] leading-[1.65] text-ink">{catalogue.lead}</p>
+
+      <div className="mt-8 flex items-start gap-4 border border-chalk px-5 py-4">
+        <span className="mt-0.5 grid h-5 w-5 shrink-0 place-items-center rounded-full border border-stone font-sans text-[10px] text-stone" aria-hidden="true">
+          i
+        </span>
+        <p className="font-sans text-[13px] leading-[1.6] text-ink">{catalogue.notice}</p>
       </div>
+
+      <CatalogueGrid />
     </div>
   );
 }

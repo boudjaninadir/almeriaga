@@ -1,9 +1,9 @@
 import type { Config } from 'tailwindcss';
 
 /**
- * Toutes les couleurs passent par des variables CSS (voir app/globals.css).
- * Marque : vert profond + or, repris des cartes de visite ALMERÍAGA.
- * Pour changer la marque, modifiez uniquement les variables --brand* et --gold* dans globals.css.
+ * Thème ALMERÍAGA — identité Figma « papier & encre ».
+ * Toutes les couleurs passent par des variables CSS (app/globals.css).
+ * Papier #FAF8F4, encre #141414, pierre #8A8680, craie #E7E4DE, accent #E88923.
  */
 const rgb = (name: string) => `rgb(var(--${name}) / <alpha-value>)`;
 
@@ -12,13 +12,21 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
+        paper: rgb('paper'),
         canvas: rgb('canvas'),
         surface: rgb('surface'),
         'surface-2': rgb('surface-2'),
+        chalk: rgb('chalk'),
         line: rgb('line'),
         ink: rgb('ink'),
         'ink-soft': rgb('ink-soft'),
         'ink-faint': rgb('ink-faint'),
+        stone: rgb('stone'),
+        accent: rgb('accent'),
+        'accent-soft': rgb('accent-soft'),
+        danger: rgb('danger'),
+        ok: rgb('ok'),
+        warn: rgb('warn'),
         brand: rgb('brand'),
         'brand-strong': rgb('brand-strong'),
         'brand-soft': rgb('brand-soft'),
@@ -26,18 +34,27 @@ const config: Config = {
         gold: rgb('gold'),
         'gold-light': rgb('gold-light'),
         'gold-ink': rgb('gold-ink'),
-        danger: rgb('danger'),
-        ok: rgb('ok'),
-        warn: rgb('warn'),
       },
       fontFamily: {
-        sans: ['var(--font-geist-sans)', 'ui-sans-serif', 'system-ui', '-apple-system', 'Segoe UI', 'Roboto', 'sans-serif'],
+        sans: ['var(--font-inter)', 'ui-sans-serif', 'system-ui', '-apple-system', 'Segoe UI', 'Roboto', 'sans-serif'],
+        display: ['var(--font-manrope)', 'var(--font-inter)', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+        arabic: ['var(--font-arabic)'],
+      },
+      borderRadius: {
+        DEFAULT: '2px',
+        sm: '2px',
+        md: '2px',
+        lg: '2px',
+        xl: '2px',
+        xl2: '2px',
+        '2xl': '2px',
+        '3xl': '2px',
+        full: '9999px',
       },
       boxShadow: {
-        soft: '0 1px 2px rgb(30 41 59 / 0.05), 0 8px 24px -12px rgb(30 41 59 / 0.12)',
-        lift: '0 2px 4px rgb(30 41 59 / 0.05), 0 18px 44px -18px rgb(15 81 50 / 0.35)',
+        soft: 'none',
+        lift: 'none',
       },
-      borderRadius: { xl2: '1.25rem' },
       letterSpacing: { tightish: '-0.02em' },
     },
   },

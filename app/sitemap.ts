@@ -4,43 +4,22 @@ import { SITE } from '@/lib/site';
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = SITE.url;
   const now = new Date();
-
-  return [
-    {
-      url: baseUrl,
-      lastModified: now,
-      changeFrequency: 'daily',
-      priority: 1.0,
-    },
-    {
-      url: `${baseUrl}/catalogue`,
-      lastModified: now,
-      changeFrequency: 'weekly',
-      priority: 0.9,
-    },
-    {
-      url: `${baseUrl}/gros`,
-      lastModified: now,
-      changeFrequency: 'weekly',
-      priority: 0.8,
-    },
-    {
-      url: `${baseUrl}/simulateur`,
-      lastModified: now,
-      changeFrequency: 'monthly',
-      priority: 0.7,
-    },
-    {
-      url: `${baseUrl}/espace-fournisseurs`,
-      lastModified: now,
-      changeFrequency: 'weekly',
-      priority: 0.6,
-    },
-    {
-      url: `${baseUrl}/mentions-legales`,
-      lastModified: now,
-      changeFrequency: 'monthly',
-      priority: 0.3,
-    },
+  const routes: Array<{ path: string; priority: number; frequency: 'daily' | 'weekly' | 'monthly' }> = [
+    { path: '', priority: 1, frequency: 'daily' },
+    { path: '/catalogue', priority: 0.9, frequency: 'weekly' },
+    { path: '/produit/lisseur', priority: 0.8, frequency: 'weekly' },
+    { path: '/sur-commande/produit-exemple', priority: 0.6, frequency: 'monthly' },
+    { path: '/gros', priority: 0.8, frequency: 'weekly' },
+    { path: '/revendeurs', priority: 0.7, frequency: 'weekly' },
+    { path: '/cadre-legal', priority: 0.5, frequency: 'monthly' },
+    { path: '/contact', priority: 0.6, frequency: 'monthly' },
+    { path: '/mentions-legales', priority: 0.3, frequency: 'monthly' },
   ];
+
+  return routes.map((route) => ({
+    url: `${baseUrl}${route.path}`,
+    lastModified: now,
+    changeFrequency: route.frequency,
+    priority: route.priority,
+  }));
 }

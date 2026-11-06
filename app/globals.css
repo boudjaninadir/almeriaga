@@ -3,60 +3,108 @@
 @tailwind utilities;
 
 /* ─────────────────────────────────────────────────────────────
-   Design tokens ALMERÍAGA : blanc cassé, vert profond et or
+   Tokens ALMERÍAGA — identité Figma « papier & encre »
+   Papier #FAF8F4 · Encre #141414 · Pierre #8A8680 · Craie #E7E4DE
+   Accent #E88923 (micro-accent uniquement, jamais en surface)
    ───────────────────────────────────────────────────────────── */
 @layer base {
   :root {
-    --canvas: 250 250 247; /* #FAFAF7 blanc cassé très clair */
-    --surface: 242 246 243;
-    --surface-2: 232 241 236;
-    --line: 220 228 223;
+    --paper: 250 248 244;
+    --canvas: 250 248 244;
+    --surface: 243 240 234;
+    --surface-2: 231 228 222;
+    --chalk: 231 228 222;
+    --line: 231 228 222;
 
-    --ink: 27 31 29; /* #1B1F1D anthracite */
-    --ink-soft: 68 76 72;
-    --ink-faint: 100 110 105;
+    --ink: 20 20 20;
+    --ink-soft: 74 72 68;
+    --ink-faint: 138 134 128;
+    --stone: 138 134 128;
 
-    --brand: 11 61 46; /* #0B3D2E vert de marque profond et sobre */
-    --brand-strong: 6 36 27; /* #06241B vert très sombre pour dégradés */
-    --brand-soft: 232 241 236; /* #E8F1EC vert doux pour badges */
-    --brand-ring: 11 61 46;
+    --accent: 232 137 35;
+    --accent-soft: 232 185 35;
 
-    --gold: 184 150 46; /* #B8962E or discret */
-    --gold-light: 227 199 102; /* #E3C766 or clair */
-    --gold-ink: 138 110 30; /* #8A6E1E */
+    --danger: 180 35 24;
+    --ok: 20 20 20;
+    --warn: 138 134 128;
 
-    --danger: 190 18 60;
-    --ok: 4 120 87;
-    --warn: 180 83 9;
+    /* Alias historiques : les écrans hérités restent lisibles en monochrome. */
+    --brand: 20 20 20;
+    --brand-strong: 20 20 20;
+    --brand-soft: 231 228 222;
+    --brand-ring: 20 20 20;
+    --gold: 232 137 35;
+    --gold-light: 232 137 35;
+    --gold-ink: 138 134 128;
+
+    --font-arabic: 'Segoe UI', 'Noto Naskh Arabic', 'Noto Sans Arabic', 'Geeza Pro', 'Traditional Arabic',
+      Tahoma, 'Helvetica Neue', Arial, sans-serif;
   }
 
   html {
     scroll-behavior: smooth;
     -webkit-text-size-adjust: 100%;
-    scroll-padding-top: 5rem;
+    scroll-padding-top: 7rem;
+    background: rgb(var(--paper));
   }
 
   body {
-    @apply bg-canvas text-ink antialiased;
+    @apply bg-paper text-ink antialiased;
     text-rendering: optimizeLegibility;
   }
 
   ::selection {
-    background: rgb(var(--brand) / 0.16);
+    background: rgb(var(--accent) / 0.22);
   }
 
   :focus-visible {
-    outline: 2px solid rgb(var(--brand-ring));
-    outline-offset: 2px;
+    outline: 2px solid rgb(var(--ink));
+    outline-offset: 3px;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    text-wrap: balance;
+  }
+
+  html[lang='ar'] body,
+  [lang='ar'] {
+    font-family: var(--font-arabic);
+    letter-spacing: 0;
+  }
+
+  html[lang='ar'] h1,
+  html[lang='ar'] h2,
+  html[lang='ar'] h3,
+  html[lang='ar'] h4,
+  html[lang='ar'] .font-display {
+    font-family: var(--font-arabic);
+    letter-spacing: 0;
+  }
+
+  html[dir='rtl'] .tracking-tightish,
+  html[dir='rtl'] .tracking-tight,
+  html[dir='rtl'] .tracking-wide,
+  html[dir='rtl'] .tracking-wider,
+  html[dir='rtl'] .tracking-widest,
+  html[dir='rtl'] .eyebrow {
+    letter-spacing: 0;
+  }
+
+  html[dir='rtl'] .icon-directional {
+    transform: scaleX(-1);
+  }
+
+  html[dir='rtl'] .select-chevron {
+    right: auto;
+    left: 1rem;
   }
 
   @media (prefers-reduced-motion: reduce) {
-    html {
-      scroll-behavior: auto;
-    }
-    *,
-    *::before,
-    *::after {
+    html { scroll-behavior: auto; }
+    *, *::before, *::after {
       animation-duration: 0.01ms !important;
       animation-iteration-count: 1 !important;
       transition-duration: 0.01ms !important;
@@ -66,34 +114,79 @@
 
 @layer components {
   .container-page {
-    @apply mx-auto w-full max-w-6xl px-5 sm:px-8;
+    @apply mx-auto w-full max-w-[1440px] px-6 sm:px-10 lg:px-20;
   }
 
   .eyebrow {
-    @apply text-xs font-semibold uppercase tracking-[0.14em] text-gold;
+    @apply font-sans text-[11px] font-medium uppercase leading-none tracking-[0.14em] text-stone sm:text-[12px];
   }
 
+  .display-1 {
+    @apply font-display text-[44px] font-extrabold leading-[1.08] tracking-[-0.03em] text-ink sm:text-[64px] lg:text-[80px];
+  }
+
+  .display-2 {
+    @apply font-display text-[34px] font-extrabold leading-[1.08] tracking-[-0.03em] text-ink sm:text-[40px] lg:text-[48px];
+  }
+
+  .display-3 {
+    @apply font-display text-[26px] font-bold leading-[1.12] tracking-[-0.02em] text-ink;
+  }
+
+  .display-4 {
+    @apply font-display text-[22px] font-bold leading-[1.15] tracking-[-0.02em] text-ink;
+  }
+
+  .body-lg {
+    @apply font-sans text-[16px] leading-[1.6] text-ink;
+  }
+
+  .body-sm {
+    @apply font-sans text-[13px] leading-[1.6] text-ink;
+  }
+
+  .muted { @apply text-stone; }
+
+  .rule { @apply border-0 border-t border-chalk; }
+
+  .link-underline {
+    @apply underline decoration-chalk decoration-1 underline-offset-4 transition hover:decoration-ink;
+  }
+
+  /* Anciens écrans (simulateur, espace fournisseurs) : fond encre, sans texture. */
+  .bg-dark-block { background: rgb(var(--ink)); border: 0; position: relative; }
+  .bg-dark-block::before { content: none; }
+
   .section-title {
-    @apply text-balance text-3xl font-semibold tracking-tightish text-ink sm:text-4xl;
+    @apply font-display text-[34px] font-extrabold leading-[1.08] tracking-[-0.03em] text-ink sm:text-[40px] lg:text-[48px];
   }
 
   .section-lead {
-    @apply mt-4 max-w-2xl text-pretty text-base leading-relaxed text-ink-soft sm:text-lg;
+    @apply mt-4 max-w-2xl font-sans text-[16px] leading-[1.6] text-ink;
   }
 
-  .bg-dark-block {
-    background: linear-gradient(135deg, rgb(var(--brand-strong)), rgb(var(--brand)));
-    position: relative;
-    border: 1px solid rgb(var(--gold) / 0.3);
-  }
-  .bg-dark-block::before {
-    content: '';
+  .sr-only-focusable:not(:focus):not(:focus-within) {
     position: absolute;
-    inset: 0;
-    opacity: 0.07;
-    pointer-events: none;
-    background-image: url("data:image/svg+xml,%3Csvg width='100' height='20' viewBox='0 0 100 20' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M21.216 10c0-3.314-2.686-6-6-6s-6 2.686-6 6 2.686 6 6 6 6-2.686 6-6zm25.432 0c0-3.314-2.686-6-6-6s-6 2.686-6 6 2.686 6 6 6 6-2.686 6-6zm25.432 0c0-3.314-2.686-6-6-6s-6 2.686-6 6 2.686 6 6 6 6-2.686 6-6z' fill='%23E3C766' fill-opacity='0.4' fill-rule='evenodd'/%3E%3C/svg%3E");
-    background-repeat: repeat;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
   }
+
+  .no-scrollbar { scrollbar-width: none; }
+  .no-scrollbar::-webkit-scrollbar { display: none; }
 }
 
+/* Motion discrète : uniquement au survol sur pointeur précis. */
+@media (hover: hover) and (pointer: fine) {
+  .tilt-card { transition: transform 220ms ease, border-color 220ms ease; }
+  .tilt-card:hover { transform: translateY(-2px) rotate(-0.25deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tilt-card, .tilt-card:hover { transform: none; }
+}

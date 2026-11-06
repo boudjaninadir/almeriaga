@@ -14,13 +14,13 @@ const env = (value: string | undefined, fallback = ''): string => (value && valu
 const PRODUCTION_URL = 'https://almeriaga.vercel.app';
 
 export const SITE = {
-  name: 'ALMERÍAGA',
-  tagline: 'Global sourcing & micro-importation',
+  name: 'Almeríaga',
+  tagline: 'Deux rives. Un lien.',
   url: env(process.env.NEXT_PUBLIC_SITE_URL, PRODUCTION_URL).replace(/\/+$/, ''),
   locale: 'fr_DZ',
-  title: 'PS5 Slim 1 To + GTA VI, paiement à la livraison',
+  title: 'Deux rives. Un lien.',
   description:
-    'PS5 Slim 1 To neuve avec GTA VI. Réservez en ligne, confirmation par téléphone, paiement à la livraison dans votre wilaya.',
+    'Produits achetés en Espagne, remis en Algérie. Vous choisissez, un conseiller vous rappelle, vous payez à la remise.',
 } as const;
 
 export const CONTACT = {

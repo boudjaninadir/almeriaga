@@ -1,39 +1,23 @@
-import { MobileCtaBar } from '@/components/MobileCtaBar';
-import { AboutSection } from '@/components/sections/AboutSection';
-import { FaqSection } from '@/components/sections/FaqSection';
-import { FileTrackingSection } from '@/components/sections/FileTrackingSection';
-import { HeroBrandSection } from '@/components/sections/HeroBrandSection';
-import { HowItWorksSection } from '@/components/sections/HowItWorksSection';
-import { PackSection } from '@/components/sections/PackSection';
-import { ProductsSection } from '@/components/sections/ProductsSection';
-import { ReserveSection } from '@/components/sections/ReserveSection';
-import { SimulatorPreviewSection } from '@/components/sections/SimulatorPreviewSection';
-import { SuppliersDemoSection } from '@/components/sections/SuppliersDemoSection';
+import { ClosingCta } from '@/components/home/ClosingCta';
+import { HomeFaq } from '@/components/home/Faq';
+import { HomeHero } from '@/components/home/Hero';
+import { HomeSteps } from '@/components/home/Steps';
+import { TrustStrip } from '@/components/home/TrustStrip';
 
 /**
- * Page d'accueil : assemblage des sections dans l'ordre de lecture commercial.
- * Chaque ancre utilisée par la navigation existe ici et une seule fois :
- * `#produits`, `#pack`, `#reserver`, `#fournisseurs`, `#suivi`, `#a-propos`, `#faq`.
+ * Accueil — écran « Accueil / » de la maquette Figma (desktop 5:37063, mobile 5:37229).
+ * Hero, trio de confiance, trois étapes, FAQ, bande de clôture.
  */
 export default function Page() {
   return (
     <>
-      <HeroBrandSection />
-
-      <div className="space-y-16 pb-16 pt-16 md:space-y-24 md:pb-24 md:pt-24">
-        <ProductsSection />
-        <PackSection />
-        <ReserveSection />
-        <HowItWorksSection />
-        <SimulatorPreviewSection />
-        <SuppliersDemoSection />
-        <FileTrackingSection />
-        <AboutSection />
-        <FaqSection />
+      <HomeHero />
+      <TrustStrip />
+      <div className="space-y-16 pb-0 pt-16 lg:space-y-24 lg:pt-24">
+        <HomeSteps />
+        <HomeFaq />
       </div>
-
-      <MobileCtaBar />
+      <ClosingCta />
     </>
   );
 }
-

@@ -1,27 +1,32 @@
+'use client';
+
 import { ButtonLink } from '@/components/ui/Button';
 import { FEATURED_PRODUCT } from '@/lib/catalog';
-import { SITE, whatsappLink } from '@/lib/site';
+import { useI18n } from '@/lib/i18n/context';
+import { whatsappLink } from '@/lib/site';
 
 /**
  * Barre d'action fixe en bas d'écran sur mobile : réserver ou joindre WhatsApp
  * sans remonter la page. Masquée à partir de `md` (le header prend le relais).
  */
 export function MobileCtaBar() {
-  const whatsapp = whatsappLink(`Bonjour ${SITE.name}, je souhaite réserver le ${FEATURED_PRODUCT.name}.`);
+  const { dict } = useI18n();
+  const product = dict.products.items[FEATURED_PRODUCT.slug as keyof typeof dict.products.items];
+  const whatsapp = whatsappLink(dict.hero.whatsappMessage);
 
   return (
     <div className="fixed inset-x-0 bottom-0 z-30 border-t border-line bg-canvas/95 px-4 py-3 backdrop-blur md:hidden">
       <div className="flex items-center gap-3">
         <div className="min-w-0 flex-1">
-          <p className="truncate text-xs font-semibold text-ink">{FEATURED_PRODUCT.name}</p>
-          <p className="text-[11px] text-ink-faint">Sans paiement en ligne</p>
+          <p className="truncate text-xs font-semibold text-ink">{product?.name ?? FEATURED_PRODUCT.name}</p>
+          <p className="text-[11px] text-ink-faint">{dict.common.noOnlinePayment}</p>
         </div>
         {whatsapp && (
           <a
             href={whatsapp}
             target="_blank"
             rel="noopener noreferrer"
-            aria-label="Nous écrire sur WhatsApp"
+            aria-label={dict.nav.whatsapp}
             className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-line bg-surface text-brand"
           >
             <svg viewBox="0 0 24 24" className="h-5 w-5" fill="currentColor" aria-hidden="true">
@@ -30,7 +35,7 @@ export function MobileCtaBar() {
           </a>
         )}
         <ButtonLink href="#reserver" size="md" className="shrink-0">
-          Réserver
+          {dict.nav.reserve}
         </ButtonLink>
       </div>
     </div>

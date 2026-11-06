@@ -48,7 +48,7 @@ export function AuthModal({ isOpen, onClose }: Props) {
 
   return (
     <div className="fixed inset-0 z-50 flex items-end justify-center bg-slate-900/50 sm:items-center sm:p-6" role="dialog" aria-modal="true" aria-labelledby="auth-title">
-      <div className="w-full max-w-md space-y-6 rounded-t-3xl bg-white p-6 shadow-2xl sm:rounded-3xl sm:p-8">
+      <div dir="ltr" lang="fr" className="w-full max-w-md space-y-6 rounded-t-3xl bg-white p-6 shadow-2xl sm:rounded-3xl sm:p-8">
         <div className="flex items-start justify-between">
           <div>
             <p className="text-xs font-semibold uppercase tracking-wider text-amber-600">Espace sécurisé</p>

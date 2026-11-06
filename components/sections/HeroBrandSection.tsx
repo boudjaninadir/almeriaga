@@ -1,10 +1,12 @@
-import { Ar } from '@/components/Ar';
 import { ButtonLink } from '@/components/ui/Button';
 import { RouteMap } from '@/components/RouteMap';
-import { SITE, whatsappLink } from '@/lib/site';
+import { getLocaleContext } from '@/lib/i18n/server';
+import { whatsappLink } from '@/lib/site';
 
 export function HeroBrandSection() {
-  const whatsapp = whatsappLink(`Bonjour ${SITE.name}, je souhaite réserver le Pack PS5 Slim + GTA VI.`);
+  const { dict } = getLocaleContext();
+  const hero = dict.hero;
+  const whatsapp = whatsappLink(hero.whatsappMessage);
 
   return (
     <section className="relative overflow-hidden bg-canvas pt-16 pb-20 md:pt-24 md:pb-28 text-ink border-b border-line">
@@ -21,23 +23,24 @@ export function HeroBrandSection() {
           <div className="lg:col-span-7 space-y-6 text-center lg:text-left">
             <div className="inline-flex items-center gap-2 rounded-full bg-white px-4 py-1.5 text-xs font-semibold text-gold-ink border border-gold/40 shadow-soft">
               <span className="h-2 w-2 rounded-full bg-gold animate-pulse" />
-              <span>Disponible sur réservation — Sourcing direct Espagne</span>
+              <span>{hero.badge}</span>
             </div>
 
             <h1 className="text-4xl font-semibold tracking-tightish text-ink sm:text-6xl text-balance">
-              De l’Espagne à votre porte. <span className="text-brand">من إسبانيا إلى باب منزلك</span>
+              {hero.title}{' '}
+              <span className="text-brand" dir="rtl" lang="ar">{hero.titleAccent}</span>
             </h1>
 
             <p className="max-w-xl mx-auto lg:mx-0 text-pretty text-lg text-ink-soft leading-relaxed font-sans">
-              Global sourcing et micro-importation de haute précision. Commandez votre Pack PS5 Slim + GTA VI en toute sérénité avec paiement à la livraison dans votre wilaya.
+              {hero.subtitle}
             </p>
 
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4 lg:justify-start pt-2">
               <ButtonLink href="#produits" variant="gold" size="lg" className="w-full sm:w-auto">
-                Voir les produits <Ar>عرض المنتجات</Ar>
+                {hero.ctaProducts}
               </ButtonLink>
               <ButtonLink href="#reserver" variant="secondary" size="lg" className="w-full sm:w-auto">
-                Demander un rappel <Ar>حجز</Ar>
+                {hero.ctaCallback}
               </ButtonLink>
               {whatsapp && (
                 <a
@@ -46,22 +49,18 @@ export function HeroBrandSection() {
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 text-xs font-semibold text-brand hover:underline pt-2 sm:pt-0"
                 >
-                  <span>💬 WhatsApp direct</span>
+                  <span>💬 {hero.whatsapp}</span>
                 </a>
               )}
             </div>
 
             {/* Trust Bullets / Puces de confiance */}
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-6 border-t border-line text-xs font-mono text-ink-soft">
-              <div className="flex items-center justify-center lg:justify-start gap-2">
-                <span className="text-gold">✓</span> Importation déclarée
-              </div>
-              <div className="flex items-center justify-center lg:justify-start gap-2">
-                <span className="text-gold">✓</span> Facture & Garantie
-              </div>
-              <div className="flex items-center justify-center lg:justify-start gap-2">
-                <span className="text-gold">✓</span> Paiement à la livraison
-              </div>
+              {hero.trust.map((item) => (
+                <div key={item} className="flex items-center justify-center lg:justify-start gap-2">
+                  <span className="text-gold">✓</span> {item}
+                </div>
+              ))}
             </div>
           </div>
 

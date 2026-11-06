@@ -1,80 +1,75 @@
-# ALMERÍAGA v2 — Guide de démarrage et d'administration
+# ALMERÍAGA — Guide de démarrage
 
-## 1. Démarrage rapide (Windows)
-1. Ouvrir le dossier du projet dans VS Code.
-2. Installer les dépendances : `npm install`
-3. Configurer les variables d'environnement : copiez `.env.example` en `.env.local` et remplissez vos clés (`LEADS_WEBHOOK_URL`, `LEADS_WEBHOOK_SECRET`, etc.).
-   → `NEXT_PUBLIC_SITE_URL` doit valoir `https://almeriaga.vercel.app` en production (ou votre domaine définitif).
-     Sans cette variable, le code retombe sur cette même URL de production : les balises OpenGraph, le
-     `sitemap.xml` et le `robots.txt` restent donc corrects.
-   → `NEXT_PUBLIC_WHATSAPP_NUMBER` (format international sans `+`, ex. `213550000000`) active tous les liens WhatsApp.
-   → `NEXT_PUBLIC_SELLER_ANAE` / `NEXT_PUBLIC_SELLER_NIF` alimentent le pied de page et `/mentions-legales`.
-   → `NEXT_PUBLIC_META_PIXEL_ID` / `NEXT_PUBLIC_TIKTOK_PIXEL_ID` : laisser vide désactive le pixel concerné.
-4. Lancer le serveur de développement : `npm run dev` (http://localhost:3000)
+Plateforme de micro-importation Espagne → Algérie. Design aligné sur la maquette Figma `zMqPU7ibdVFIy0Lt80nWeP` (22 écrans desktop/mobile).
 
+## 1. Démarrage
 
-## 2. Commandes de vérification
-- Typecheck : `npm run typecheck`
-- Tests : `npm test`
-- Build de production : `npm run build`
-
-## 3. Structure de la page d'accueil (`app/page.tsx`)
-L'accueil assemble les sections dans cet ordre. Chaque ancre du menu doit exister **une seule fois** ici :
-
-| Ancre | Composant |
-| --- | --- |
-| — (hero) | `components/sections/HeroBrandSection.tsx` |
-| `#produits` | `components/sections/ProductsSection.tsx` |
-| `#pack` | `components/sections/PackSection.tsx` |
-| `#reserver` | `components/sections/ReserveSection.tsx` (formulaire `LeadForm`) |
-| `#comment-ca-marche` | `components/sections/HowItWorksSection.tsx` |
-| `#simulateur` | `components/sections/SimulatorPreviewSection.tsx` |
-| `#fournisseurs` | `components/sections/SuppliersDemoSection.tsx` |
-| `#suivi` | `components/sections/FileTrackingSection.tsx` |
-| `#a-propos` | `components/sections/AboutSection.tsx` |
-| `#faq` | `components/sections/FaqSection.tsx` |
-
-La barre d'action fixe sur mobile est `components/MobileCtaBar.tsx`, le menu hamburger
-(avec `/catalogue`, `/simulateur`, `/gros`, `/espace-fournisseurs`) est dans `components/Navbar.tsx`.
-
-## 3 bis. Comment ajouter un produit (`lib/catalog.ts`)
-
-Ouvrez `lib/catalog.ts` et ajoutez un nouvel objet dans le tableau `PRODUCTS` :
-```ts
-{
-  slug: 'mon-nouveau-produit',
-  name: 'Nom complet du produit',
-  shortName: 'Nom court',
-  priceFromDzd: null, // ou nombre en DZD si fixe
-  availability: 'OnDemand', // 'PreOrder' | 'OnDemand' | 'OnQuote' | 'AtRelease' | 'InStock'
-  warrantyMonths: 12,
-  pack: [
-    { icon: 'console', title: 'Élément 1', body: 'Description...' }
-  ]
-}
+```bash
+npm install
+cp .env.example .env.local   # renseigner les variables
+npm run dev                  # http://localhost:3000
 ```
 
-## 4. Comment remplacer les illustrations par de vraies photos (`public/images/`)
-Placez vos fichiers au format WebP ou PNG dans le dossier `public/images/` :
-- `ps5-slim.webp` (remplace l'illustration PS5 Slim)
-- `dualsense.webp` (manette)
-- `quest.webp` (casque VR)
-- `gta6-fond.webp` (fond ambiance GTA VI)
-- `carte-recto.png` et `carte-verso.png` (pour la carte de visite interactive 3D dans "À propos")
-Si le fichier existe, le composant l'affiche automatiquement à la place du SVG de secours.
+Variables utiles :
+- `NEXT_PUBLIC_SITE_URL` (production : `https://almeriaga.vercel.app` ou domaine définitif)
+- `NEXT_PUBLIC_WHATSAPP_NUMBER` (format international sans `+`)
+- `NEXT_PUBLIC_CONTACT_EMAIL`
+- `NEXT_PUBLIC_SELLER_*` (mentions légales)
+- `LEADS_WEBHOOK_URL`, `LEADS_WEBHOOK_SECRET`, `LEADS_DRY_RUN`
+- `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY` (connexion Google)
 
-## 5. Comment ajouter un vrai fournisseur vérifié (`lib/suppliers-demo.ts` ou tableur)
-Mettez à jour `lib/suppliers-demo.ts` avec vos fournisseurs réels vérifiés par le propriétaire, en passant le statut à `Vérifié`.
+## 2. Vérifications
 
-## 6. Brancher Google Sheets (Google Apps Script)
-1. Créez un Google Sheet avec un onglet nommé `Leads`.
-2. Ouvrez Extensions > Apps Script, collez le code de `google-apps-script/Code.gs`.
-3. Définissez la propriété du script `LEADS_WEBHOOK_SECRET` avec le même secret que dans votre `.env.local` (`LEADS_WEBHOOK_SECRET`).
-4. Déployez en tant que Web App (accès : « Tout le monde »). Copiez l'URL de déploiement dans `LEADS_WEBHOOK_URL`.
+```bash
+npm run typecheck
+npm test
+npm run lint
+npm run build
+```
 
-## 7. Déploiement sur Vercel
-1. Poussez votre code sur GitHub.
-2. Importez le projet sur Vercel.
-3. Renseignez les variables d'environnement dans les paramètres du projet Vercel (`LEADS_WEBHOOK_URL`, `LEADS_WEBHOOK_SECRET`, etc.).
-4. Lancez le déploiement.
+## 3. Destinations (11 pages, desktop + mobile)
 
+| Route | Écran |
+|---|---|
+| `/` | Accueil |
+| `/catalogue` | Catalogue |
+| `/produit/lisseur` | Fiche lisseur |
+| `/produit/pack-ecouteurs` | Fiche pack écouteurs (même gabarit) |
+| `/sur-commande/produit-exemple` | Produit sur commande / devis |
+| `/gros` | Professionnels — gros |
+| `/revendeurs` | Professionnels — revendeurs |
+| `/cadre-legal` | Cadre légal |
+| `/contact` | Contact |
+| `/mentions-legales` | Mentions légales |
+| `/merci` | Confirmation de demande |
+| `/connexion` | Connexion / inscription |
+
+Les anciennes routes `/simulateur` et `/espace-fournisseurs` redirigent vers `/gros` et `/revendeurs` : elles ne font pas partie des 22 écrans.
+
+## 4. Identité et composants
+
+- Tokens : `app/globals.css` — papier `#FAF8F4`, encre `#141414`, pierre `#8A8680`, craie `#E7E4DE`, accent `#E88923`.
+- Typographies : Manrope ExtraBold (titres), Inter (texte), via `next/font/google` (auto-hébergées).
+- Primitives : `components/ui/` — boutons, champs, badges, accordéon.
+- Header/footer : `components/Navbar.tsx`, `components/Footer.tsx`.
+- Carte : `components/RouteMap.tsx` (SVG original, étincelles 6,2 s, `prefers-reduced-motion`).
+- Photos produits : `public/images/` (extraites de la maquette).
+
+## 5. Formulaires et Google Sheets
+
+Tous les formulaires utilisent `components/forms/RequestForm.tsx` et le contrat exact
+`leads` : `type, product_slug, nom, telephone, wilaya, message, utm_source, utm_campaign`.
+Le détail (colonnes, valeurs, revendeur sérialisé) est dans `docs/ARCHITECTURE_SHEETS.md`.
+
+## 6. Langues
+
+FR / AR / ES / EN + mode DZ (90 % FR, 10 % AR). Sélecteur de drapeaux dans le header,
+cookie `almeriaga_locale`, HTML rendu côté serveur, RTL en arabe.
+Documentation : `docs/I18N.md`.
+
+## 7. Déploiement
+
+1. Pousser le dépôt sur GitHub.
+2. Importer sur Vercel, renseigner les variables d'environnement.
+3. Déployer. Vérifier `/api/leads` en dry-run puis réel.
+4. Contrôler les mentions légales et les justificatifs avant mise en ligne.

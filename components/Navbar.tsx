@@ -1,178 +1,116 @@
 'use client';
 
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { useEffect, useId, useState } from 'react';
-import { AuthModal } from '@/components/auth/AuthModal';
+import { LanguageSwitcher } from '@/components/i18n/LanguageSwitcher';
 import { Logo } from '@/components/Logo';
-import { ButtonLink } from '@/components/ui/Button';
-import { SITE, whatsappLink } from '@/lib/site';
-
-/** Liens de la barre de navigation sur grand écran. */
-const LINKS = [
-  { href: '/#produits', label: 'Produits' },
-  { href: '/catalogue', label: 'Catalogue' },
-  { href: '/simulateur', label: 'Simulateur' },
-  { href: '/#fournisseurs', label: 'Fournisseurs' },
-  { href: '/#suivi', label: 'Suivi' },
-  { href: '/#a-propos', label: 'À propos' },
-] as const;
-
-/** Menu mobile : mêmes liens + les pages qui n'ont pas de place dans la barre. */
-const MOBILE_LINKS = [
-  { href: '/#produits', label: 'Produits' },
-  { href: '/catalogue', label: 'Catalogue' },
-  { href: '/simulateur', label: 'Simulateur de rentabilité' },
-  { href: '/gros', label: 'Achat en gros / revendeurs' },
-  { href: '/#fournisseurs', label: 'Fournisseurs' },
-  { href: '/espace-fournisseurs', label: 'Espace fournisseurs' },
-  { href: '/#suivi', label: 'Suivi de dossier' },
-  { href: '/#a-propos', label: 'À propos' },
-] as const;
+import { ButtonLink, ArrowUpRight } from '@/components/ui/Button';
+import { useI18n } from '@/lib/i18n/context';
+import { cn } from '@/lib/cn';
 
 export function Navbar() {
-  const [authOpen, setAuthOpen] = useState(false);
+  const { dict } = useI18n();
+  const { nav } = dict;
+  const pathname = usePathname();
   const [menuOpen, setMenuOpen] = useState(false);
   const menuId = useId();
-  const whatsapp = whatsappLink(`Bonjour ${SITE.name}, j’ai une question.`);
 
-  // Échap ferme le menu ; un écran large le referme aussi (le panneau est masqué en CSS).
+  const links = [
+    { href: '/', label: nav.home, active: pathname === '/' },
+    { href: '/catalogue', label: nav.catalogue, active: pathname.startsWith('/catalogue') || pathname.startsWith('/produit') || pathname.startsWith('/sur-commande') },
+    { href: '/cadre-legal', label: nav.legal, active: pathname === '/cadre-legal' },
+    { href: '/contact', label: nav.contact, active: pathname === '/contact' },
+  ];
+
+  useEffect(() => {
+    setMenuOpen(false);
+  }, [pathname]);
+
   useEffect(() => {
     if (!menuOpen) return;
-
     function onKeyDown(event: KeyboardEvent) {
       if (event.key === 'Escape') setMenuOpen(false);
     }
-    const desktop = window.matchMedia('(min-width: 1024px)');
-    function onBreakpointChange() {
-      if (desktop.matches) setMenuOpen(false);
-    }
-
     document.addEventListener('keydown', onKeyDown);
-    desktop.addEventListener('change', onBreakpointChange);
+    document.body.style.overflow = 'hidden';
     return () => {
       document.removeEventListener('keydown', onKeyDown);
-      desktop.removeEventListener('change', onBreakpointChange);
+      document.body.style.overflow = '';
     };
   }, [menuOpen]);
 
   return (
-    <header className="sticky top-0 z-40 border-b border-line/80 bg-canvas/90 backdrop-blur">
-      <div className="container-page flex h-16 items-center justify-between gap-3">
-        <Link href="/" aria-label={`${SITE.name}, accueil`} onClick={() => setMenuOpen(false)}>
+    <header className="sticky top-0 z-40 border-b border-chalk bg-paper/95 backdrop-blur-sm">
+      <div className="container-page flex h-16 items-center justify-between gap-4 lg:h-[104px]">
+        <Link href="/" aria-label={`Almeríaga — ${nav.homeLabel}`} className="shrink-0">
           <Logo />
         </Link>
 
-        <nav aria-label="Navigation principale" className="hidden items-center gap-6 text-sm font-medium text-ink-soft lg:flex">
-          {LINKS.map((link) => (
-            <Link key={link.href} href={link.href} className="transition hover:text-brand">
-              {link.label}
-            </Link>
-          ))}
-        </nav>
-
-        <div className="flex items-center gap-2 sm:gap-3">
-          <button
-            type="button"
-            onClick={() => setAuthOpen(true)}
-            className="hidden text-sm font-medium text-ink-soft transition hover:text-brand sm:inline-flex"
-          >
-            Connexion
-          </button>
-          <ButtonLink href="/#reserver" size="md" className="hidden sm:inline-flex">
-            Réserver
-          </ButtonLink>
-          <button
-            type="button"
-            className="inline-flex h-11 w-11 items-center justify-center rounded-xl border border-line bg-surface text-ink transition hover:bg-surface-2 lg:hidden"
-            aria-expanded={menuOpen}
-            aria-controls={menuId}
-            aria-label={menuOpen ? 'Fermer le menu' : 'Ouvrir le menu'}
-            onClick={() => setMenuOpen((open) => !open)}
-          >
-            <svg
-              viewBox="0 0 24 24"
-              className="h-5 w-5"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth={1.8}
-              strokeLinecap="round"
-              aria-hidden="true"
-            >
-              {menuOpen ? <path d="M6 6l12 12M18 6L6 18" /> : <path d="M4 7h16M4 12h16M4 17h16" />}
-            </svg>
-          </button>
-        </div>
-      </div>
-
-      <div id={menuId} hidden={!menuOpen} className="border-t border-line bg-canvas lg:hidden">
-        <nav aria-label="Navigation mobile" className="container-page divide-y divide-line py-2">
-          {MOBILE_LINKS.map((link) => (
+        <nav aria-label={nav.mainNav} className="hidden items-center gap-6 lg:flex">
+          {links.map((link) => (
             <Link
               key={link.href}
               href={link.href}
-              onClick={() => setMenuOpen(false)}
-              className="flex items-center justify-between py-3 text-sm font-medium text-ink transition hover:text-brand"
+              aria-current={link.active ? 'page' : undefined}
+              className={cn(
+                'relative whitespace-nowrap py-2 font-sans text-[13px] leading-none transition-colors',
+                link.active ? 'text-ink' : 'text-ink/80 hover:text-ink',
+              )}
             >
               {link.label}
-              <svg
-                viewBox="0 0 24 24"
-                className="h-4 w-4 text-ink-faint"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth={1.8}
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                aria-hidden="true"
-              >
-                <path d="M9 6l6 6-6 6" />
-              </svg>
+              {link.active && (
+                <span className="absolute -bottom-0.5 start-0 h-px w-4 bg-accent" aria-hidden="true" />
+              )}
             </Link>
           ))}
-          <button
-            type="button"
-            onClick={() => {
-              setMenuOpen(false);
-              setAuthOpen(true);
-            }}
-            className="flex w-full items-center justify-between py-3 text-left text-sm font-medium text-ink transition hover:text-brand"
-          >
-            Connexion
-            <svg
-              viewBox="0 0 24 24"
-              className="h-4 w-4 text-ink-faint"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth={1.8}
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              aria-hidden="true"
-            >
-              <path d="M9 6l6 6-6 6" />
-            </svg>
-          </button>
         </nav>
 
-        <div className="container-page flex flex-col gap-3 pb-5">
-          <ButtonLink href="/#reserver" size="lg" className="w-full" onClick={() => setMenuOpen(false)}>
-            Réserver mon pack
+        <div className="flex items-center gap-3">
+          <div className="hidden lg:block">
+            <LanguageSwitcher />
+          </div>
+          <ButtonLink href="/catalogue" size="lg" arrow className="hidden h-14 px-5 lg:inline-flex">
+            {nav.reserve}
           </ButtonLink>
-          {whatsapp && (
-            <a
-              href={whatsapp}
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={() => setMenuOpen(false)}
-              className="inline-flex h-11 items-center justify-center rounded-xl border border-line bg-surface text-sm font-medium text-brand"
-            >
-              Discuter sur WhatsApp
-            </a>
-          )}
+          <button
+            type="button"
+            className="inline-flex h-11 w-11 items-center justify-center border border-chalk text-ink transition-colors hover:border-ink lg:hidden"
+            aria-expanded={menuOpen}
+            aria-controls={menuId}
+            aria-label={menuOpen ? nav.menuClose : nav.menuOpen}
+            onClick={() => setMenuOpen((open) => !open)}
+          >
+            <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth={1.4} aria-hidden="true">
+              {menuOpen ? <path d="M5 5l14 14M19 5L5 19" /> : <path d="M4 8h16M4 16h16" />}
+            </svg>
+          </button>
         </div>
       </div>
 
-      <AuthModal isOpen={authOpen} onClose={() => setAuthOpen(false)} />
+      <div id={menuId} hidden={!menuOpen} className="border-t border-chalk bg-paper lg:hidden">
+        <div className="container-page flex flex-col gap-6 py-8">
+          <nav aria-label={nav.mobileNav} className="flex flex-col">
+            {links.map((link) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                className="flex min-h-[56px] items-center justify-between border-b border-chalk py-3 font-display text-[18px] font-medium text-ink"
+              >
+                {link.label}
+                <ArrowUpRight className="h-3.5 w-3.5 text-stone" />
+              </Link>
+            ))}
+          </nav>
+          <div className="flex items-center justify-between gap-4">
+            <span className="eyebrow">{dict.language.label}</span>
+            <LanguageSwitcher />
+          </div>
+          <ButtonLink href="/catalogue" size="lg" arrow className="w-full" onClick={() => setMenuOpen(false)}>
+            {nav.reserve}
+          </ButtonLink>
+        </div>
+      </div>
     </header>
   );
 }
-
-

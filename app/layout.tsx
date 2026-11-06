@@ -1,26 +1,37 @@
 import type { Metadata, Viewport } from 'next';
-import { GeistSans } from 'geist/font/sans';
-import { GeistMono } from 'geist/font/mono';
+import { Inter, Manrope } from 'next/font/google';
 import { Analytics } from '@/components/Analytics';
 import { Footer } from '@/components/Footer';
 import { Navbar } from '@/components/Navbar';
+import { I18nProvider } from '@/lib/i18n/context';
+import { getLocaleContext } from '@/lib/i18n/server';
 import { SITE } from '@/lib/site';
 import '@/app/globals.css';
+
+const inter = Inter({
+  subsets: ['latin'],
+  variable: '--font-inter',
+  display: 'swap',
+  weight: ['400', '500', '600'],
+});
+
+const manrope = Manrope({
+  subsets: ['latin'],
+  variable: '--font-manrope',
+  display: 'swap',
+  weight: ['400', '500', '600', '700', '800'],
+});
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE.url),
   title: {
-    default: `${SITE.name} — ${SITE.title}`,
+    default: `${SITE.name} — Deux rives. Un lien.`,
     template: `%s | ${SITE.name}`,
   },
   description: SITE.description,
   alternates: { canonical: '/' },
-  // Favicon vectoriel (app/icon.svg) + repli .ico pour les navigateurs qui le demandent d'office.
   icons: {
-    icon: [
-      { url: '/favicon.ico', sizes: '16x16 32x32 48x48' },
-      { url: '/icon.svg', type: 'image/svg+xml' },
-    ],
+    icon: [{ url: '/icon.svg', type: 'image/svg+xml' }],
   },
   openGraph: {
     type: 'website',
@@ -33,7 +44,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: '#0B3D2E',
+  themeColor: '#FAF8F4',
   width: 'device-width',
   initialScale: 1,
 };
@@ -43,13 +54,21 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const { locale, dict, dir, htmlLang } = getLocaleContext();
+
   return (
-    <html lang="fr" className={`${GeistSans.variable} ${GeistMono.variable} h-full antialiased`}>
-      <body className="flex min-h-full flex-col bg-canvas text-ink font-sans selection:bg-brand-soft selection:text-brand-strong">
-        <Analytics />
-        <Navbar />
-        <main className="flex-1">{children}</main>
-        <Footer />
+    <html
+      lang={htmlLang}
+      dir={dir}
+      className={`${inter.variable} ${manrope.variable} h-full antialiased`}
+    >
+      <body className="flex min-h-full flex-col bg-paper font-sans text-ink selection:bg-accent/20">
+        <I18nProvider locale={locale} dictionary={dict}>
+          <Analytics />
+          <Navbar />
+          <main className="flex-1">{children}</main>
+          <Footer />
+        </I18nProvider>
       </body>
     </html>
   );

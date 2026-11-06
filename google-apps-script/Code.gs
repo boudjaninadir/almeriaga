@@ -1,8 +1,13 @@
+/**
+ * ALMERÍAGA — webhook Google Sheets.
+ * Contrat exact (handoff Figma 5:39731) : 8 clés dans cet ordre.
+ *   type, product_slug, nom, telephone, wilaya, message, utm_source, utm_campaign
+ * Aucune clé supplémentaire, aucune transformation de nom.
+ */
 function doPost(e) {
   var lock = LockService.getScriptLock();
   if (!lock.tryLock(10000)) {
-    return ContentService.createTextOutput(JSON.stringify({ ok: false, error: "Server busy" }))
-      .setMimeType(ContentService.MimeType.JSON);
+    return json({ ok: false, error: "Server busy" });
   }
 
   try {
@@ -10,8 +15,7 @@ function doPost(e) {
     var expectedSecret = PropertiesService.getScriptProperties().getProperty("LEADS_WEBHOOK_SECRET");
 
     if (expectedSecret && data.secret !== expectedSecret) {
-      return ContentService.createTextOutput(JSON.stringify({ ok: false, error: "Unauthorized" }))
-        .setMimeType(ContentService.MimeType.JSON);
+      return json({ ok: false, error: "Unauthorized" });
     }
 
     var lead = data.lead || {};
@@ -19,65 +23,43 @@ function doPost(e) {
     if (!sheet) {
       sheet = SpreadsheetApp.getActiveSpreadsheet().insertSheet("Leads");
       sheet.appendRow([
-        "lead_id", "recu_le", "type", "produit", "nom", "telephone", "wilaya_code", "wilaya",
-        "quantite", "volume", "boutique", "statut", "notes",
-        "utm_source", "utm_medium", "utm_campaign", "utm_content", "utm_term",
-        "fbclid", "ttclid", "event_id"
+        "type", "product_slug", "nom", "telephone", "wilaya", "message", "utm_source", "utm_campaign"
       ]);
-      sheet.getRange("A1:U1").setFontWeight("bold");
+      sheet.getRange("A1:H1").setFontWeight("bold");
+      sheet.setFrozenRows(1);
     }
 
-    var now = new Date();
-    var yyyy = now.getFullYear();
-    var mm = ("0" + (now.getMonth() + 1)).slice(-2);
-    var dd = ("0" + now.getDate()).slice(-2);
-    var datePrefix = "L-" + yyyy + mm + dd + "-";
-    
-    var lastRow = sheet.getLastRow();
-    var nextNum = lastRow > 1 ? lastRow : 1;
-    var numStr = ("000" + nextNum).slice(-3);
-    var leadId = datePrefix + numStr;
-
-    var attr = lead.attribution || {};
-    var formulaSafe = function(val) {
-      var s = String(val || "");
-      if (/^[=+\-@\t\r]/.test(s)) {
-        return "'" + s;
-      }
-      return s;
+    // Anti-injection de formules : toute valeur commençant par = + - @ est préfixée par '.
+    var safe = function (value) {
+      var s = String(value == null ? "" : value);
+      return /^[=+\-@\t\r]/.test(s) ? "'" + s : s;
     };
 
     sheet.appendRow([
-      formulaSafe(leadId),
-      formulaSafe(lead.receivedAt || now.toISOString()),
-      formulaSafe(lead.kind),
-      formulaSafe(lead.product),
-      formulaSafe(lead.name),
-      String(lead.phone || ""), // phone as text
-      formulaSafe(lead.wilayaCode),
-      formulaSafe(lead.wilayaName),
-      formulaSafe(lead.quantity),
-      formulaSafe(lead.volume),
-      formulaSafe(lead.shop),
-      "Nouveau",
-      "",
-      formulaSafe(attr.utm_source),
-      formulaSafe(attr.utm_medium),
-      formulaSafe(attr.utm_campaign),
-      formulaSafe(attr.utm_content),
-      formulaSafe(attr.utm_term),
-      formulaSafe(attr.fbclid),
-      formulaSafe(attr.ttclid),
-      formulaSafe(lead.eventId)
+      safe(lead.type),
+      safe(lead.product_slug),
+      safe(lead.nom),
+      String(lead.telephone || ""), // texte : conserve le +
+      safe(lead.wilaya),
+      safe(lead.message),
+      safe(lead.utm_source),
+      safe(lead.utm_campaign)
     ]);
 
-    return ContentService.createTextOutput(JSON.stringify({ ok: true, lead_id: leadId }))
-      .setMimeType(ContentService.MimeType.JSON);
+    // Force les cellules texte (téléphone, code wilaya) à rester en texte.
+    var row = sheet.getLastRow();
+    sheet.getRange(row, 4, 1, 1).setNumberFormat("@");
+    sheet.getRange(row, 5, 1, 1).setNumberFormat("@");
+
+    return json({ ok: true });
   } catch (err) {
-    return ContentService.createTextOutput(JSON.stringify({ ok: false, error: err.toString() }))
-      .setMimeType(ContentService.MimeType.JSON);
+    return json({ ok: false, error: err.toString() });
   } finally {
     lock.releaseLock();
   }
 }
 
+function json(payload) {
+  return ContentService.createTextOutput(JSON.stringify(payload))
+    .setMimeType(ContentService.MimeType.JSON);
+}

@@ -1,16 +1,18 @@
 import { Badge } from '@/components/ui/Badge';
 import { Card, CardBody } from '@/components/ui/Card';
-import { Ar } from '@/components/Ar';
 import { LeadForm } from '@/components/LeadForm';
-import { CONTACT, SITE, displayPhone, whatsappLink } from '@/lib/site';
-import { DELIVERY } from '@/lib/catalog';
+import { getLocaleContext } from '@/lib/i18n/server';
+import { interpolate } from '@/lib/i18n/format';
+import { CONTACT, displayPhone, whatsappLink } from '@/lib/site';
 
 /**
  * Bloc de réservation du pack phare (ancre `#reserver`).
  * Cible de tous les CTA du site : header, hero, cartes produit, pied de page, barre mobile.
  */
 export function ReserveSection() {
-  const whatsapp = whatsappLink(`Bonjour ${SITE.name}, info PS5.`);
+  const { dict } = getLocaleContext();
+  const { reserve } = dict;
+  const whatsapp = whatsappLink(reserve.whatsappMessage);
 
   return (
     <section id="reserver" className="scroll-mt-20 container-page">
@@ -18,10 +20,10 @@ export function ReserveSection() {
         <Card className="border-brand/20 shadow-lift">
           <CardBody className="space-y-8 p-8 sm:p-10">
             <div className="space-y-2 text-center">
-              <Badge>Réservation</Badge>
-              <h2 className="text-2xl font-bold tracking-tightish text-ink sm:text-3xl">Réserver votre pack</h2>
+              <Badge>{reserve.badge}</Badge>
+              <h2 className="text-2xl font-bold tracking-tightish text-ink sm:text-3xl">{reserve.title}</h2>
               <p className="text-sm text-ink-soft">
-                Rappel sous {DELIVERY.callbackDelay}. {DELIVERY.note}
+                {interpolate(reserve.lead, { delay: reserve.callbackDelay, note: reserve.note })}
               </p>
             </div>
 
@@ -31,11 +33,11 @@ export function ReserveSection() {
               {whatsapp && (
                 <p>
                   <a href={whatsapp} target="_blank" rel="noopener noreferrer" className="font-semibold text-brand underline underline-offset-2">
-                    WhatsApp <Ar>اتصل</Ar> {displayPhone(CONTACT.whatsappNumber)}
+                    {reserve.whatsapp} {displayPhone(CONTACT.whatsappNumber)}
                   </a>
                 </p>
               )}
-              <p>Le formulaire ne fonctionne pas ? Écrivez-nous, nous enregistrons votre demande à la main.</p>
+              <p>{reserve.fallback}</p>
             </div>
           </CardBody>
         </Card>

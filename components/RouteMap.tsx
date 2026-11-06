@@ -1,77 +1,132 @@
+'use client';
+
+import { useEffect, useState } from 'react';
+import { useI18n } from '@/lib/i18n/context';
+
+/**
+ * Carte schématique Almería / Alicante → Oran, puis Tlemcen et Sidi Bel Abbès.
+ * Tracés vectoriels originaux, papier & encre, route orange. Les étincelles
+ * (6,2 s) ne sont montées qu'après hydratation et jamais en mode « mouvement réduit ».
+ */
 export function RouteMap() {
+  const { dict } = useI18n();
+  const map = dict.home.map;
+  const [animate, setAnimate] = useState(false);
+
+  useEffect(() => {
+    const query = window.matchMedia('(prefers-reduced-motion: reduce)');
+    setAnimate(!query.matches);
+    function onChange(event: MediaQueryListEvent) {
+      setAnimate(!event.matches);
+    }
+    query.addEventListener('change', onChange);
+    return () => query.removeEventListener('change', onChange);
+  }, []);
+
   return (
-    <div className="relative w-full max-w-2xl mx-auto rounded-2xl bg-dark-block p-6 sm:p-8 shadow-lift overflow-hidden border border-gold/30">
-      {/* Background glow */}
-      <div className="absolute inset-0 bg-gradient-to-r from-brand-strong via-brand to-brand-strong opacity-80 pointer-events-none" />
+    <figure className="w-full">
+      <div className="relative w-full">
+        <svg
+          viewBox="0 0 640 720"
+          role="img"
+          aria-label={`${map.caption}. ${map.label}.`}
+          className="h-[430px] w-full overflow-visible sm:h-[520px] lg:h-[560px]" preserveAspectRatio="xMidYMid meet"
+        >
+          <defs>
+            <pattern id="map-grid" width="64" height="64" patternUnits="userSpaceOnUse">
+              <path d="M64 0H0V64" fill="none" stroke="#E7E4DE" strokeWidth="0.8" />
+            </pattern>
+            <marker id="route-arrow" viewBox="0 0 8 8" refX="4" refY="4" markerWidth="5" markerHeight="5" orient="auto">
+              <path d="M0 0L8 4L0 8Z" fill="#E88923" />
+            </marker>
+          </defs>
 
-      <div className="relative z-10 space-y-4">
-        <div className="flex items-center justify-between">
-          <span className="eyebrow text-gold-light">Sourcing international & Logistique</span>
-          <span className="font-mono text-xs text-gold/80">Almería → Oran → Alger</span>
-        </div>
+          <rect width="640" height="720" fill="#FAF8F4" />
+          <rect width="640" height="720" fill="url(#map-grid)" opacity="0.55" />
 
-        {/* Original SVG Route Map (Spain to Algeria) */}
-        <div className="relative aspect-[2/1] w-full flex items-center justify-center">
-          <svg viewBox="0 0 500 240" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full drop-shadow-md">
-            <defs>
-              <linearGradient id="routeGrad" x1="0" y1="120" x2="500" y2="120" gradientUnits="userSpaceOnUse">
-                <stop offset="0%" stopColor="#B8962E" />
-                <stop offset="50%" stopColor="#E3C766" />
-                <stop offset="100%" stopColor="#34D399" />
-              </linearGradient>
-            </defs>
+          {/* Espagne */}
+          <path
+            d="M0 150C58 138 104 148 156 132C214 114 262 128 320 114C378 100 424 116 482 102C536 89 590 96 640 82V0H0Z"
+            fill="#F3F0EA"
+            stroke="#8A8680"
+            strokeWidth="0.9"
+          />
+          {/* Algérie */}
+          <path
+            d="M0 476C72 458 132 470 202 452C278 432 338 458 414 442C492 426 566 448 640 432V720H0Z"
+            fill="#F3F0EA"
+            stroke="#8A8680"
+            strokeWidth="0.9"
+          />
 
-            {/* Stylized Landmasses (Spain top, Mediterranean sea center, Algeria bottom) */}
-            {/* Spain / Europe North */}
-            <path d="M50 20 H350 C400 20 450 40 480 60 C420 80 350 70 300 80 C200 100 120 70 50 80 Z" fill="#0B3D2E" opacity="0.4" stroke="#B8962E" strokeWidth="0.8" />
-            <text x="180" y="55" fill="#E3C766" fontSize="12" fontFamily="monospace" opacity="0.8">ESPAGNE</text>
+          <text x="380" y="58" fill="#8A8680" fontSize="11" letterSpacing="2.2" fontFamily="Inter, sans-serif" textAnchor="middle">
+            {map.spain.toUpperCase()}
+          </text>
+          <text x="320" y="300" fill="#8A8680" fontSize="20" letterSpacing="5" fontFamily="Manrope, sans-serif" textAnchor="middle">
+            {map.mediterranean.toUpperCase()}
+          </text>
+          <text x="360" y="682" fill="#8A8680" fontSize="11" letterSpacing="2.2" fontFamily="Inter, sans-serif" textAnchor="middle">
+            {map.algeria.toUpperCase()}
+          </text>
+          <text x="24" y="236" fill="#8A8680" fontSize="9" letterSpacing="1.8" fontFamily="Inter, sans-serif">
+            {map.label.toUpperCase()}
+          </text>
 
-            {/* Mediterranean Sea separator line / waves */}
-            <path d="M50 110 Q 250 130 480 110" stroke="#B8962E" strokeWidth="0.5" strokeDasharray="4 4" opacity="0.3" />
+          {/* Routes */}
+          <path d="M420 112C444 210 430 320 348 428" fill="none" stroke="#E88923" strokeWidth="2.2" markerEnd="url(#route-arrow)" />
+          <path d="M182 162C212 246 262 348 346 426" fill="none" stroke="#E88923" strokeWidth="1.2" strokeDasharray="3 6" />
+          <path d="M344 440C312 476 280 500 252 528" fill="none" stroke="#8A8680" strokeWidth="1" strokeDasharray="2 5" />
+          <path d="M356 440C396 466 438 488 470 516" fill="none" stroke="#8A8680" strokeWidth="1" strokeDasharray="2 5" />
 
-            {/* Algeria / North Africa South */}
-            <path d="M50 170 C150 160 250 180 350 160 C420 150 460 200 480 220 H50 Z" fill="#0B3D2E" opacity="0.5" stroke="#B8962E" strokeWidth="0.8" />
-            <text x="220" y="200" fill="#E3C766" fontSize="12" fontFamily="monospace" opacity="0.8">ALGÉRIE</text>
+          {/* Villes */}
+          <City x={420} y={112} label={map.alicante} anchor="middle" labelY={-14} />
+          <City x={182} y={162} label={map.almeria} anchor="middle" labelY={-14} />
+          <City x={348} y={432} label={map.oran} anchor="middle" labelY={-16} />
+          <City x={252} y={532} label={map.tlemcen} anchor="middle" labelY={22} />
+          <City x={470} y={520} label={map.sidi} anchor="middle" labelY={22} />
 
-            {/* Almería Pin (Spain) */}
-            <circle cx="160" cy="75" r="5" fill="#B8962E" />
-            <circle cx="160" cy="75" r="10" stroke="#E3C766" strokeWidth="1" className="animate-ping" opacity="0.6" />
-            <text x="135" y="65" fill="#FAFAF7" fontSize="11" fontWeight="600" fontFamily="monospace">Almería</text>
-
-            {/* Oran Pin */}
-            <circle cx="210" cy="145" r="4" fill="#E3C766" />
-            <text x="185" y="165" fill="#FAFAF7" fontSize="11" fontWeight="600" fontFamily="monospace">Oran</text>
-
-            {/* Alger Pin */}
-            <circle cx="340" cy="135" r="5" fill="#34D399" />
-            <text x="325" y="160" fill="#FAFAF7" fontSize="11" fontWeight="600" fontFamily="monospace">Alger</text>
-
-            {/* Animated Dashed Route (Almería -> Oran -> Alger) */}
-            <path
-              d="M160 75 Q 185 110 210 145 T 340 135"
-              stroke="url(#routeGrad)"
-              strokeWidth="2.5"
-              strokeDasharray="6 6"
-              className="animate-[dash_3s_linear_infinite]"
-            />
-
-            {/* Moving glowing packet dot along route */}
-            <circle r="4" fill="#E3C766">
-              <animateMotion
-                dur="4s"
-                repeatCount="indefinite"
-                path="M160 75 Q 185 110 210 145 T 340 135"
-              />
-            </circle>
-          </svg>
-        </div>
-
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-2 text-xs text-white/80 font-mono border-t border-gold/20">
-          <div>📍 Sourcing direct Almería</div>
-          <div>🚢 Traversée maritime sécurisée</div>
-          <div>📦 Livraison à domicile (Wilaya)</div>
-        </div>
+          {animate && (
+            <g aria-hidden="true">
+              <circle r="3" fill="#E88923">
+                <animateMotion dur="6.2s" repeatCount="indefinite" path="M420 112C444 210 430 320 348 428" />
+              </circle>
+              <circle r="2.4" fill="#E88923">
+                <animateMotion dur="6.2s" begin="2.1s" repeatCount="indefinite" path="M182 162C212 246 262 348 346 426" />
+              </circle>
+              <circle r="2" fill="#E88923">
+                <animateMotion dur="6.2s" begin="4.2s" repeatCount="indefinite" path="M344 440C312 476 280 500 252 528" />
+              </circle>
+            </g>
+          )}
+        </svg>
       </div>
-    </div>
+      <figcaption className="mt-4 flex items-start gap-3 font-sans text-[13px] leading-snug text-ink">
+        <span className="mt-2 h-px w-6 shrink-0 bg-accent" aria-hidden="true" />
+        <span>{map.caption}</span>
+      </figcaption>
+    </figure>
+  );
+}
+
+function City({
+  x,
+  y,
+  label,
+  anchor,
+  labelY,
+}: {
+  x: number;
+  y: number;
+  label: string;
+  anchor: 'middle' | 'start' | 'end';
+  labelY: number;
+}) {
+  return (
+    <g>
+      <circle cx={x} cy={y} r="3.2" fill="#FAF8F4" stroke="#141414" strokeWidth="1" />
+      <text x={x} y={y + labelY} fill="#141414" fontSize="11" fontFamily="Inter, sans-serif" textAnchor={anchor}>
+        {label}
+      </text>
+    </g>
   );
 }

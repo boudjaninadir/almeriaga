@@ -1,43 +1,31 @@
 import Link from 'next/link';
 import { Logo } from '@/components/Logo';
-import { CONTACT, LEGAL, SITE, displayPhone, whatsappLink } from '@/lib/site';
-
-const LINKS = [
-  { href: '/#produits', label: 'Produits' },
-  { href: '/catalogue', label: 'Catalogue' },
-  { href: '/simulateur', label: 'Simulateur' },
-  { href: '/gros', label: 'Achat en gros' },
-  { href: '/#fournisseurs', label: 'Fournisseurs' },
-  { href: '/espace-fournisseurs', label: 'Espace fournisseurs' },
-  { href: '/#suivi', label: 'Suivi de dossier' },
-  { href: '/#a-propos', label: 'À propos' },
-  { href: '/mentions-legales', label: 'Mentions légales' },
-] as const;
+import { getLocaleContext } from '@/lib/i18n/server';
 
 export function Footer() {
-  const year = new Date().getFullYear();
-  const whatsapp = whatsappLink(`Bonjour ${SITE.name}, j’ai une question.`);
+  const { dict } = getLocaleContext();
+  const { footer, nav } = dict;
+
+  const links = [
+    { href: '/catalogue', label: nav.catalogue },
+    { href: '/cadre-legal', label: nav.legal },
+    { href: '/contact', label: nav.contact },
+    { href: '/mentions-legales', label: footer.legal },
+  ];
 
   return (
-    <footer className="bg-dark-block pb-28 pt-14 text-white/80 md:pb-14">
-      <div className="container-page grid gap-10 md:grid-cols-[1.2fr_1fr_1.2fr]">
-        <div className="space-y-4">
-          <Logo light gradientId="almeriaga-gold-footer" />
-          <div className="space-y-1 text-sm">
-            {LEGAL.sellerName && <p className="font-medium text-white">{LEGAL.sellerName}</p>}
-            <p>Auto-entrepreneur · Micro-importateur</p>
-            {LEGAL.anae && <p>N° ANAE : {LEGAL.anae}</p>}
-            {LEGAL.nif && <p>NIF : {LEGAL.nif}</p>}
-            {LEGAL.city && <p>{LEGAL.city}, Algérie</p>}
-          </div>
+    <footer className="border-t border-chalk bg-paper">
+      <div className="container-page grid gap-12 py-14 md:grid-cols-[1.4fr_1fr_1fr] md:gap-16 md:py-16">
+        <div className="max-w-[420px] space-y-6">
+          <Logo />
+          <p className="font-sans text-[13px] leading-[1.65] text-ink">{footer.tagline}</p>
         </div>
 
-        <nav aria-label="Pied de page" className="space-y-2 text-sm">
-          <p className="text-xs font-semibold uppercase tracking-[0.14em] text-gold-light">Navigation</p>
-          <ul className="space-y-2">
-            {LINKS.map((link) => (
+        <nav aria-label={footer.navTitle} className="space-y-1">
+          <ul className="space-y-4">
+            {links.map((link) => (
               <li key={link.href}>
-                <Link href={link.href} className="transition hover:text-white">
+                <Link href={link.href} className="font-sans text-[14px] leading-none text-ink transition-colors hover:text-stone">
                   {link.label}
                 </Link>
               </li>
@@ -45,37 +33,23 @@ export function Footer() {
           </ul>
         </nav>
 
-        <div className="space-y-3 text-sm">
-          <p className="text-xs font-semibold uppercase tracking-[0.14em] text-gold-light">Contact par pôle</p>
-          <div className="space-y-1.5 text-xs">
-            <p><span className="text-white/60">Général :</span> <a href={`mailto:${CONTACT.emails.hello}`} className="hover:text-gold-light underline">{CONTACT.emails.hello}</a></p>
-            <p><span className="text-white/60">Commandes :</span> <a href={`mailto:${CONTACT.emails.commandes}`} className="hover:text-gold-light underline">{CONTACT.emails.commandes}</a></p>
-            <p><span className="text-white/60">Revendeurs :</span> <a href={`mailto:${CONTACT.emails.gros}`} className="hover:text-gold-light underline">{CONTACT.emails.gros}</a></p>
-            <p><span className="text-white/60">Fournisseurs :</span> <a href={`mailto:${CONTACT.emails.fournisseurs}`} className="hover:text-gold-light underline">{CONTACT.emails.fournisseurs}</a></p>
-            <p><span className="text-white/60">Support :</span> <a href={`mailto:${CONTACT.emails.support}`} className="hover:text-gold-light underline">{CONTACT.emails.support}</a></p>
-          </div>
-          {CONTACT.whatsappNumber && (
-            <p className="pt-2">
-              {whatsapp ? (
-                <a className="transition hover:text-white font-semibold text-gold-light" href={whatsapp} target="_blank" rel="noopener noreferrer">
-                  WhatsApp {displayPhone(CONTACT.whatsappNumber)}
-                </a>
-              ) : (
-                displayPhone(CONTACT.whatsappNumber)
-              )}
-            </p>
-          )}
+        <div className="space-y-4">
+          <p className="font-sans text-[12px] uppercase leading-none tracking-[0.12em] text-stone">{footer.twoShores}</p>
+          <p className="font-sans text-[13px] leading-[1.6] text-ink">
+            {footer.route}
+            <br />
+            {footer.routeCities}
+          </p>
+          <p className="font-sans text-[13px] leading-[1.6] text-stone">{footer.noPayment}</p>
         </div>
       </div>
 
-      <div className="container-page mt-10 border-t border-white/15 pt-6 text-xs leading-relaxed text-white/60">
-        <p>
-          © {year} {SITE.name}. Tous droits réservés. PlayStation et PS5 sont des marques de Sony Interactive Entertainment ;
-          {' '}
-          {SITE.name} n’est pas affilié à Sony. Grand Theft Auto est une marque de Take-Two Interactive.
-        </p>
+      <div className="border-t border-chalk">
+        <div className="container-page flex flex-col gap-2 py-6 font-sans text-[11px] leading-none text-stone sm:flex-row sm:items-center sm:justify-between">
+          <p>{footer.copyright}</p>
+          <p>{footer.legalNote}</p>
+        </div>
       </div>
     </footer>
   );
 }
-

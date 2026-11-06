@@ -1,82 +1,67 @@
-import { LeadForm } from '@/components/LeadForm';
-import { Ar } from '@/components/Ar';
-import { Badge } from '@/components/ui/Badge';
-import { Card, CardBody } from '@/components/ui/Card';
-import { Icon } from '@/components/ui/Icons';
-import { SITE, whatsappLink } from '@/lib/site';
+import type { Metadata } from 'next';
+import { RequestForm } from '@/components/forms/RequestForm';
+import { getLocaleContext } from '@/lib/i18n/server';
+import { whatsappLink } from '@/lib/site';
 
-export const metadata = {
-  title: 'Achat en gros & Revendeurs',
-  description: 'Approvisionnement en gros pour les boutiques de jeux vidéo et revendeurs en Algérie. Tarifs préférentiels et accompagnement.',
+export const metadata: Metadata = {
+  title: 'Gros & professionnels',
+  description: 'Demande d’approvisionnement en gros, étudiée au cas par cas. Produits autorisés, paiement à la remise.',
 };
 
 export default function GrosPage() {
-  const whatsapp = whatsappLink(`Bonjour ${SITE.name}, je suis revendeur et souhaite des informations sur l'achat en gros.`);
+  const { dict } = getLocaleContext();
+  const page = dict.trade.gros;
+  const whatsapp = whatsappLink('Bonjour Almeríaga, demande en gros.');
 
   return (
-    <div className="py-12 md:py-20">
-      <div className="container-page space-y-12">
-        <div className="mx-auto max-w-2xl text-center space-y-4">
-          <Badge>Espace B2B / Revendeurs</Badge>
-          <h1 className="text-3xl font-extrabold tracking-tight text-ink sm:text-4xl">
-            Approvisionnement en gros <Ar>البيع بالجملة</Ar>
+    <div className="container-page pb-20 pt-6 lg:pb-24 lg:pt-8">
+      <div className="grid gap-12 lg:grid-cols-12 lg:gap-10">
+        <div className="lg:col-span-7">
+          <p className="eyebrow">{page.eyebrow}</p>
+          <h1 className="mt-6 display-1">
+            {page.title}
+            <br />
+            {page.titleSecond}
           </h1>
-          <p className="text-ink-soft">
-            Vous possédez une boutique de jeux vidéo ou êtes revendeur ? Bénéficiez de conditions privilégiées et d'un approvisionnement direct et régulier.
-          </p>
+          <p className="mt-6 max-w-[560px] font-sans text-[16px] leading-[1.65] text-ink">{page.lead}</p>
+
+          <div className="mt-16 max-w-[560px]">
+            <p className="eyebrow">{page.blockEyebrow}</p>
+            <h2 className="mt-6 font-display text-[34px] font-extrabold leading-[1.1] tracking-[-0.03em] text-ink lg:text-[40px]">
+              {page.blockTitle}
+              <br />
+              {page.blockSecond}
+            </h2>
+            <p className="mt-6 font-sans text-[16px] leading-[1.65] text-ink">{page.blockLead}</p>
+            <ul className="mt-8 divide-y divide-chalk border-t border-chalk">
+              {page.bullets.map((bullet) => (
+                <li key={bullet} className="py-3 font-sans text-[16px] leading-[1.6] text-ink">
+                  {bullet}
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
 
-        <div className="grid gap-6 md:grid-cols-3">
-          <Card>
-            <CardBody className="space-y-4">
-              <div className="inline-flex rounded-2xl bg-brand-soft p-3 text-brand"><Icon name="store" className="h-6 w-6" /></div>
-              <h3 className="font-bold text-ink">Tarifs dégressifs</h3>
-              <p className="text-sm text-ink-soft leading-relaxed">
-                Marges attractives pour les boutiques partenaires selon les volumes commandés (à partir de 5 unités).
-              </p>
-            </CardBody>
-          </Card>
-
-          <Card>
-            <CardBody className="space-y-4">
-              <div className="inline-flex rounded-2xl bg-brand-soft p-3 text-brand"><Icon name="shield" className="h-6 w-6" /></div>
-              <h3 className="font-bold text-ink">Produits vérifiés</h3>
-              <p className="text-sm text-ink-soft leading-relaxed">
-                Consoles neuves d'origine, emballées et garanties. Traçabilité et conformité assurées.
-              </p>
-            </CardBody>
-          </Card>
-
-          <Card>
-            <CardBody className="space-y-4">
-              <div className="inline-flex rounded-2xl bg-brand-soft p-3 text-brand"><Icon name="phone" className="h-6 w-6" /></div>
-              <h3 className="font-bold text-ink">Suivi dédié</h3>
-              <p className="text-sm text-ink-soft leading-relaxed">
-                Un interlocuteur unique pour vos commandes, vos plannings de livraison et vos questions logistiques.
-              </p>
-            </CardBody>
-          </Card>
+        <div className="lg:col-span-5">
+          <h2 className="font-display text-[26px] font-bold leading-[1.15] tracking-[-0.02em] text-ink">
+            {page.formTitle}
+          </h2>
+          <p className="mt-2 font-sans text-[13px] leading-[1.6] text-ink">{dict.shop.product.requestLead}</p>
+          <div className="mt-6">
+            <RequestForm type="gros" submitLabel={page.submit} messageRequired />
+          </div>
+          <p className="mt-5 font-sans text-[13px] leading-[1.6] text-stone">{dict.shop.product.formNote}</p>
         </div>
+      </div>
 
-        <div className="mx-auto max-w-xl">
-          <Card className="border-brand/20 shadow-lift">
-            <CardBody className="space-y-8 p-8 sm:p-10">
-              <div className="space-y-2 text-center">
-                <Badge>Rappel B2B</Badge>
-                <h2 className="text-2xl font-bold tracking-tight text-ink">Demander un rappel <Ar>طلب اتصال</Ar></h2>
-                <p className="text-sm text-ink-soft">Indiquez vos coordonnées et votre volume prévisionnel.</p>
-              </div>
-
-              <LeadForm kind="wholesale" />
-
-              {whatsapp && (
-                <p className="text-center text-xs text-ink-faint pt-2">
-                  Contact direct : <a href={whatsapp} target="_blank" rel="noopener noreferrer" className="text-brand underline">WhatsApp <Ar>واتساب</Ar></a>
-                </p>
-              )}
-            </CardBody>
-          </Card>
-        </div>
+      <div className="mt-14 flex flex-col gap-4 border border-chalk px-5 py-4 sm:flex-row sm:items-center sm:justify-between">
+        <p className="max-w-[760px] font-sans text-[13px] leading-[1.6] text-ink">{page.notice}</p>
+        {whatsapp && (
+          <a href={whatsapp} target="_blank" rel="noopener noreferrer" className="font-sans text-[13px] text-ink link-underline whitespace-nowrap">
+            {page.whatsapp}
+          </a>
+        )}
       </div>
     </div>
   );

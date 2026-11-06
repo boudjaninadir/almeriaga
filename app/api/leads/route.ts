@@ -1,4 +1,6 @@
 import { NextResponse } from 'next/server';
+import { getDictionary } from '@/lib/i18n';
+import { isLocale } from '@/lib/i18n/config';
 import { SITE } from '@/lib/site';
 import { rateLimit, rememberPhone, wasPhoneSeenRecently } from '@/lib/rate-limit';
 import { validateLead } from '@/lib/validation';
@@ -6,7 +8,7 @@ import { validateLead } from '@/lib/validation';
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
 
-const MAX_BODY_BYTES = 4096;
+const MAX_BODY_BYTES = 8192;
 const RATE_LIMIT_MAX = 5; // requêtes
 const RATE_LIMIT_WINDOW_MS = 10 * 60 * 1000; // par 10 minutes et par IP
 const DUPLICATE_WINDOW_MS = 10 * 60 * 1000;
@@ -62,19 +64,21 @@ function maskedSummary(name: string, phone: string): string {
 }
 
 export async function POST(req: Request) {
+  const defaultApi = getDictionary('fr').api;
+
   if (!isAllowedOrigin(req)) {
-    return reply({ ok: false, code: 'forbidden', message: 'Origine non autorisée.' }, 403);
+    return reply({ ok: false, code: 'forbidden', message: defaultApi.forbidden }, 403);
   }
 
   if (!(req.headers.get('content-type') ?? '').toLowerCase().includes('application/json')) {
-    return reply({ ok: false, code: 'unsupported_media_type', message: 'Format de requête invalide.' }, 415);
+    return reply({ ok: false, code: 'unsupported_media_type', message: defaultApi.invalidFormat }, 415);
   }
 
   const ip = clientIp(req);
   const limit = rateLimit(`ip:${ip}`, RATE_LIMIT_MAX, RATE_LIMIT_WINDOW_MS);
   if (!limit.allowed) {
     return reply(
-      { ok: false, code: 'rate_limited', message: 'Trop de tentatives. Réessayez dans quelques minutes.' },
+      { ok: false, code: 'rate_limited', message: defaultApi.rateLimited },
       429,
       { 'Retry-After': String(limit.retryAfterSec) },
     );
@@ -84,22 +88,26 @@ export async function POST(req: Request) {
   try {
     text = await req.text();
   } catch {
-    return reply({ ok: false, code: 'bad_request', message: 'Requête illisible.' }, 400);
+    return reply({ ok: false, code: 'bad_request', message: defaultApi.unreadable }, 400);
   }
   if (Buffer.byteLength(text, 'utf8') > MAX_BODY_BYTES) {
-    return reply({ ok: false, code: 'payload_too_large', message: 'Requête trop volumineuse.' }, 413);
+    return reply({ ok: false, code: 'payload_too_large', message: defaultApi.tooLarge }, 413);
   }
 
   let parsed: unknown;
   try {
     parsed = JSON.parse(text);
   } catch {
-    return reply({ ok: false, code: 'bad_request', message: 'Requête invalide.' }, 400);
+    return reply({ ok: false, code: 'bad_request', message: defaultApi.invalidRequest }, 400);
   }
   if (typeof parsed !== 'object' || parsed === null || Array.isArray(parsed)) {
-    return reply({ ok: false, code: 'bad_request', message: 'Requête invalide.' }, 400);
+    return reply({ ok: false, code: 'bad_request', message: defaultApi.invalidRequest }, 400);
   }
   const body = parsed as ApiBody;
+
+  // Langue de la demande : pilote les messages d'erreur renvoyés au formulaire.
+  const locale = isLocale(body.locale) ? body.locale : 'fr';
+  const t = getDictionary(locale);
 
   // Piège à robots : champ invisible pour un humain. On répond "ok" pour ne rien révéler.
   if (typeof body.website === 'string' && body.website.trim() !== '') {
@@ -109,26 +117,33 @@ export async function POST(req: Request) {
   // Un humain met plus d'une seconde à remplir le formulaire.
   const elapsedMs = Number(body.elapsedMs);
   if (!Number.isFinite(elapsedMs) || elapsedMs < MIN_FILL_TIME_MS) {
-    return reply({ ok: false, code: 'too_fast', message: 'Merci de réessayer dans un instant.' }, 429);
+    return reply({ ok: false, code: 'too_fast', message: t.api.tooFast }, 429);
   }
 
-  const result = validateLead(body);
+  const result = validateLead(body, t.request.errors);
   if (!result.ok) {
     return reply(
-      { ok: false, code: 'validation_error', message: 'Certains champs sont invalides.', fieldErrors: result.errors },
+      { ok: false, code: 'validation_error', message: t.api.validationSummary, fieldErrors: result.errors },
       422,
     );
   }
   const { lead } = result;
 
   // Double envoi (double clic, rafraîchissement) : on confirme sans créer de doublon.
-  if (wasPhoneSeenRecently(`${lead.kind}:${lead.phone}`, DUPLICATE_WINDOW_MS)) {
+  if (wasPhoneSeenRecently(`${lead.type}:${lead.telephone}`, DUPLICATE_WINDOW_MS)) {
     return reply({ ok: true, duplicate: true });
   }
 
   if (process.env.LEADS_DRY_RUN === 'true') {
-    console.info('[leads:dry-run]', lead.kind, maskedSummary(lead.name, lead.phone), `wilaya=${lead.wilayaCode}`, `qty=${lead.quantity}`);
-    rememberPhone(`${lead.kind}:${lead.phone}`);
+    console.info(
+      '[leads:dry-run]',
+      lead.type,
+      maskedSummary(lead.nom, lead.telephone),
+      `wilaya=${lead.wilaya}`,
+      `slug=${lead.product_slug || '-'}`,
+      `locale=${locale}`,
+    );
+    rememberPhone(`${lead.type}:${lead.telephone}`);
     return reply({ ok: true, dryRun: true });
   }
 
@@ -142,7 +157,7 @@ export async function POST(req: Request) {
   }
   if (!webhookUrl || !webhookSecret || !webhookIsHttps) {
     console.error('[leads] LEADS_WEBHOOK_URL (https) ou LEADS_WEBHOOK_SECRET manquant ou invalide.');
-    return reply({ ok: false, code: 'misconfigured', message: 'Service momentanément indisponible.' }, 503);
+    return reply({ ok: false, code: 'misconfigured', message: t.api.misconfigured }, 503);
   }
 
   let stored = false;
@@ -152,11 +167,8 @@ export async function POST(req: Request) {
       headers: { 'content-type': 'application/json' },
       body: JSON.stringify({
         secret: webhookSecret,
-        lead: {
-          receivedAt: new Date().toISOString(),
-          ...lead,
-          userAgent: (req.headers.get('user-agent') ?? '').slice(0, 160),
-        },
+        // Contrat exact : 8 clés, aucune transformation côté Apps Script.
+        lead,
       }),
       signal: AbortSignal.timeout(WEBHOOK_TIMEOUT_MS),
       cache: 'no-store',
@@ -173,11 +185,11 @@ export async function POST(req: Request) {
 
   if (!stored) {
     return reply(
-      { ok: false, code: 'upstream_error', message: 'Nous n’avons pas pu enregistrer votre demande. Écrivez-nous sur WhatsApp.' },
+      { ok: false, code: 'upstream_error', message: t.api.upstream },
       502,
     );
   }
 
-  rememberPhone(`${lead.kind}:${lead.phone}`);
+  rememberPhone(`${lead.type}:${lead.telephone}`);
   return reply({ ok: true });
 }

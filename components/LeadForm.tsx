@@ -175,14 +175,14 @@ export function LeadForm({ kind = 'retail', product: initialProduct }: { kind?: 
   if (status === 'success' && confirmed) {
     return (
       <div role="status" aria-live="polite" className="space-y-4 py-2 text-center sm:text-left">
-        <span className="mx-auto grid h-12 w-12 place-items-center rounded-full bg-brand-soft text-brand sm:mx-0">
+        <span className="mx-auto grid h-12 w-12 place-items-center rounded-full bg-[#12513D] text-[#D4AF37] sm:mx-0">
           <Icon name="check" className="h-6 w-6" />
         </span>
-        <h3 ref={successRef} tabIndex={-1} className="text-2xl font-semibold tracking-tightish text-ink focus:outline-none">
+        <h3 ref={successRef} tabIndex={-1} className="text-2xl font-semibold tracking-tightish text-[#F7F5EF] focus:outline-none">
           Merci{confirmed.firstName ? ` ${confirmed.firstName}` : ''}, {copy.success}
         </h3>
         <p className="text-ink-soft">
-          Nous vous appelons au <span className="font-medium text-ink">{confirmed.maskedPhone}</span> dans la journée.
+          Nous vous appelons au <span className="font-medium text-[#F7F5EF]">{confirmed.maskedPhone}</span> dans la journée.
           Gardez votre téléphone à portée.
         </p>
         {kind === 'retail' && <p className="text-sm text-ink-faint">Aucun paiement n’est demandé avant la livraison.</p>}

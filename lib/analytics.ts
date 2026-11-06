@@ -1,17 +1,17 @@
 /**
- * Helpers de suivi côté navigateur. Sans danger si les pixels ne sont pas chargés
- * (IDs absents, bloqueur de publicités) : chaque appel est protégé.
+ * Helpers de suivi côté navigateur (Meta uniquement).
+ * Sans danger si le pixel n'est pas chargé (identifiant absent, bloqueur de publicités) :
+ * chaque appel est protégé.
  *
- * L'eventId identique côté navigateur et (plus tard) côté serveur via l'API
- * Conversions de Meta / Events API de TikTok permet la déduplication.
+ * L'eventId transmis à /merci permet de rapprocher l'événement Lead de la conversion.
  */
 
 declare global {
   interface Window {
     fbq?: (...args: unknown[]) => void;
-    ttq?: { track: (event: string, params?: Record<string, unknown>, options?: Record<string, unknown>) => void };
   }
 }
+
 
 export function newEventId(): string {
   try {
@@ -22,18 +22,28 @@ export function newEventId(): string {
   return `${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 12)}`;
 }
 
+/** Événement Lead : déclenché par la page /merci, avec l'identifiant de la demande. */
 export function trackLead(eventId: string, contentName: string): void {
   try {
     window.fbq?.('track', 'Lead', { content_name: contentName }, { eventID: eventId });
   } catch {
-    /* le suivi ne doit jamais casser le formulaire */
+    /* le suivi ne doit jamais casser la page */
   }
+}
+
+/** Événement ViewContent : déclenché à l'ouverture d'une fiche produit. */
+export function trackViewContent(contentId: string, contentName: string): void {
   try {
-    window.ttq?.track('SubmitForm', { content_name: contentName }, { event_id: eventId });
+    window.fbq?.('track', 'ViewContent', {
+      content_type: 'product',
+      content_ids: [contentId],
+      content_name: contentName,
+    });
   } catch {
     /* idem */
   }
 }
+
 
 export function readAttribution(keys: readonly string[]): Record<string, string> {
   const result: Record<string, string> = {};

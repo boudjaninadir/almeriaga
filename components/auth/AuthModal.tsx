@@ -47,33 +47,33 @@ export function AuthModal({ isOpen, onClose }: Props) {
   }
 
   return (
-    <div className="fixed inset-0 z-50 flex items-end justify-center bg-slate-900/50 sm:items-center sm:p-6" role="dialog" aria-modal="true" aria-labelledby="auth-title">
-      <div className="w-full max-w-md space-y-6 rounded-t-3xl bg-white p-6 shadow-2xl sm:rounded-3xl sm:p-8">
+    <div className="fixed inset-0 z-50 flex items-end justify-center bg-[#06241B]/70 backdrop-blur-sm sm:items-center sm:p-6" role="dialog" aria-modal="true" aria-labelledby="auth-title">
+      <div className="w-full max-w-md space-y-6 rounded-t-3xl border border-[#D4AF37]/25 bg-[#0E4635] p-6 shadow-2xl sm:rounded-3xl sm:p-8">
         <div className="flex items-start justify-between">
           <div>
-            <p className="text-xs font-semibold uppercase tracking-wider text-amber-600">Espace sécurisé</p>
-            <h2 id="auth-title" className="mt-1 text-xl font-bold text-slate-900">Connexion ALMERÍAGA</h2>
+            <p className="text-xs font-semibold uppercase tracking-wider text-[#D4AF37]">Espace sécurisé</p>
+            <h2 id="auth-title" className="mt-1 text-xl font-bold text-[#F7F5EF]">Connexion ALMERÍAGA</h2>
           </div>
-          <button type="button" onClick={onClose} aria-label="Fermer" className="rounded-full p-2 text-slate-500 hover:bg-slate-100">✕</button>
+          <button type="button" onClick={onClose} aria-label="Fermer" className="rounded-full p-2 text-ink-faint transition-colors hover:bg-[#12513D] hover:text-[#D4AF37]">✕</button>
         </div>
 
         <button
           type="button"
           onClick={loginWithGoogle}
           disabled={busy}
-          className="flex h-12 w-full items-center justify-center gap-2 rounded-xl border border-slate-200 text-sm font-semibold text-slate-700 transition hover:bg-slate-50 disabled:opacity-60"
+          className="flex h-12 w-full items-center justify-center gap-2 rounded-xl border border-[#D4AF37]/30 text-sm font-semibold text-[#F7F5EF] transition hover:border-[#D4AF37]/60 hover:bg-[#12513D] disabled:opacity-60"
         >
           Continuer avec Google (Gmail)
         </button>
 
-        <div className="flex items-center gap-3 text-[11px] uppercase tracking-wider text-slate-400">
-          <span className="h-px flex-1 bg-slate-200" />
+        <div className="flex items-center gap-3 text-[11px] uppercase tracking-wider text-ink-faint">
+          <span className="h-px flex-1 bg-[#D4AF37]/25" />
           ou téléphone algérien
-          <span className="h-px flex-1 bg-slate-200" />
+          <span className="h-px flex-1 bg-[#D4AF37]/25" />
         </div>
 
         <form onSubmit={requestCode} className="space-y-3" noValidate>
-          <label htmlFor="auth-phone" className="block text-sm font-medium text-slate-700">Numéro mobile (+213)</label>
+          <label htmlFor="auth-phone" className="block text-sm font-medium text-[#F7F5EF]">Numéro mobile (+213)</label>
           <input
             id="auth-phone"
             type="tel"
@@ -83,20 +83,20 @@ export function AuthModal({ isOpen, onClose }: Props) {
             onChange={(e) => setPhone(e.target.value)}
             placeholder="0550 12 34 56"
             aria-invalid={phoneError ? true : undefined}
-            className="h-12 w-full rounded-xl border border-slate-200 px-4 text-base text-slate-900 focus:border-emerald-800 focus:outline-none focus:ring-2 focus:ring-emerald-800/20"
+            className="h-12 w-full rounded-xl border border-[#D4AF37]/25 bg-[#0B3D2E] px-4 text-base text-[#F7F5EF] placeholder:text-ink-faint focus:border-[#D4AF37] focus:outline-none focus:ring-2 focus:ring-[#D4AF37]/40"
           />
-          {phoneError && <p role="alert" className="text-xs font-medium text-rose-600">{phoneError}</p>}
-          <button type="submit" className="h-12 w-full rounded-xl bg-slate-900 text-sm font-semibold text-white transition hover:bg-slate-800">
+          {phoneError && <p role="alert" className="text-xs font-medium text-danger">{phoneError}</p>}
+          <button type="submit" className="h-12 w-full rounded-xl bg-[#D4AF37] text-sm font-semibold text-[#0B3D2E] transition hover:bg-[#F3D77A]">
             Recevoir le code
           </button>
           {simulated && (
-            <p role="status" className="rounded-xl bg-amber-50 p-3 text-xs text-amber-800">
+            <p role="status" className="rounded-xl border border-warn/25 bg-warn/5 p-3 text-xs text-warn">
               Mode démonstration : aucun SMS n’a été envoyé. La connexion par téléphone sera activée dès qu’un fournisseur SMS sera branché.
             </p>
           )}
         </form>
 
-        {error && <p role="alert" className="text-xs font-medium text-rose-600">{error}</p>}
+        {error && <p role="alert" className="text-xs font-medium text-danger">{error}</p>}
       </div>
     </div>
   );

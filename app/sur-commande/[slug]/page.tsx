@@ -52,7 +52,7 @@ export default async function SurCommandePage({ params }: PageProps) {
   return (
     <div className="container-page py-10 md:py-16">
       <nav aria-label="Fil d’Ariane" className="mb-6 text-xs text-ink-faint">
-        <Link href="/catalogue" className="transition-colors hover:text-accent-ink">
+        <Link href="/catalogue" className="transition-colors hover:text-[#D4AF37]">
           Catalogue
         </Link>
         <span aria-hidden="true"> / </span>
@@ -73,13 +73,13 @@ export default async function SurCommandePage({ params }: PageProps) {
             </div>
 
             <div className="space-y-3">
-              <h1 className="text-3xl font-semibold tracking-display text-ink sm:text-4xl">{product.name}</h1>
-              <p className="font-display text-2xl font-semibold text-accent-ink">{priceLabel(product)}</p>
+              <h1 className="text-3xl font-semibold tracking-display text-[#F7F5EF] sm:text-4xl">{product.name}</h1>
+              <p className="font-display text-2xl font-semibold text-[#D4AF37]">{priceLabel(product)}</p>
               <p className="text-sm leading-relaxed text-ink-soft">{product.description}</p>
             </div>
 
             <div className="surface-card p-6 sm:p-7">
-              <h2 className="text-lg font-semibold tracking-tightish text-ink">Demander un devis</h2>
+              <h2 className="text-lg font-semibold tracking-tightish text-[#F7F5EF]">Demander un devis</h2>
               <p className="mt-1 text-sm text-ink-soft">
                 Précisez le modèle et la quantité souhaités : le devis est établi après échange, en dinars.
               </p>
@@ -98,7 +98,7 @@ export default async function SurCommandePage({ params }: PageProps) {
                 href={whatsapp}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 text-sm font-semibold text-mint-ink transition-colors hover:text-accent-ink"
+                className="inline-flex items-center gap-2 text-sm font-semibold text-[#D4AF37] transition-colors hover:text-[#D4AF37]"
               >
                 <Icon name="whatsapp" className="h-4 w-4" />
                 Demander un devis sur WhatsApp

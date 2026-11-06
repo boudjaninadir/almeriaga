@@ -42,18 +42,18 @@ export function Trust() {
           </p>
           <Link
             href="/cadre-legal"
-            className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-accent-ink transition-colors hover:text-accent"
+            className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-[#D4AF37] transition-colors hover:text-[#F3D77A]"
           >
             Voir les étapes du cadre légal
             <Icon name="arrow" className="h-4 w-4" />
           </Link>
 
-          <dl className="mt-10 grid grid-cols-3 gap-4 border-t border-line pt-6">
+          <dl className="mt-10 grid grid-cols-3 gap-4 border-t border-[#D4AF37]/20 pt-6">
             {STATS.map((stat, index) => (
               <Reveal key={stat.label} delay={index * 80}>
                 <div>
                   <dt className="sr-only">{stat.label}</dt>
-                  <dd className="font-display text-3xl font-semibold tracking-display text-ink">
+                  <dd className="font-display text-3xl font-semibold tracking-display text-[#F7F5EF]">
                     <Counter value={stat.value} suffix={stat.suffix ?? ''} />
                   </dd>
                   <p className="mt-1 text-xs leading-snug text-ink-faint">{stat.label}</p>
@@ -61,17 +61,30 @@ export function Trust() {
               </Reveal>
             ))}
           </dl>
+
+          {/* Carte pointillée des wilayas desservies (public/brand/algeria-dots.svg). */}
+          <div className="mt-8 rounded-xl3 border border-[#D4AF37]/25 bg-[#0E4635] p-5">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/brand/algeria-dots.svg"
+              alt="Carte pointillée de l'Algérie : Oran, Tlemcen et Sidi Bel Abbès"
+              className="mx-auto h-56 w-auto"
+            />
+            <p className="mt-3 text-center text-xs font-semibold uppercase tracking-[0.14em] text-[#D4AF37]">
+              Oran · Tlemcen · Sidi Bel Abbès
+            </p>
+          </div>
         </Reveal>
 
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-1">
           {PILLARS.map((pillar, index) => (
             <Reveal key={pillar.title} delay={index * 80}>
               <div className="surface-card flex gap-4 p-6">
-                <span className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-mint text-mint-ink">
+                <span className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-[#D4AF37]/25 bg-[#12513D] text-[#D4AF37]">
                   <Icon name={pillar.icon} className="h-5 w-5" />
                 </span>
                 <div className="space-y-1.5">
-                  <h3 className="text-base font-semibold tracking-tightish text-ink">{pillar.title}</h3>
+                  <h3 className="text-base font-semibold tracking-tightish text-[#F7F5EF]">{pillar.title}</h3>
                   <p className="text-sm leading-relaxed text-ink-soft">{pillar.body}</p>
                 </div>
               </div>

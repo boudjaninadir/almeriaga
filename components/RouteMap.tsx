@@ -66,7 +66,7 @@ export function RouteMap() {
           </svg>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-2 text-xs text-white/80 font-mono border-t border-gold/20">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-2 text-xs text-[#F7F5EF]/80 font-mono border-t border-gold/20">
           <div>📍 Sourcing direct Almería</div>
           <div>🚢 Traversée maritime sécurisée</div>
           <div>📦 Livraison à domicile (Wilaya)</div>

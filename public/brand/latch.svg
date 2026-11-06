@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 320" role="img" aria-label="Emblème ALMERÍAGA — fermoir doré">
+  <defs>
+    <linearGradient id="lt-gold" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#F7E7A8" />
+      <stop offset="0.45" stop-color="#D4AF37" />
+      <stop offset="1" stop-color="#B8860B" />
+    </linearGradient>
+    <linearGradient id="lt-gold-h" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#C89B25" />
+      <stop offset="0.5" stop-color="#F3D77A" />
+      <stop offset="1" stop-color="#C89B25" />
+    </linearGradient>
+    <radialGradient id="lt-rivet" cx="0.35" cy="0.3" r="0.9">
+      <stop offset="0" stop-color="#FBF0C4" />
+      <stop offset="1" stop-color="#B8860B" />
+    </radialGradient>
+  </defs>
+  <path d="M42,112 L158,108 C168,152 152,202 118,236 C94,216 58,168 44,140 Z" fill="url(#lt-gold)" stroke="#8A6E1E" stroke-width="2" />
+  <circle cx="60" cy="128" r="11" fill="url(#lt-rivet)" stroke="#8A6E1E" stroke-width="1.5" />
+  <circle cx="148" cy="124" r="11" fill="url(#lt-rivet)" stroke="#8A6E1E" stroke-width="1.5" />
+  <path d="M72,88 L72,178 C72,206 128,206 128,178 L128,86" fill="none" stroke="#8A6E1E" stroke-width="10" stroke-linecap="round" />
+  <path d="M72,88 L72,178 C72,206 128,206 128,178 L128,86" fill="none" stroke="url(#lt-gold-h)" stroke-width="5" stroke-linecap="round" />
+  <rect x="86" y="142" width="46" height="152" rx="23" fill="url(#lt-gold)" stroke="#8A6E1E" stroke-width="2" />
+  <rect x="96" y="152" width="7" height="120" rx="3.5" fill="#FBF0C4" opacity="0.75" />
+  <rect x="74" y="120" width="62" height="28" rx="12" fill="url(#lt-gold-h)" stroke="#8A6E1E" stroke-width="2" />
+  <rect x="84" y="126" width="42" height="7" rx="3.5" fill="#FBF0C4" opacity="0.8" />
+  <rect x="30" y="18" width="142" height="72" rx="16" fill="url(#lt-gold)" stroke="#8A6E1E" stroke-width="2" />
+  <circle cx="60" cy="52" r="12" fill="url(#lt-rivet)" stroke="#8A6E1E" stroke-width="1.5" />
+  <circle cx="142" cy="48" r="12" fill="url(#lt-rivet)" stroke="#8A6E1E" stroke-width="1.5" />
+  <rect x="78" y="42" width="46" height="32" rx="11" fill="url(#lt-gold-h)" stroke="#8A6E1E" stroke-width="2" />
+  <rect x="88" y="48" width="26" height="6" rx="3" fill="#FBF0C4" opacity="0.85" />
+</svg>

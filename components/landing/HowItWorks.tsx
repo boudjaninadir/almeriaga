@@ -39,14 +39,14 @@ export function HowItWorks() {
             <Reveal delay={index * 80} className="h-full">
               <div className="surface-card flex h-full flex-col gap-4 p-6 sm:p-7">
                 <div className="flex items-center justify-between">
-                  <span className="inline-flex h-11 w-11 items-center justify-center rounded-xl bg-accent-soft text-accent-ink">
+                  <span className="inline-flex h-11 w-11 items-center justify-center rounded-xl border border-[#D4AF37]/25 bg-[#12513D] text-[#D4AF37]">
                     <Icon name={step.icon} className="h-5 w-5" />
                   </span>
-                  <span className="font-display text-3xl font-semibold tracking-display text-line">
+                  <span className="font-display text-3xl font-semibold tracking-display text-[#D4AF37]/25">
                     {String(index + 1).padStart(2, '0')}
                   </span>
                 </div>
-                <h3 className="text-lg font-semibold tracking-tightish text-ink">{step.title}</h3>
+                <h3 className="text-lg font-semibold tracking-tightish text-[#F7F5EF]">{step.title}</h3>
                 <p className="text-sm leading-relaxed text-ink-soft">{step.body}</p>
               </div>
             </Reveal>

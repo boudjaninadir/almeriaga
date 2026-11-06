@@ -6,8 +6,7 @@ import { Badge } from '@/components/ui/Badge';
 import { Button } from '@/components/ui/Button';
 import { Card, CardBody } from '@/components/ui/Card';
 import { TextField } from '@/components/ui/Input';
-import { formatDzd, parseNumber } from '@/lib/format';
-import { formatEur, formatPct } from '@/lib/format-private';
+import { formatDzd, formatEur, formatPct, parseNumber } from '@/lib/format';
 import { DEFAULT_INPUTS, simulate } from '@/lib/simulator';
 import type { SimInputs } from '@/lib/simulator';
 

@@ -7,12 +7,11 @@ import { Icon } from '@/components/ui/Icons';
 
 const CONTROL =
   'h-12 w-full rounded-xl border bg-canvas px-4 text-base text-ink placeholder:text-ink-faint ' +
-  'transition focus:outline-none focus:ring-2 focus:ring-accent/50 disabled:opacity-60';
+  'transition focus:outline-none focus:ring-2 focus:ring-brand-ring/60 disabled:opacity-60';
 
 function controlClasses(hasError: boolean): string {
-  return cn(CONTROL, hasError ? 'border-danger' : 'border-line hover:border-ink-faint/60 focus:border-accent');
+  return cn(CONTROL, hasError ? 'border-danger' : 'border-line hover:border-ink-faint/60 focus:border-brand');
 }
-
 
 type ShellProps = {
   id: string;
@@ -29,7 +28,7 @@ function FieldShell({ id, label, hint, error, required, children }: ShellProps) 
       <label htmlFor={id} className="block text-sm font-medium text-ink">
         {label}
         {required && (
-          <span aria-hidden="true" className="text-accent">
+          <span aria-hidden="true" className="text-brand">
             {' '}
             *
           </span>
@@ -118,7 +117,7 @@ export function CheckField({ label, error, className, ...rest }: CheckFieldProps
           type="checkbox"
           aria-invalid={error ? true : undefined}
           aria-describedby={error ? `${id}-error` : undefined}
-          className={cn('mt-0.5 h-5 w-5 shrink-0 rounded-md border-line accent-accent', className)}
+          className={cn('mt-0.5 h-5 w-5 shrink-0 rounded-md border-line accent-brand', className)}
           {...rest}
         />
         <span>{label}</span>

@@ -1,15 +1,13 @@
 import type { MetadataRoute } from 'next';
-import { SITE_URL } from '@/lib/site-config';
+import { SITE } from '@/lib/site';
 
 export default function robots(): MetadataRoute.Robots {
   return {
     rules: {
       userAgent: '*',
       allow: '/',
-      // Modules internes et routes techniques : jamais indexés.
-      disallow: ['/api/', '/admin/', '/admin', '/simulateur', '/merci'],
+      disallow: '/api/',
     },
-    sitemap: `${SITE_URL}/sitemap.xml`,
+    sitemap: `${SITE.url}/sitemap.xml`,
   };
 }
-

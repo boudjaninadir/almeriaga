@@ -1,18 +1,17 @@
 import { ImageResponse } from 'next/og';
-import { BRAND_NAME, BRAND_TAGLINE } from '@/lib/site-config';
+import { SITE } from '@/lib/site';
 
 export const runtime = 'edge';
-export const alt = `${BRAND_NAME} — ${BRAND_TAGLINE}`;
+export const alt = `${SITE.name} — ${SITE.title}`;
 export const size = { width: 1200, height: 630 };
 export const contentType = 'image/png';
 
-/** Visuel de partage : thème clair, accent vif, aucune mention de produit spécifique. */
 export default async function OpengraphImage() {
   return new ImageResponse(
     (
       <div
         style={{
-          background: 'linear-gradient(150deg, #FDFBF7 0%, #FFECE3 55%, #E4F2ED 100%)',
+          background: 'linear-gradient(135deg, #0F5132 0%, #082d1c 100%)',
           width: '100%',
           height: '100%',
           display: 'flex',
@@ -21,48 +20,46 @@ export default async function OpengraphImage() {
           justifyContent: 'center',
           padding: '60px',
           fontFamily: 'sans-serif',
-          color: '#222429',
+          color: '#ffffff',
           textAlign: 'center',
         }}
       >
         <div
           style={{
-            fontSize: '68px',
+            fontSize: '64px',
             fontWeight: 800,
-            letterSpacing: '-0.03em',
-            color: '#CD380A',
-            marginBottom: '18px',
+            letterSpacing: '-0.025em',
+            color: '#C9A227',
+            marginBottom: '20px',
           }}
         >
-          {BRAND_NAME}
+          {SITE.name}
         </div>
         <div
           style={{
-            fontSize: '34px',
+            fontSize: '32px',
             fontWeight: 600,
             maxWidth: '900px',
-            lineHeight: 1.25,
-            color: '#222429',
+            lineHeight: 1.3,
+            color: '#ffffff',
           }}
         >
-          {BRAND_TAGLINE}
+          {SITE.title}
         </div>
         <div
           style={{
-            marginTop: '42px',
+            marginTop: '40px',
             fontSize: '20px',
-            color: '#155C4C',
-            background: '#E4F2ED',
-            padding: '12px 26px',
+            color: '#d1fae5',
+            background: 'rgba(255, 255, 255, 0.1)',
+            padding: '12px 24px',
             borderRadius: '9999px',
-            border: '1px solid rgba(21, 92, 76, 0.18)',
           }}
         >
-          Prix en dinars · Aucun paiement en ligne
+          Paiement à la livraison · Algérie
         </div>
       </div>
     ),
-    { ...size },
+    { ...size }
   );
 }
-

@@ -3,28 +3,23 @@ import { forwardRef } from 'react';
 import type { AnchorHTMLAttributes, ButtonHTMLAttributes } from 'react';
 import { cn } from '@/lib/cn';
 
-type Variant = 'primary' | 'secondary' | 'ghost' | 'mint';
-type Size = 'sm' | 'md' | 'lg';
+type Variant = 'primary' | 'secondary' | 'ghost' | 'gold';
+type Size = 'md' | 'lg';
 
-/**
- * Boutons du thème clair : ils se soulèvent au survol et s'enfoncent au clic.
- * Seules transform et box-shadow sont animées.
- */
 const BASE =
-  'inline-flex items-center justify-center gap-2 rounded-xl font-semibold tracking-tightish transition duration-200 ease-out-soft ' +
-  'hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.99] ' +
-  'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-canvas ' +
-  'disabled:pointer-events-none disabled:opacity-60';
+  'inline-flex items-center justify-center gap-2 rounded-xl font-medium tracking-tightish transition duration-200 ' +
+  'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-ring focus-visible:ring-offset-2 ' +
+  'focus-visible:ring-offset-canvas disabled:cursor-not-allowed disabled:opacity-60';
 
 const VARIANTS: Record<Variant, string> = {
-  primary: 'bg-accent text-white shadow-soft hover:bg-accent-ink hover:shadow-accent',
-  secondary: 'border border-line bg-surface text-ink hover:border-ink-faint/50 hover:bg-surface-2',
-  ghost: 'text-ink-soft hover:bg-surface-2 hover:text-ink',
-  mint: 'bg-mint text-mint-ink hover:bg-mint/70',
+  primary: 'bg-brand text-white shadow-soft hover:bg-brand-strong hover:shadow-lift active:translate-y-px',
+  secondary: 'border border-line bg-canvas text-ink hover:bg-surface',
+  ghost: 'text-ink-soft hover:bg-surface hover:text-ink',
+  // Bouton or : à utiliser sur fond vert profond uniquement (texte vert sur or = 5,5:1).
+  gold: 'bg-gold-light text-brand-strong hover:bg-gold active:translate-y-px',
 };
 
 const SIZES: Record<Size, string> = {
-  sm: 'h-10 px-4 text-sm',
   md: 'h-11 px-5 text-sm',
   lg: 'h-12 px-6 text-base',
 };
@@ -74,16 +69,9 @@ type ButtonLinkProps = Omit<AnchorHTMLAttributes<HTMLAnchorElement>, 'href'> & {
   size?: Size;
 };
 
-/**
- * Lien stylé comme un bouton.
- * Chemins internes → next/link (navigation client, jamais une ancre seule).
- * Liens externes (WhatsApp, mailto, tel) → <a>.
- */
+/** Lien stylé comme un bouton. Les chemins internes ("/gros") utilisent next/link, les ancres ("#reserver") un <a>. */
 export function ButtonLink({ href, variant, size, className, ...rest }: ButtonLinkProps) {
   const classes = buttonClasses({ variant, size, className });
-  if (href.startsWith('/')) {
-    return <Link href={href} className={classes} {...rest} />;
-  }
+  if (href.startsWith('/')) return <Link href={href} className={classes} {...rest} />;
   return <a href={href} className={classes} {...rest} />;
 }
-

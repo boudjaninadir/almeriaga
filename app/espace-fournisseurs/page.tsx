@@ -1,4 +1,3 @@
-import { notFound } from 'next/navigation';
 import { LeadForm } from '@/components/LeadForm';
 import { Ar } from '@/components/Ar';
 import { Badge } from '@/components/ui/Badge';
@@ -12,9 +11,6 @@ export const metadata = {
 };
 
 export default function EspaceFournisseursPage() {
-  // Route retirée de la structure (voir PLAN.md) : elle répond désormais 404.
-  notFound();
-
   const whatsapp = whatsappLink(`Bonjour ${SITE.name}, je souhaite en savoir plus sur l'espace fournisseurs.`);
 
   return (
@@ -85,7 +81,7 @@ export default function EspaceFournisseursPage() {
 
               {whatsapp && (
                 <p className="text-center text-xs text-ink-faint pt-2">
-                  Contact : <a href={whatsapp ?? undefined} target="_blank" rel="noopener noreferrer" className="text-brand underline">WhatsApp <Ar>واتساب</Ar></a>
+                  Contact : <a href={whatsapp} target="_blank" rel="noopener noreferrer" className="text-brand underline">WhatsApp <Ar>واتساب</Ar></a>
                 </p>
               )}
             </CardBody>

@@ -1,14 +1,8 @@
-import type { Metadata } from 'next';
 import { SimulatorApp } from '@/components/SimulatorApp';
 
-/**
- * Module PRIVÉ : protégé par middleware (Basic Auth), noindex, hors sitemap et hors robots.
- * C'est le seul endroit, avec /admin/suivi, où des euros et des marges peuvent apparaître.
- */
-export const metadata: Metadata = {
-  title: 'Simulateur de rentabilité (privé)',
-  description: 'Simulateur interne de micro-importation : coûts, marges et seuils de rentabilité.',
-  robots: { index: false, follow: false, nocache: true },
+export const metadata = {
+  title: 'Simulateur de rentabilité',
+  description: 'Simulateur de micro-importation : calculez vos coûts, marges et seuils de rentabilité en toute conformité.',
 };
 
 export default function SimulateurPage() {
@@ -20,4 +14,3 @@ export default function SimulateurPage() {
     </div>
   );
 }
-

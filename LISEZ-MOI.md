@@ -1,73 +1,53 @@
-# ALMERÍAGA v3 — guide de démarrage
+# ALMERÍAGA v2 — Guide de démarrage et d'administration
 
-> Tous les fichiers de cette refonte sont livrés **non exécutés**. Les commandes ci-dessous
-> sont à lancer par vous, après avoir relu `PLAN.md`.
+## 1. Démarrage rapide (Windows)
+1. Ouvrir le dossier du projet dans VS Code.
+2. Installer les dépendances : `npm install`
+3. Configurer les variables d'environnement : copiez `.env.example` en `.env.local` et remplissez vos clés (`LEADS_WEBHOOK_URL`, `LEADS_WEBHOOK_SECRET`, etc.).
+4. Lancer le serveur de développement : `npm run dev` (http://localhost:3000)
 
-## 1. Démarrage rapide
+## 2. Commandes de vérification
+- Typecheck : `npm run typecheck`
+- Tests : `npm test`
+- Build de production : `npm run build`
 
-1. `npm install` (les dépendances n'ont pas changé).
-2. Copier `.env.example` en `.env.local`, puis renseigner au minimum :
-   - `NEXT_PUBLIC_CONTACT_WHATSAPP` (format international sans `+`, ex. `213XXXXXXXXX`) ;
-   - `NEXT_PUBLIC_CONTACT_EMAIL` ;
-   - `NEXT_PUBLIC_SUPABASE_URL` et `NEXT_PUBLIC_SUPABASE_ANON_KEY` ;
-   - `NEXT_PUBLIC_META_PIXEL_ID` (facultatif) ;
-   - `ADMIN_USER` / `ADMIN_PASSWORD` (obligatoires pour `/simulateur` et `/admin/suivi`).
-3. Exécuter les trois fichiers SQL dans le SQL Editor de Supabase, dans cet ordre :
-   `lib/supabase-sql-products.sql`, `lib/supabase-sql-leads.sql`,
-   `lib/supabase-sql-seed-sur-commande.sql`.
-4. `npm run dev` puis http://localhost:3000
+## 3. Comment ajouter un produit (`lib/catalog.ts`)
+Ouvrez `lib/catalog.ts` et ajoutez un nouvel objet dans le tableau `PRODUCTS` :
+```ts
+{
+  slug: 'mon-nouveau-produit',
+  name: 'Nom complet du produit',
+  shortName: 'Nom court',
+  priceFromDzd: null, // ou nombre en DZD si fixe
+  availability: 'OnDemand', // 'PreOrder' | 'OnDemand' | 'OnQuote' | 'AtRelease' | 'InStock'
+  warrantyMonths: 12,
+  pack: [
+    { icon: 'console', title: 'Élément 1', body: 'Description...' }
+  ]
+}
+```
 
-## 2. Commandes de vérification (à lancer par vous)
+## 4. Comment remplacer les illustrations par de vraies photos (`public/images/`)
+Placez vos fichiers au format WebP ou PNG dans le dossier `public/images/` :
+- `ps5-slim.webp` (remplace l'illustration PS5 Slim)
+- `dualsense.webp` (manette)
+- `quest.webp` (casque VR)
+- `gta6-fond.webp` (fond ambiance GTA VI)
+- `carte-recto.png` et `carte-verso.png` (pour la carte de visite interactive 3D dans "À propos")
+Si le fichier existe, le composant l'affiche automatiquement à la place du SVG de secours.
 
-- `npm run typecheck`
-- `npm test`
-- `npm run build`
-- `npm run lint`
+## 5. Comment ajouter un vrai fournisseur vérifié (`lib/suppliers-demo.ts` ou tableur)
+Mettez à jour `lib/suppliers-demo.ts` avec vos fournisseurs réels vérifiés par le propriétaire, en passant le statut à `Vérifié`.
 
+## 6. Brancher Google Sheets (Google Apps Script)
+1. Créez un Google Sheet avec un onglet nommé `Leads`.
+2. Ouvrez Extensions > Apps Script, collez le code de `google-apps-script/Code.gs`.
+3. Définissez la propriété du script `LEADS_WEBHOOK_SECRET` avec le même secret que dans votre `.env.local` (`LEADS_WEBHOOK_SECRET`).
+4. Déployez en tant que Web App (accès : « Tout le monde »). Copiez l'URL de déploiement dans `LEADS_WEBHOOK_URL`.
 
-## 3. Structure du site
-
-| Route | Rôle |
-| --- | --- |
-| `/` | Landing consommateur (hero 3D, 3 étapes, confiance, FAQ) |
-| `/catalogue` | Produits publiés + filtres par catégorie |
-| `/produit/[slug]` | Fiche produit (lien stable pour Meta Ads) |
-| `/sur-commande/[slug]` | Gabarit « sur devis » (noindex) |
-| `/merci` | Confirmation + événement Meta Lead |
-| `/gros` | Formulaire grossiste (aucun prix public) |
-| `/revendeurs` | Formulaire revendeur |
-| `/cadre-legal` | Démarche ANAE en 3 phases |
-| `/contact` | WhatsApp + e-mail |
-| `/mentions-legales` | Informations légales |
-| `/simulateur` | **privé** (Basic Auth, noindex) |
-| `/admin/suivi` | **privé** (Basic Auth, noindex) |
-
-## 4. Ajouter un produit
-
-1. Ouvrir la table `products` dans Supabase (Table Editor).
-2. Créer une ligne : `slug` (minuscules et tirets), `name`, `description`, `category`,
-   `price_dzd` (entier, en dinars, ou vide = « sur devis »), `status`
-   (`disponible` ou `sur_commande`), `images` (tableau d'URL), `is_published = true`.
-3. La fiche est disponible immédiatement sur `/produit/<slug>` (et `/sur-commande/<slug>`
-   pour un devis). Aucune modification de code n'est nécessaire.
-
-Les 12 fiches génériques livrées par `lib/supabase-sql-seed-sur-commande.sql` sont
-`is_published = false` : complétez-les puis publiez-les une par une.
-
-## 5. Produit pilote (lien publicitaire)
-
-`PILOT_PRODUCT_SLUG` (dans `lib/site-config.ts`) vaut `produit-pilote`. Le bouton
-« Commander » du site pointe vers `/produit/produit-pilote` tant qu'aucune autre fiche
-n'est publiée. Dès que vous publiez un produit, il devient la fiche mise en avant :
-adaptez le slug si vous voulez imposer un produit précis.
-
-## 6. Données personnelles et sécurité
-
-- Aucun nom, NIF, numéro ANAE ou RIB n'est codé en dur : complétez `/mentions-legales`
-  avant publication.
-- La table `leads` n'a **aucune** politique de lecture publique ; seule l'insertion est
-  autorisée, avec un `WITH CHECK` strict.
-- `/simulateur` et `/admin/suivi` répondent 404 tant que `ADMIN_USER` / `ADMIN_PASSWORD`
-  ne sont pas définis.
-
+## 7. Déploiement sur Vercel
+1. Poussez votre code sur GitHub.
+2. Importez le projet sur Vercel.
+3. Renseignez les variables d'environnement dans les paramètres du projet Vercel (`LEADS_WEBHOOK_URL`, `LEADS_WEBHOOK_SECRET`, etc.).
+4. Lancez le déploiement.
 

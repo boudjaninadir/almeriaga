@@ -1,181 +1,151 @@
+import { MAX_RETAIL_QUANTITY, UNAVAILABLE_WILAYA_CODES, WHOLESALE_VOLUMES } from '@/lib/site';
 import { findWilaya } from '@/lib/wilayas';
 
 /**
- * Validation partagée entre le formulaire (navigateur) et l'API (serveur).
- * Le serveur revalide TOUJOURS : ne jamais faire confiance au navigateur.
- * Aucune dépendance externe.
+ * Validation partagée client + serveur (aucune dépendance externe).
+ * Le serveur revalide TOUJOURS : ne faites jamais confiance au navigateur.
  */
 
-export const LEAD_TYPES = ['consommateur', 'devis', 'revendeur', 'gros'] as const;
-export type LeadType = (typeof LEAD_TYPES)[number];
+export type LeadKind = 'retail' | 'wholesale' | 'waitlist';
+export const LEAD_KINDS: readonly LeadKind[] = ['retail', 'wholesale', 'waitlist'];
 
-/** Types de demandes des professionnels : la société et le volume sont obligatoires. */
-const BUSINESS_TYPES: readonly LeadType[] = ['gros', 'revendeur'];
-
-/** Mobile algérien : préfixe 0, +213 ou 00213, puis 5/6/7 et 8 chiffres. */
-export const DZ_PHONE_PATTERN = '^(0|\\+213|00213)[567]\\d{8}$';
-const DZ_PHONE_RE = new RegExp(DZ_PHONE_PATTERN);
-
-/** Tranches de volume proposées aux professionnels. */
-export const VOLUME_RANGES = ['1 à 9 unités', '10 à 49 unités', '50 à 199 unités', '200 unités et plus'] as const;
-
-export type LeadFieldName =
-  | 'type'
-  | 'name'
-  | 'phone'
-  | 'wilaya'
-  | 'business_name'
-  | 'volume'
-  | 'message'
-  | 'product_slug'
-  | 'consent'
-  // Clés conservées uniquement pour les composants hérités non routés (voir PLAN.md) :
-  // validateLead ne les produit jamais.
-  | 'kind'
-  | 'quantity'
-  | 'shop';
-
-
+export type LeadFieldName = 'kind' | 'name' | 'phone' | 'wilaya' | 'quantity' | 'volume' | 'shop' | 'consent';
 export type LeadFieldErrors = Partial<Record<LeadFieldName, string>>;
 
-/** Données nettoyées, prêtes pour l'insertion dans la table `leads`. */
-export type LeadPayload = {
-  type: LeadType;
-  product_slug: string;
+export type Attribution = Partial<
+  Record<'utm_source' | 'utm_medium' | 'utm_campaign' | 'utm_content' | 'utm_term' | 'fbclid' | 'ttclid', string>
+>;
+
+export const ATTRIBUTION_KEYS = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term', 'fbclid', 'ttclid'] as const;
+
+export type ValidatedLead = {
+  kind: LeadKind;
+  product: string;
   name: string;
   /** Format international : +213XXXXXXXXX */
   phone: string;
-  wilaya: string;
-  business_name: string;
+  wilayaCode: string;
+  wilayaName: string;
+  /** Détail uniquement. */
+  quantity: number | null;
+  /** Gros uniquement : '5-9' | '10-24' | '25-49' | '50+'. */
   volume: string;
-  message: string;
-  utm_source: string;
-  utm_campaign: string;
+  /** Gros uniquement : nom de la boutique (facultatif). */
+  shop: string;
+  eventId: string | null;
+  attribution: Attribution;
 };
 
-export type LeadValidationResult = { ok: true; lead: LeadPayload } | { ok: false; errors: LeadFieldErrors };
+export type LeadValidationResult = { ok: true; lead: ValidatedLead } | { ok: false; errors: LeadFieldErrors };
 
-export const ATTRIBUTION_KEYS = ['utm_source', 'utm_campaign'] as const;
-
+// Construits via RegExp() pour ne pas dépendre de la cible de compilation (\p{L} exige 'u').
 const NAME_RE = new RegExp("^[\\p{L}\\p{M}][\\p{L}\\p{M} '’.-]*$", 'u');
 const LETTER_RE = new RegExp('\\p{L}', 'gu');
-const FORMULA_START_RE = /^[=+\-@\t\r]/;
-const SLUG_RE = /^[a-z0-9]+(-[a-z0-9]+)*$/;
+const LETTER_OR_DIGIT_RE = new RegExp('[\\p{L}\\p{N}]', 'u');
 const CONTROL_CHARS_RE = /[\u0000-\u001F\u007F]/g;
+const EVENT_ID_RE = /^[A-Za-z0-9_-]{8,64}$/;
+const FORMULA_START_RE = /^[=+\-@\t\r]/;
+// +213 / 00213 / 0 suivi d'un mobile algérien : 5 (Ooredoo), 6 (Mobilis), 7 (Djezzy) + 8 chiffres.
+const DZ_MOBILE_RE = /^(?:\+213|00213|0)([567]\d{8})$/;
 
 export function cleanText(value: unknown, maxLength: number): string {
   if (typeof value !== 'string') return '';
-  return value
-    .replace(CONTROL_CHARS_RE, '')
-    .replace(/\s+/g, ' ')
-    .trim()
-    .slice(0, maxLength);
+  return value.replace(CONTROL_CHARS_RE, '').replace(/\s+/g, ' ').trim().slice(0, maxLength);
 }
 
-/**
- * Normalise un numéro saisi ("0550 12 34 56", "+213 661 23 45 67", "00213770123456")
- * et retourne sa forme internationale +213XXXXXXXXX, ou null si invalide.
- */
-export function normalizeDzPhone(input: unknown): string | null {
+/** Retourne le numéro au format +213XXXXXXXXX, ou null s'il n'est pas un mobile algérien valide. */
+export function normalizeDzMobile(input: unknown): string | null {
   if (typeof input !== 'string') return null;
   const compact = input.replace(/[\s.\-()]/g, '');
-  if (!DZ_PHONE_RE.test(compact)) return null;
-  const national = compact.replace(/^(\+213|00213|0)/, '');
-  return `+213${national}`;
+  const match = DZ_MOBILE_RE.exec(compact);
+  return match ? `+213${match[1]}` : null;
 }
 
-/**
- * @deprecated Ancien nom, conservé pour les composants hérités non routés
- * (liste des fichiers à supprimer dans PLAN.md).
- */
-export const normalizeDzMobile = normalizeDzPhone;
-
-/** @deprecated Anciens types de demandes, remplacés par `LeadType`. */
-export type LeadKind = 'retail' | 'wholesale' | 'waitlist';
-
-/** @deprecated Voir `LeadKind`. */
-export const LEAD_KINDS: readonly LeadKind[] = ['retail', 'wholesale', 'waitlist'];
-
-
-function isLeadType(value: unknown): value is LeadType {
-  return typeof value === 'string' && (LEAD_TYPES as readonly string[]).includes(value);
+function toBoolean(value: unknown): boolean {
+  return value === true || value === 'true' || value === 'on';
 }
 
 export function validateLead(raw: unknown): LeadValidationResult {
   const input = (typeof raw === 'object' && raw !== null ? raw : {}) as Record<string, unknown>;
   const errors: LeadFieldErrors = {};
 
-  const type = isLeadType(input.type) ? input.type : null;
-  if (!type) errors.type = 'Type de demande inconnu.';
+  const kind = LEAD_KINDS.find((k) => k === input.kind);
+  if (!kind) errors.kind = 'Formulaire inconnu.';
 
+  // Nom : lettres (latines ou arabes), espaces, apostrophes, points, tirets. Doit commencer par une lettre
+  // (bloque aussi les débuts "=", "+", "-", "@" utilisés pour l'injection de formules dans un tableur).
   const name = cleanText(input.name, 80);
   const letterCount = (name.match(LETTER_RE) ?? []).length;
-  if (!name) {
-    errors.name = 'Indiquez votre nom.';
-  } else if (letterCount < 2 || !NAME_RE.test(name)) {
-    errors.name = 'Entrez un nom valide (lettres uniquement).';
-  }
+  if (!name) errors.name = 'Indiquez votre nom.';
+  else if (letterCount < 2 || !NAME_RE.test(name)) errors.name = 'Entrez un nom valide (lettres uniquement).';
 
-  const phone = normalizeDzPhone(input.phone);
+  const phone = normalizeDzMobile(input.phone);
   if (!phone) errors.phone = 'Entrez un numéro mobile algérien valide (ex : 0550 12 34 56).';
 
-  const wilayaCode = cleanText(input.wilaya, 2);
+  // Wilaya : obligatoire pour une livraison (détail) ou une zone (gros) ; facultative pour la liste d'attente.
+  const wilayaCode = cleanText(input.wilaya, 3);
   const wilaya = findWilaya(wilayaCode);
-  if (!wilaya) errors.wilaya = 'Choisissez votre wilaya.';
+  if (!wilaya) {
+    if (kind !== 'waitlist' || wilayaCode) errors.wilaya = 'Choisissez votre wilaya.';
+  } else if (UNAVAILABLE_WILAYA_CODES.includes(wilaya.code)) {
+    errors.wilaya = 'Cette wilaya n’est pas desservie pour le moment.';
+  }
 
-  const productSlug = cleanText(input.product_slug, 80).toLowerCase();
-  if (productSlug && !SLUG_RE.test(productSlug)) errors.product_slug = 'Référence produit invalide.';
-
-  const isBusiness = type !== null && BUSINESS_TYPES.includes(type);
-
-  let businessName = '';
-  if (isBusiness) {
-    businessName = cleanText(input.business_name, 120);
-    if (businessName.length < 2) errors.business_name = 'Indiquez le nom de la société ou du magasin.';
-    else if (FORMULA_START_RE.test(businessName)) errors.business_name = 'Nom invalide.';
+  let quantity: number | null = null;
+  if (kind === 'retail') {
+    const q = typeof input.quantity === 'string' ? input.quantity.trim() : input.quantity;
+    const parsed = typeof q === 'number' ? q : /^\d{1,2}$/.test(String(q)) ? Number(q) : NaN;
+    if (!Number.isInteger(parsed) || parsed < 1 || parsed > MAX_RETAIL_QUANTITY) {
+      errors.quantity = `Choisissez une quantité entre 1 et ${MAX_RETAIL_QUANTITY}.`;
+    } else {
+      quantity = parsed;
+    }
   }
 
   let volume = '';
-  if (isBusiness) {
-    const candidate = cleanText(input.volume, 40);
-    if ((VOLUME_RANGES as readonly string[]).includes(candidate)) volume = candidate;
-    else errors.volume = 'Choisissez un volume estimé.';
+  if (kind === 'wholesale') {
+    const v = cleanText(input.volume, 10);
+    if (WHOLESALE_VOLUMES.some((option) => option.value === v)) volume = v;
+    else errors.volume = 'Choisissez un volume.';
   }
 
-  let message = cleanText(input.message, 1000);
-  if (type === 'revendeur' && message.length < 2) {
-    errors.message = 'Précisez votre type de commerce.';
+  let shop = '';
+  if (kind === 'wholesale') {
+    shop = cleanText(input.shop, 80);
+    if (shop && (FORMULA_START_RE.test(shop) || !LETTER_OR_DIGIT_RE.test(shop))) {
+      errors.shop = 'Entrez un nom de boutique valide.';
+    }
   }
 
-  const consent = input.consent === true || input.consent === 'true' || input.consent === 'on';
-  if (!consent) errors.consent = 'Votre accord est nécessaire pour être rappelé(e).';
+  if (!toBoolean(input.consent)) errors.consent = 'Votre accord est nécessaire pour être rappelé(e).';
 
-  if (!type || Object.keys(errors).length > 0) return { ok: false, errors };
+  if (Object.keys(errors).length > 0 || !kind || !phone) return { ok: false, errors };
+
+  const eventIdRaw = cleanText(input.eventId, 64);
+  const attributionInput =
+    typeof input.attribution === 'object' && input.attribution !== null ? (input.attribution as Record<string, unknown>) : {};
+  const attribution: Attribution = {};
+  for (const key of ATTRIBUTION_KEYS) {
+    const value = cleanText(attributionInput[key], 200);
+    if (value) attribution[key] = value;
+  }
+
+  const product = cleanText(input.product, 60);
 
   return {
     ok: true,
     lead: {
-      type,
-      product_slug: productSlug,
+      kind,
+      product,
       name,
-      phone: phone as string,
-      wilaya: wilaya ? `${wilaya.code} – ${wilaya.name}` : '',
-      business_name: businessName,
+      phone,
+      wilayaCode: wilaya?.code ?? '',
+      wilayaName: wilaya?.name ?? '',
+      quantity,
       volume,
-      message: isBusiness ? message : message.slice(0, 1000),
-      utm_source: cleanText(input.utm_source, 100),
-      utm_campaign: cleanText(input.utm_campaign, 100),
+      shop,
+      eventId: EVENT_ID_RE.test(eventIdRaw) ? eventIdRaw : null,
+      attribution,
     },
   };
 }
-
-
-/* Ancienne validation (retail / wholesale / waitlist) supprimée :
-   elle est remplacée par la validation par `type` ci-dessus. */
-
-
-/* Constantes de l'ancienne validation supprimées. */
-
-
-/* Ancienne fonction validateLead (kind) supprimée. */
-

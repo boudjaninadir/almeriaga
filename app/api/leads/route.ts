@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
-import { rateLimit } from '@/lib/rate-limit';
-import { SITE_URL } from '@/lib/site-config';
+import { SITE } from '@/lib/site';
+import { rateLimit, rememberPhone, wasPhoneSeenRecently } from '@/lib/rate-limit';
 import { validateLead } from '@/lib/validation';
 
 export const runtime = 'nodejs';
@@ -9,17 +9,9 @@ export const dynamic = 'force-dynamic';
 const MAX_BODY_BYTES = 4096;
 const RATE_LIMIT_MAX = 5; // requêtes
 const RATE_LIMIT_WINDOW_MS = 10 * 60 * 1000; // par 10 minutes et par IP
+const DUPLICATE_WINDOW_MS = 10 * 60 * 1000;
 const MIN_FILL_TIME_MS = 1000;
-const SUPABASE_TIMEOUT_MS = 8000;
-
-/**
- * Insertion via l'API REST Supabase avec la clé anonyme.
- * La politique RLS de lib/supabase-sql-leads.sql n'autorise QUE l'insertion :
- * aucune lecture publique n'est possible.
- */
-const SUPABASE_URL = (process.env.NEXT_PUBLIC_SUPABASE_URL ?? '').trim().replace(/\/$/, '');
-const SUPABASE_ANON_KEY = (process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ?? '').trim();
-
+const WEBHOOK_TIMEOUT_MS = 8000;
 
 type ApiBody = Record<string, unknown>;
 
@@ -49,7 +41,7 @@ function isAllowedOrigin(req: Request): boolean {
   const host = req.headers.get('host');
   if (host) allowed.add(host.toLowerCase());
   try {
-    allowed.add(new URL(SITE_URL).host.toLowerCase());
+    allowed.add(new URL(SITE.url).host.toLowerCase());
   } catch {
     /* SITE.url invalide : on ignore */
   }
@@ -129,54 +121,63 @@ export async function POST(req: Request) {
   }
   const { lead } = result;
 
+  // Double envoi (double clic, rafraîchissement) : on confirme sans créer de doublon.
+  if (wasPhoneSeenRecently(`${lead.kind}:${lead.phone}`, DUPLICATE_WINDOW_MS)) {
+    return reply({ ok: true, duplicate: true });
+  }
+
   if (process.env.LEADS_DRY_RUN === 'true') {
-    console.info(
-      '[leads:dry-run]',
-      lead.type,
-      maskedSummary(lead.name, lead.phone),
-      `wilaya=${lead.wilaya}`,
-      `produit=${lead.product_slug || '—'}`,
-    );
+    console.info('[leads:dry-run]', lead.kind, maskedSummary(lead.name, lead.phone), `wilaya=${lead.wilayaCode}`, `qty=${lead.quantity}`);
+    rememberPhone(`${lead.kind}:${lead.phone}`);
     return reply({ ok: true, dryRun: true });
   }
 
-  if (!SUPABASE_URL || !SUPABASE_ANON_KEY) {
-    console.error('[leads] NEXT_PUBLIC_SUPABASE_URL ou NEXT_PUBLIC_SUPABASE_ANON_KEY manquant.');
-    return reply(
-      { ok: false, code: 'misconfigured', message: 'Service momentanément indisponible. Écrivez-nous sur WhatsApp.' },
-      503,
-    );
+  const webhookUrl = process.env.LEADS_WEBHOOK_URL;
+  const webhookSecret = process.env.LEADS_WEBHOOK_SECRET;
+  let webhookIsHttps = false;
+  try {
+    webhookIsHttps = Boolean(webhookUrl) && new URL(webhookUrl as string).protocol === 'https:';
+  } catch {
+    webhookIsHttps = false;
+  }
+  if (!webhookUrl || !webhookSecret || !webhookIsHttps) {
+    console.error('[leads] LEADS_WEBHOOK_URL (https) ou LEADS_WEBHOOK_SECRET manquant ou invalide.');
+    return reply({ ok: false, code: 'misconfigured', message: 'Service momentanément indisponible.' }, 503);
   }
 
+  let stored = false;
   try {
-    const response = await fetch(`${SUPABASE_URL}/rest/v1/leads`, {
+    const response = await fetch(webhookUrl, {
       method: 'POST',
-      headers: {
-        apikey: SUPABASE_ANON_KEY,
-        Authorization: `Bearer ${SUPABASE_ANON_KEY}`,
-        'content-type': 'application/json',
-        Prefer: 'return=minimal',
-      },
-      body: JSON.stringify(lead),
-      signal: AbortSignal.timeout(SUPABASE_TIMEOUT_MS),
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({
+        secret: webhookSecret,
+        lead: {
+          receivedAt: new Date().toISOString(),
+          ...lead,
+          userAgent: (req.headers.get('user-agent') ?? '').slice(0, 160),
+        },
+      }),
+      signal: AbortSignal.timeout(WEBHOOK_TIMEOUT_MS),
       cache: 'no-store',
     });
-
-    if (!response.ok) {
-      console.error('[leads] Supabase HTTP', response.status);
-      return reply(
-        { ok: false, code: 'upstream_error', message: 'Nous n’avons pas pu enregistrer votre demande. Écrivez-nous sur WhatsApp.' },
-        502,
-      );
+    if (response.ok) {
+      const data = (await response.json().catch(() => null)) as { ok?: boolean } | null;
+      stored = data?.ok === true;
+    } else {
+      console.error('[leads] webhook HTTP', response.status);
     }
   } catch (error) {
-    console.error('[leads] erreur Supabase:', error instanceof Error ? error.name : 'unknown');
+    console.error('[leads] webhook error:', error instanceof Error ? error.name : 'unknown');
+  }
+
+  if (!stored) {
     return reply(
       { ok: false, code: 'upstream_error', message: 'Nous n’avons pas pu enregistrer votre demande. Écrivez-nous sur WhatsApp.' },
       502,
     );
   }
 
+  rememberPhone(`${lead.kind}:${lead.phone}`);
   return reply({ ok: true });
 }
-

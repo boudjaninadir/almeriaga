@@ -2,12 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
-
-/**
- * @deprecated Carte de visite 3D de l'ancienne section « À propos ».
- * Les identifiants personnels (nom, ANAE, NIF, ville) ont été retirés : plus aucune
- * donnée personnelle n'est codée en dur. À retirer avec `git rm components/FlipCard.tsx`.
- */
+import { LEGAL } from '@/lib/site';
 
 type FlipCardProps = {
   rectoSrc?: string;
@@ -47,12 +42,12 @@ export function FlipCard({ rectoSrc = '/images/carte-recto.png', versoSrc = '/im
             <span className="h-2 w-2 rounded-full bg-gold animate-pulse" />
           </div>
           <div className="relative z-10 space-y-1">
-            <h3 className="text-xl font-bold tracking-tight text-white">ALMERÍAGA</h3>
+            <h3 className="text-xl font-bold tracking-tight text-white">{LEGAL.sellerName}</h3>
             <p className="text-xs text-gold-light font-mono">Auto-entrepreneur | Micro-importateur</p>
           </div>
           <div className="relative z-10 flex justify-between items-end text-[11px] font-mono text-white/70 pt-2 border-t border-gold/20">
-            <span>Importation déclarée</span>
-            <span>Micro-importation</span>
+            <span>ANAE: {LEGAL.anae}</span>
+            <span>NIF: {LEGAL.nif}</span>
           </div>
         </div>
 
@@ -60,7 +55,7 @@ export function FlipCard({ rectoSrc = '/images/carte-recto.png', versoSrc = '/im
         <div className="absolute inset-0 w-full h-full backface-hidden rounded-2xl bg-gradient-to-br from-gold-light via-gold to-[#8A6E1E] p-6 flex flex-col justify-between rotate-y-180 text-brand-strong shadow-lift overflow-hidden border border-white/30">
           <div className="relative z-10 flex items-center justify-between">
             <span className="font-mono text-xs uppercase tracking-widest font-bold">Sourcing & Logistique</span>
-            <span className="font-mono text-xs font-semibold">Algérie</span>
+            <span className="font-mono text-xs font-semibold">{LEGAL.city}</span>
           </div>
           <div className="relative z-10 space-y-1 text-center">
             <p className="text-sm font-bold tracking-wider uppercase">De l'Espagne à votre porte</p>

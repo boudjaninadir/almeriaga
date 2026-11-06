@@ -1,60 +1,41 @@
 import test from 'node:test';
 import assert from 'node:assert';
-import { normalizeDzPhone, validateLead } from '@/lib/validation';
+import { validateLead, normalizeDzMobile } from '@/lib/validation';
 
-test('normalizeDzPhone accepts the three Algerian prefixes', () => {
-  assert.strictEqual(normalizeDzPhone('0550123456'), '+213550123456');
-  assert.strictEqual(normalizeDzPhone('+213 661 23 45 67'), '+213661234567');
-  assert.strictEqual(normalizeDzPhone('00213770123456'), '+213770123456');
-  assert.strictEqual(normalizeDzPhone('0123456789'), null);
+test('normalizeDzMobile handles various formats', () => {
+  assert.strictEqual(normalizeDzMobile('0550123456'), '+213550123456');
+  assert.strictEqual(normalizeDzMobile('+213 661 23 45 67'), '+213661234567');
+  assert.strictEqual(normalizeDzMobile('00213770123456'), '+213770123456');
+  assert.strictEqual(normalizeDzMobile('0123456789'), null);
 });
 
-test('validateLead accepts a consumer request', () => {
-  const result = validateLead({
-    type: 'consommateur',
+test('validateLead validates retail lead successfully', () => {
+  const res = validateLead({
+    kind: 'retail',
     name: 'Karim Benali',
     phone: '0550123456',
     wilaya: '16',
+    quantity: 1,
     consent: true,
+    elapsedMs: 2000,
   });
-
-  assert.strictEqual(result.ok, true);
-  if (result.ok) {
-    assert.strictEqual(result.lead.type, 'consommateur');
-    assert.strictEqual(result.lead.phone, '+213550123456');
-    assert.strictEqual(result.lead.wilaya, '16 – Alger');
+  assert.strictEqual(res.ok, true);
+  if (res.ok) {
+    assert.strictEqual(res.lead.kind, 'retail');
+    assert.strictEqual(res.lead.phone, '+213550123456');
+    assert.strictEqual(res.lead.wilayaCode, '16');
   }
 });
 
-test('validateLead rejects an invalid name or phone', () => {
-  const result = validateLead({
-    type: 'consommateur',
+test('validateLead rejects invalid name or phone', () => {
+  const res = validateLead({
+    kind: 'retail',
     name: '=SUM(A1)',
     phone: '123',
     wilaya: '16',
+    quantity: 1,
     consent: true,
+    elapsedMs: 2000,
   });
-
-  assert.strictEqual(result.ok, false);
+  assert.strictEqual(res.ok, false);
 });
-
-test('validateLead requires shop name and volume for a reseller', () => {
-  const result = validateLead({
-    type: 'revendeur',
-    name: 'Karim Benali',
-    phone: '0550123456',
-    wilaya: '16',
-    business_name: '',
-    volume: '',
-    message: '',
-    consent: true,
-  });
-
-  assert.strictEqual(result.ok, false);
-  if (!result.ok) {
-    assert.ok(result.errors.business_name);
-    assert.ok(result.errors.volume);
-    assert.ok(result.errors.message);
-  }
-});
-

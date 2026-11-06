@@ -29,12 +29,12 @@ export default function MentionsLegalesPage() {
       <Card className="mt-8">
         <CardBody className="space-y-7 text-sm leading-relaxed text-ink-soft">
           <section className="space-y-2">
-            <h2 className="text-base font-semibold text-ink">1. Éditeur du site</h2>
+            <h2 className="text-base font-semibold text-[#F7F5EF]">1. Éditeur du site</h2>
             <p>
-              Le site <strong className="text-ink">{BRAND_NAME}</strong> est édité par un auto-entrepreneur exerçant une
+              Le site <strong className="text-[#F7F5EF]">{BRAND_NAME}</strong> est édité par un auto-entrepreneur exerçant une
               activité déclarée de micro-importation (décret exécutif n° 25-170).
             </p>
-            <p className="rounded-lg border border-line bg-surface-2 p-3 text-xs text-ink-faint">
+            <p className="rounded-lg border border-[#D4AF37]/25 bg-[#12513D] p-3 text-xs text-ink-faint">
               TODO — avant publication : compléter ici les mentions obligatoires (identité de l’exploitant, numéro
               d’immatriculation, adresse professionnelle, contact). Ces informations ne sont volontairement pas
               intégrées au code afin qu’aucun identifiant personnel ne soit exposé par erreur.
@@ -42,7 +42,7 @@ export default function MentionsLegalesPage() {
           </section>
 
           <section className="space-y-2">
-            <h2 className="text-base font-semibold text-ink">2. Activité et périmètre</h2>
+            <h2 className="text-base font-semibold text-[#F7F5EF]">2. Activité et périmètre</h2>
             <p>
               L’activité consiste à sélectionner des produits en Espagne et à les importer dans le cadre du régime de la
               micro-importation, pour une remise dans les wilayas desservies. Les prix publics sont exprimés en dinars
@@ -51,7 +51,7 @@ export default function MentionsLegalesPage() {
           </section>
 
           <section className="space-y-2">
-            <h2 className="text-base font-semibold text-ink">3. Propriété intellectuelle</h2>
+            <h2 className="text-base font-semibold text-[#F7F5EF]">3. Propriété intellectuelle</h2>
             <p>
               Les marques et noms commerciaux cités sur ce site appartiennent à leurs propriétaires respectifs. Les
               visuels de produits proviennent du catalogue de l’éditeur ou de ses fournisseurs ; toute reproduction
@@ -60,7 +60,7 @@ export default function MentionsLegalesPage() {
           </section>
 
           <section className="space-y-2">
-            <h2 className="text-base font-semibold text-ink">4. Données personnelles</h2>
+            <h2 className="text-base font-semibold text-[#F7F5EF]">4. Données personnelles</h2>
             <p>
               Les formulaires du site collectent uniquement le nom, le téléphone et la wilaya, ainsi que, pour les
               professionnels, le nom de la société, le volume estimé et le message. Ces données servent exclusivement au
@@ -69,23 +69,23 @@ export default function MentionsLegalesPage() {
             <p>
               Pour demander la consultation ou la suppression de vos données, écrivez à{' '}
               {CONTACT_EMAIL ? (
-                <a href={`mailto:${CONTACT_EMAIL}`} className="font-medium text-accent-ink underline underline-offset-2">
+                <a href={`mailto:${CONTACT_EMAIL}`} className="font-medium text-[#D4AF37] underline underline-offset-2">
                   {CONTACT_EMAIL}
                 </a>
               ) : (
-                <span className="font-medium text-ink">l’adresse de contact (TODO : non configurée)</span>
+                <span className="font-medium text-[#F7F5EF]">l’adresse de contact (TODO : non configurée)</span>
               )}
               .
             </p>
           </section>
 
           <section className="space-y-2">
-            <h2 className="text-base font-semibold text-ink">5. Hébergement</h2>
+            <h2 className="text-base font-semibold text-[#F7F5EF]">5. Hébergement</h2>
             <p>Le site est hébergé par Vercel Inc. (340 S Lemon Ave #4133, Walnut, CA 91789, États-Unis).</p>
           </section>
 
           <section className="space-y-2">
-            <h2 className="text-base font-semibold text-ink">6. Responsabilité</h2>
+            <h2 className="text-base font-semibold text-[#F7F5EF]">6. Responsabilité</h2>
             <p>
               Les informations légales présentées sur ce site (ANAE, décret n° 25-170, démarches, droits et taxes) sont
               fournies à titre indicatif et ne constituent pas un conseil juridique. Elles doivent être vérifiées auprès
@@ -96,7 +96,7 @@ export default function MentionsLegalesPage() {
       </Card>
 
       <p className="mt-6 text-xs text-ink-faint">
-        <Link href="/cadre-legal" className="underline underline-offset-2 hover:text-accent-ink">
+        <Link href="/cadre-legal" className="underline underline-offset-2 hover:text-[#D4AF37]">
           Voir la démarche de micro-importation
         </Link>
       </p>

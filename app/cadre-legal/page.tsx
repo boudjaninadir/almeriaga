@@ -36,15 +36,15 @@ export default function CadreLegalPage() {
           <Reveal key={phase.id} delay={index * 80}>
             <Card className="h-full">
               <CardBody className="space-y-4">
-                <span className="inline-flex h-11 w-11 items-center justify-center rounded-xl bg-accent-soft text-accent-ink">
+                <span className="inline-flex h-11 w-11 items-center justify-center rounded-xl border border-[#D4AF37]/25 bg-[#12513D] text-[#D4AF37]">
                   <Icon name={index === 0 ? 'shield' : index === 1 ? 'route' : 'store'} className="h-5 w-5" />
                 </span>
-                <h2 className="text-lg font-semibold tracking-tightish text-ink">{phase.title}</h2>
+                <h2 className="text-lg font-semibold tracking-tightish text-[#F7F5EF]">{phase.title}</h2>
                 <p className="text-sm leading-relaxed text-ink-soft">{phase.summary}</p>
-                <ol className="space-y-2 border-t border-line pt-4">
+                <ol className="space-y-2 border-t border-[#D4AF37]/25 pt-4">
                   {phase.steps.map((step) => (
                     <li key={step.label} className="text-sm leading-relaxed text-ink-soft">
-                      <span className="font-medium text-ink">{step.label}</span>
+                      <span className="font-medium text-[#F7F5EF]">{step.label}</span>
                       {step.note && <span className="block text-xs text-ink-faint">{step.note}</span>}
                     </li>
                   ))}

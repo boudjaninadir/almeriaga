@@ -51,10 +51,10 @@ export default function GrosPage() {
           <Reveal key={point.title} delay={index * 80}>
             <Card className="h-full">
               <CardBody className="space-y-3">
-                <span className="inline-flex h-11 w-11 items-center justify-center rounded-xl bg-accent-soft text-accent-ink">
+                <span className="inline-flex h-11 w-11 items-center justify-center rounded-xl border border-[#D4AF37]/25 bg-[#12513D] text-[#D4AF37]">
                   <Icon name={point.icon} className="h-5 w-5" />
                 </span>
-                <h2 className="text-base font-semibold tracking-tightish text-ink">{point.title}</h2>
+                <h2 className="text-base font-semibold tracking-tightish text-[#F7F5EF]">{point.title}</h2>
                 <p className="text-sm leading-relaxed text-ink-soft">{point.body}</p>
               </CardBody>
             </Card>
@@ -65,7 +65,7 @@ export default function GrosPage() {
       <div className="mt-12 grid gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
         <Reveal>
           <div className="space-y-4">
-            <h2 className="text-2xl font-semibold tracking-tightish text-ink">Deux façons de nous joindre</h2>
+            <h2 className="text-2xl font-semibold tracking-tightish text-[#F7F5EF]">Deux façons de nous joindre</h2>
             <p className="text-sm leading-relaxed text-ink-soft">
               Le plus rapide reste WhatsApp. Si vous préférez poser votre besoin par écrit, le formulaire ci-contre
               enregistre votre demande avec votre société, votre wilaya, votre volume et les produits visés.
@@ -75,13 +75,13 @@ export default function GrosPage() {
                 href={whatsapp}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex h-12 items-center justify-center gap-2 rounded-xl bg-mint px-6 text-base font-semibold text-mint-ink transition duration-200 ease-out-soft hover:-translate-y-0.5 hover:bg-mint/70 active:translate-y-0"
+                className="inline-flex h-12 items-center justify-center gap-2 rounded-xl border border-[#D4AF37]/45 bg-[#0E4635] px-6 text-base font-semibold text-[#D4AF37] transition duration-200 ease-out-soft hover:-translate-y-0.5 hover:bg-[#D4AF37] hover:text-[#0B3D2E] active:translate-y-0"
               >
                 <Icon name="whatsapp" className="h-5 w-5" />
                 WhatsApp direct
               </a>
             ) : (
-              <p className="rounded-xl border border-line bg-surface-2 p-4 text-xs text-ink-faint">
+              <p className="rounded-xl border border-[#D4AF37]/25 bg-[#12513D] p-4 text-xs text-ink-faint">
                 WhatsApp non configuré (TODO) : renseignez NEXT_PUBLIC_CONTACT_WHATSAPP pour activer ce bouton.
               </p>
             )}
@@ -96,7 +96,7 @@ export default function GrosPage() {
           <Card>
             <CardBody className="space-y-5">
               <div className="space-y-1">
-                <h2 className="text-xl font-semibold tracking-tightish text-ink">Demande gros</h2>
+                <h2 className="text-xl font-semibold tracking-tightish text-[#F7F5EF]">Demande gros</h2>
                 <p className="text-sm text-ink-soft">Sans engagement. Réponse par téléphone.</p>
               </div>
               <LeadCaptureForm type="gros" />

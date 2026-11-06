@@ -15,14 +15,16 @@ export function Hero({ pilot }: { pilot: Product }) {
 
   return (
     <section className="relative overflow-hidden">
-      {/* Halos décoratifs : aucune image, uniquement des dégradés doux. */}
+      {/* Texture de vagues de la carte de visite, très discrète. */}
+      <div aria-hidden="true" className="brand-waves" />
+      {/* Halos décoratifs : aucune image, uniquement des dégradés or/émeraude doux. */}
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute -right-24 -top-24 h-80 w-80 rounded-full bg-accent-soft blur-3xl"
+        className="pointer-events-none absolute -right-24 -top-24 h-80 w-80 rounded-full bg-[#D4AF37]/15 blur-3xl"
       />
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute -left-32 top-40 h-72 w-72 rounded-full bg-mint blur-3xl"
+        className="pointer-events-none absolute -left-32 top-40 h-72 w-72 rounded-full bg-[#D4AF37]/10 blur-3xl"
       />
 
       <div className="container-page relative grid items-center gap-14 py-16 md:grid-cols-[1.05fr_0.95fr] md:py-24">
@@ -35,9 +37,9 @@ export function Hero({ pilot }: { pilot: Product }) {
           </Reveal>
 
           <Reveal delay={80}>
-            <h1 className="mt-5 text-balance font-display text-4xl font-semibold leading-[1.05] tracking-display text-ink sm:text-5xl md:text-6xl">
+            <h1 className="mt-5 text-balance font-display text-4xl font-semibold leading-[1.05] tracking-display text-[#F7F5EF] sm:text-5xl md:text-6xl">
               Des produits choisis en Espagne,
-              <span className="text-accent-ink"> livrés près de vous.</span>
+              <span className="text-[#D4AF37]"> livrés près de vous.</span>
             </h1>
           </Reveal>
 
@@ -59,7 +61,7 @@ export function Hero({ pilot }: { pilot: Product }) {
                   href={whatsapp}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex h-12 items-center justify-center gap-2 rounded-xl border border-line bg-surface px-6 text-base font-semibold text-mint-ink transition duration-200 ease-out-soft hover:-translate-y-0.5 hover:bg-mint active:translate-y-0"
+                  className="inline-flex h-12 items-center justify-center gap-2 rounded-xl border border-[#D4AF37]/45 bg-[#0E4635] px-6 text-base font-semibold text-[#D4AF37] transition duration-200 ease-out-soft hover:-translate-y-0.5 hover:bg-[#D4AF37] hover:text-[#0B3D2E] active:translate-y-0"
                 >
                   <Icon name="whatsapp" className="h-5 w-5" />
                   WhatsApp
@@ -87,18 +89,18 @@ export function Hero({ pilot }: { pilot: Product }) {
         </div>
 
         <Reveal delay={160} className="relative">
-          <div className="scene-3d flex items-center justify-center py-6">
+          <div className="flex items-center justify-center py-6">
             <Parallax speed={0.05}>
-              <div className="animate-float-y">
-                <div className="object-3d animate-spin-3d">
-                  <span className="object-3d__halo" aria-hidden="true" />
-                  <span className="object-3d__face object-3d__face--front" aria-hidden="true" />
-                  <span className="object-3d__face object-3d__face--back" aria-hidden="true" />
-                  <span className="object-3d__face object-3d__face--right" aria-hidden="true" />
-                  <span className="object-3d__face object-3d__face--left" aria-hidden="true" />
-                  <span className="object-3d__face object-3d__face--top" aria-hidden="true" />
-                  <span className="object-3d__face object-3d__face--bottom" aria-hidden="true" />
-                </div>
+              <div className="animate-float-y relative flex items-center justify-center">
+                <span className="object-3d__halo" aria-hidden="true" />
+                {/* Emblème de marque : fermoir doré (public/brand/latch.svg). */}
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src="/brand/latch.svg"
+                  alt=""
+                  aria-hidden="true"
+                  className="relative h-64 w-auto drop-shadow-[0_28px_56px_rgb(3_20_14/0.65)]"
+                />
               </div>
             </Parallax>
           </div>
@@ -109,13 +111,13 @@ export function Hero({ pilot }: { pilot: Product }) {
             viewBox="0 0 320 320"
             className="pointer-events-none absolute inset-0 mx-auto h-full w-full max-w-sm opacity-70"
           >
-            <circle cx="160" cy="160" r="132" fill="none" stroke="rgb(240 82 26 / 0.18)" strokeWidth="1" />
+            <circle cx="160" cy="160" r="132" fill="none" stroke="rgb(212 175 55 / 0.22)" strokeWidth="1" />
             <circle
               cx="160"
               cy="160"
               r="104"
               fill="none"
-              stroke="rgb(21 92 76 / 0.16)"
+              stroke="rgb(212 175 55 / 0.14)"
               strokeWidth="1"
               strokeDasharray="6 10"
             />

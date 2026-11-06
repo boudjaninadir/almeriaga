@@ -51,10 +51,10 @@ export default function RevendeursPage() {
           <Reveal key={step.title} delay={index * 80}>
             <Card className="h-full">
               <CardBody className="space-y-3">
-                <span className="inline-flex h-11 w-11 items-center justify-center rounded-xl bg-mint text-mint-ink">
+                <span className="inline-flex h-11 w-11 items-center justify-center rounded-xl border border-[#D4AF37]/25 bg-[#12513D] text-[#D4AF37]">
                   <Icon name={step.icon} className="h-5 w-5" />
                 </span>
-                <h2 className="text-base font-semibold tracking-tightish text-ink">{step.title}</h2>
+                <h2 className="text-base font-semibold tracking-tightish text-[#F7F5EF]">{step.title}</h2>
                 <p className="text-sm leading-relaxed text-ink-soft">{step.body}</p>
               </CardBody>
             </Card>
@@ -67,7 +67,7 @@ export default function RevendeursPage() {
           <Card>
             <CardBody className="space-y-5">
               <div className="space-y-1">
-                <h2 className="text-xl font-semibold tracking-tightish text-ink">Inscription revendeur</h2>
+                <h2 className="text-xl font-semibold tracking-tightish text-[#F7F5EF]">Inscription revendeur</h2>
                 <p className="text-sm text-ink-soft">
                   Votre demande est enregistrée séparément des demandes de particuliers.
                 </p>
@@ -79,7 +79,7 @@ export default function RevendeursPage() {
 
         <Reveal delay={80}>
           <div className="space-y-4">
-            <h2 className="text-2xl font-semibold tracking-tightish text-ink">Ce que nous ne faisons pas</h2>
+            <h2 className="text-2xl font-semibold tracking-tightish text-[#F7F5EF]">Ce que nous ne faisons pas</h2>
             <ul className="space-y-3 text-sm leading-relaxed text-ink-soft">
               {[
                 'Aucun produit interdit par la réglementation (friperie, pièces auto, médicaments, armes, drones, produits chimiques dangereux, smartphones, gros électroménager, alimentaire frais).',
@@ -98,7 +98,7 @@ export default function RevendeursPage() {
                 href={whatsapp}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 text-sm font-semibold text-mint-ink transition-colors hover:text-accent-ink"
+                className="inline-flex items-center gap-2 text-sm font-semibold text-[#D4AF37] transition-colors hover:text-[#D4AF37]"
               >
                 <Icon name="whatsapp" className="h-4 w-4" />
                 Une question sur le programme ?

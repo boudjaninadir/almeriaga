@@ -36,8 +36,8 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: '#FDFBF7',
-  colorScheme: 'light',
+  themeColor: '#0B3D2E',
+  colorScheme: 'dark',
   width: 'device-width',
   initialScale: 1,
 };
@@ -52,10 +52,10 @@ export default async function RootLayout({
 
   return (
     <html lang="fr" className={`${GeistSans.variable} h-full antialiased`}>
-      <body className="flex min-h-full flex-col bg-canvas font-sans text-ink">
+      <body className="flex min-h-full flex-col bg-[#0B3D2E] font-sans text-[#F7F5EF]">
         <a
           href="#contenu"
-          className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded-lg focus:bg-surface focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-ink focus:shadow-soft"
+          className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded-lg focus:border focus:border-[#D4AF37]/40 focus:bg-[#0E4635] focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-[#F7F5EF] focus:shadow-soft"
         >
           Aller au contenu
         </a>

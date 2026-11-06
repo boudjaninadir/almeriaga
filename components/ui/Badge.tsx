@@ -3,11 +3,12 @@ import { cn } from '@/lib/cn';
 
 type Tone = 'accent' | 'brand' | 'mint' | 'neutral';
 
+/** Pastilles sur fond émeraude : contour or fin, texte doré ou or plein. */
 const TONES: Record<Tone, string> = {
-  accent: 'border-accent/25 bg-accent-soft text-accent-ink',
-  brand: 'border-accent/25 bg-accent-soft text-accent-ink',
-  mint: 'border-mint-ink/15 bg-mint text-mint-ink',
-  neutral: 'border-line bg-surface-2 text-ink-soft',
+  accent: 'border-[#D4AF37]/40 bg-[#12513D] text-[#F3D77A]',
+  brand: 'border-[#D4AF37] bg-[#D4AF37] text-[#0B3D2E]',
+  mint: 'border-[#D4AF37] bg-[#D4AF37] text-[#0B3D2E]',
+  neutral: 'border-[#D4AF37]/25 bg-[#12513D] text-ink-soft',
 };
 
 export function Badge({

@@ -7,20 +7,25 @@ type Variant = 'primary' | 'secondary' | 'ghost' | 'mint';
 type Size = 'sm' | 'md' | 'lg';
 
 /**
- * Boutons du thème clair : ils se soulèvent au survol et s'enfoncent au clic.
- * Seules transform et box-shadow sont animées.
+ * Boutons du thème « Rich Minimalist » : ils se soulèvent au survol et
+ * s'enfoncent au clic. Seules transform et box-shadow sont animées.
+ * - primary : or plein #D4AF37, texte émeraude #0B3D2E (contraste maximal).
+ * - secondary : carte émeraude, liseré or fin.
+ * - ghost : texte discret qui se dore au survol.
+ * - mint : contour or qui se remplit au survol.
  */
 const BASE =
   'inline-flex items-center justify-center gap-2 rounded-xl font-semibold tracking-tightish transition duration-200 ease-out-soft ' +
   'hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.99] ' +
-  'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-canvas ' +
+  'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#D4AF37] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0B3D2E] ' +
   'disabled:pointer-events-none disabled:opacity-60';
 
 const VARIANTS: Record<Variant, string> = {
-  primary: 'bg-accent text-white shadow-soft hover:bg-accent-ink hover:shadow-accent',
-  secondary: 'border border-line bg-surface text-ink hover:border-ink-faint/50 hover:bg-surface-2',
-  ghost: 'text-ink-soft hover:bg-surface-2 hover:text-ink',
-  mint: 'bg-mint text-mint-ink hover:bg-mint/70',
+  primary: 'bg-[#D4AF37] text-[#0B3D2E] shadow-soft hover:bg-[#F3D77A] hover:shadow-accent',
+  secondary:
+    'border border-[#D4AF37]/30 bg-[#0E4635] text-[#F7F5EF] hover:border-[#D4AF37]/60 hover:bg-[#12513D] hover:text-[#D4AF37]',
+  ghost: 'text-ink-soft hover:bg-[#12513D] hover:text-[#D4AF37]',
+  mint: 'border border-[#D4AF37]/45 text-[#D4AF37] hover:bg-[#D4AF37] hover:text-[#0B3D2E]',
 };
 
 const SIZES: Record<Size, string> = {

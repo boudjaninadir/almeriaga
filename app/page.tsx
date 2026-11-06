@@ -47,7 +47,7 @@ export default async function HomePage() {
 
           <Reveal delay={80}>
             <div className="space-y-5">
-              <h3 className="text-2xl font-semibold tracking-tightish text-ink">Commander en trois minutes</h3>
+              <h3 className="text-2xl font-semibold tracking-tightish text-[#F7F5EF]">Commander en trois minutes</h3>
               <p className="text-sm leading-relaxed text-ink-soft">
                 Vous laissez votre nom, votre téléphone et votre wilaya. Nous vous rappelons pour confirmer la
                 disponibilité, le délai et le lieu de remise. Le paiement se fait à la remise, jamais en ligne.
@@ -73,7 +73,7 @@ export default async function HomePage() {
         <Reveal>
           <div className="surface-card flex flex-col items-start gap-5 p-8 sm:flex-row sm:items-center sm:justify-between sm:p-10">
             <div className="space-y-2">
-              <h2 className="text-2xl font-semibold tracking-tightish text-ink">Une question avant de commander ?</h2>
+              <h2 className="text-2xl font-semibold tracking-tightish text-[#F7F5EF]">Une question avant de commander ?</h2>
               <p className="text-sm leading-relaxed text-ink-soft">
                 Écrivez-nous : nous répondons sur WhatsApp, ou par e-mail depuis la page contact.
               </p>
@@ -84,7 +84,7 @@ export default async function HomePage() {
                   href={whatsapp}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex h-12 items-center justify-center gap-2 rounded-xl bg-mint px-6 text-base font-semibold text-mint-ink transition duration-200 ease-out-soft hover:-translate-y-0.5 hover:bg-mint/70 active:translate-y-0"
+                  className="inline-flex h-12 items-center justify-center gap-2 rounded-xl border border-[#D4AF37]/45 bg-[#0E4635] px-6 text-base font-semibold text-[#D4AF37] transition duration-200 ease-out-soft hover:-translate-y-0.5 hover:bg-[#D4AF37] hover:text-[#0B3D2E] active:translate-y-0"
                 >
                   <Icon name="whatsapp" className="h-5 w-5" />
                   WhatsApp

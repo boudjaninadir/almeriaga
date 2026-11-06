@@ -60,7 +60,7 @@ export function Navbar({ ctaHref }: { ctaHref: string }) {
   }, [menuOpen]);
 
   return (
-    <header className="sticky top-0 z-40 border-b border-line/80 bg-canvas/90 backdrop-blur">
+    <header className="sticky top-0 z-40 border-b border-[#D4AF37]/20 bg-[#0B3D2E]/90 backdrop-blur">
       <div className="container-page flex h-16 items-center justify-between gap-3">
         <Link href="/" aria-label={`${BRAND_NAME}, accueil`} onClick={() => setMenuOpen(false)}>
           <Logo />
@@ -76,14 +76,14 @@ export function Navbar({ ctaHref }: { ctaHref: string }) {
                 aria-current={active ? 'page' : undefined}
                 className={cn(
                   'relative rounded-lg px-3 py-2 text-sm font-medium transition-colors duration-200',
-                  active ? 'text-accent-ink' : 'text-ink-soft hover:text-ink',
+                  active ? 'text-[#D4AF37]' : 'text-ink-soft hover:text-[#F7F5EF]',
                 )}
               >
                 {link.label}
                 <span
                   aria-hidden="true"
                   className={cn(
-                    'absolute inset-x-3 -bottom-px h-0.5 rounded-full bg-accent transition-opacity duration-200',
+                    'absolute inset-x-3 -bottom-px h-0.5 rounded-full bg-[#D4AF37] transition-opacity duration-200',
                     active ? 'opacity-100' : 'opacity-0',
                   )}
                 />
@@ -100,7 +100,7 @@ export function Navbar({ ctaHref }: { ctaHref: string }) {
 
           <button
             type="button"
-            className="inline-flex h-11 w-11 items-center justify-center rounded-xl border border-line bg-surface text-ink transition hover:bg-surface-2 lg:hidden"
+            className="inline-flex h-11 w-11 items-center justify-center rounded-xl border border-[#D4AF37]/25 bg-[#0E4635] text-[#F7F5EF] transition hover:bg-[#12513D] lg:hidden"
             aria-expanded={menuOpen}
             aria-controls={menuId}
             aria-label={menuOpen ? 'Fermer le menu' : 'Ouvrir le menu'}
@@ -121,8 +121,8 @@ export function Navbar({ ctaHref }: { ctaHref: string }) {
         </div>
       </div>
 
-      <div id={menuId} hidden={!menuOpen} className="border-t border-line bg-surface lg:hidden">
-        <nav aria-label="Navigation mobile" className="container-page divide-y divide-line py-2">
+      <div id={menuId} hidden={!menuOpen} className="border-t border-[#D4AF37]/20 bg-[#0E4635] lg:hidden">
+        <nav aria-label="Navigation mobile" className="container-page divide-y divide-[#D4AF37]/15 py-2">
           {LINKS.map((link) => {
             const active = isActive(pathname, link.href);
             return (
@@ -133,7 +133,7 @@ export function Navbar({ ctaHref }: { ctaHref: string }) {
                 aria-current={active ? 'page' : undefined}
                 className={cn(
                   'flex items-center justify-between py-3 text-sm font-medium',
-                  active ? 'text-accent-ink' : 'text-ink',
+                  active ? 'text-[#D4AF37]' : 'text-[#F7F5EF]',
                 )}
               >
                 {link.label}
@@ -167,7 +167,7 @@ export function Navbar({ ctaHref }: { ctaHref: string }) {
               target="_blank"
               rel="noopener noreferrer"
               onClick={() => setMenuOpen(false)}
-              className="inline-flex h-11 items-center justify-center rounded-xl border border-mint-ink/15 bg-mint text-sm font-semibold text-mint-ink"
+              className="inline-flex h-11 items-center justify-center rounded-xl border border-[#D4AF37]/45 text-sm font-semibold text-[#D4AF37] transition-colors duration-200 hover:bg-[#D4AF37] hover:text-[#0B3D2E]"
             >
               Discuter sur WhatsApp
             </a>

@@ -1,14 +1,24 @@
 import type { Config } from 'tailwindcss';
 
 /**
- * Thème clair ALMERÍAGA : blanc chaud, surfaces blanches, texte anthracite,
- * un accent vif (orange) et une couleur secondaire douce (menthe).
- * Aucun fond noir, aucun mode sombre.
+ * Thème ALMERÍAGA — « Rich Minimalist » (Luxe-Tech).
+ * Fond vert émeraude profond (#0B3D2E), accents or (#D4AF37), texte blanc
+ * cassé (#F7F5EF), cartes épurées à liseré doré.
  *
- * Toutes les couleurs passent par des variables CSS (voir app/globals.css) :
- * pour changer la charte, modifiez uniquement les variables --accent* et --mint*.
+ * Toutes les couleurs sémantiques passent par des variables CSS
+ * (voir app/globals.css) : pour changer la charte, modifiez uniquement
+ * les variables --canvas / --surface / --line / --ink* / --accent* / --mint*.
+ *
+ * La palette explicite (`emerald`, `gold`, `cream`) permet d'écrire directement
+ * les valeurs de la charte validée, et les alias hérités (`brand`, `dark-block`)
+ * maintiennent les composants historiques dans la même identité visuelle.
  */
 const rgb = (name: string) => `rgb(var(--${name}) / <alpha-value>)`;
+
+/** Vert émeraude profond — fonds principaux et sections. */
+const EMERALD = '#0B3D2E';
+/** Or / jaune luxe — bordures fines, titres, accents, boutons. */
+const GOLD = '#D4AF37';
 
 const config: Config = {
   content: ['./app/**/*.{ts,tsx}', './components/**/*.{ts,tsx}', './lib/**/*.{ts,tsx}'],
@@ -31,15 +41,42 @@ const config: Config = {
         ok: rgb('ok'),
         warn: rgb('warn'),
         danger: rgb('danger'),
+
+        /* ── Charte validée : valeurs explicites ── */
+        emerald: {
+          DEFAULT: EMERALD,
+          deep: '#06241B',
+          soft: '#0E4635',
+          mute: '#12513D',
+        },
+        gold: {
+          DEFAULT: GOLD,
+          light: '#F3D77A',
+          deep: '#A67C00',
+        },
+        cream: {
+          DEFAULT: '#F7F5EF',
+          soft: '#D8E2DB',
+          mute: '#A5B8AC',
+        },
+
+        /* ── Alias hérités (composants historiques) : même identité ── */
+        brand: {
+          DEFAULT: GOLD,
+          soft: '#12513D',
+          strong: EMERALD,
+        },
+        'dark-block': '#0E4635',
       },
       fontFamily: {
         sans: ['var(--font-geist-sans)', 'ui-sans-serif', 'system-ui', '-apple-system', 'Segoe UI', 'Roboto', 'sans-serif'],
         display: ['var(--font-geist-sans)', 'ui-sans-serif', 'system-ui', 'sans-serif'],
       },
       boxShadow: {
-        soft: '0 1px 2px rgb(34 36 41 / 0.04), 0 12px 28px -20px rgb(34 36 41 / 0.28)',
-        lift: '0 2px 6px rgb(34 36 41 / 0.05), 0 22px 44px -26px rgb(34 36 41 / 0.32)',
-        accent: '0 18px 38px -22px rgb(205 56 10 / 0.45)',
+        soft: '0 1px 2px rgb(3 20 14 / 0.35), 0 14px 30px -22px rgb(3 20 14 / 0.75)',
+        lift: '0 2px 6px rgb(3 20 14 / 0.4), 0 26px 50px -28px rgb(3 20 14 / 0.85)',
+        accent: '0 18px 38px -20px rgb(212 175 55 / 0.35)',
+        gold: '0 0 0 1px rgb(212 175 55 / 0.28), 0 20px 45px -30px rgb(212 175 55 / 0.45)',
       },
       borderRadius: { xl2: '1.25rem', xl3: '1.75rem' },
       letterSpacing: { tightish: '-0.02em', display: '-0.035em' },

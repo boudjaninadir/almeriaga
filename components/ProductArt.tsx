@@ -12,12 +12,12 @@ type ProductArtProps = {
 export function ProductArt({ icon, className }: ProductArtProps) {
   return (
     <div
-      className={`relative flex items-center justify-center overflow-hidden rounded-2xl border border-line bg-surface p-6 ${className ?? ''}`}
+      className={`relative flex items-center justify-center overflow-hidden rounded-2xl border border-[#D4AF37]/25 bg-[#0E4635] p-6 ${className ?? ''}`}
     >
-      <div className="absolute inset-0 bg-gradient-to-br from-accent-soft/40 to-transparent pointer-events-none" />
-      <div className="relative z-10 flex flex-col items-center justify-center text-accent-ink">
-        <div className="rounded-2xl border border-line bg-canvas p-4 shadow-soft">
-          <Icon name={icon} className="h-12 w-12 text-accent-ink" />
+      <div className="absolute inset-0 bg-gradient-to-br from-[#12513D]/40 to-transparent pointer-events-none" />
+      <div className="relative z-10 flex flex-col items-center justify-center text-[#D4AF37]">
+        <div className="rounded-2xl border border-[#D4AF37]/25 bg-[#0B3D2E] p-4 shadow-soft">
+          <Icon name={icon} className="h-12 w-12 text-[#D4AF37]" />
         </div>
       </div>
     </div>

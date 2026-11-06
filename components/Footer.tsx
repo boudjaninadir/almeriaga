@@ -4,7 +4,8 @@ import { Icon } from '@/components/ui/Icons';
 import { BRAND_NAME, CONTACT_EMAIL, CONTACT_WHATSAPP, displayPhone, whatsappLink } from '@/lib/site-config';
 
 /**
- * Pied de page clair, sans fond sombre.
+ * Pied de page : bloc sombre en dégradé très subtil (#0B3D2E → #06241B)
+ * et liseré or 1px, conformément à la charte « Rich Minimalist ».
  * Aucun lien vers /gros ni /revendeurs ici : la landing ne doit pas les exposer.
  */
 const LINKS = [
@@ -19,8 +20,9 @@ export function Footer() {
   const whatsapp = whatsappLink(`Bonjour ${BRAND_NAME}, j’ai une question.`);
 
   return (
-    <footer className="mt-24 border-t border-line bg-surface">
-      <div className="container-page grid gap-10 py-14 md:grid-cols-[1.4fr_1fr_1.2fr]">
+    <footer className="relative mt-24 overflow-hidden border-t border-[#D4AF37]/30 bg-gradient-to-b from-[#0B3D2E] to-[#06241B]">
+      <div aria-hidden="true" className="brand-waves" />
+      <div className="container-page relative grid gap-10 py-14 md:grid-cols-[1.4fr_1fr_1.2fr]">
         <div className="space-y-4">
           <Logo />
           <p className="max-w-sm text-sm leading-relaxed text-ink-soft">
@@ -31,11 +33,11 @@ export function Footer() {
         </div>
 
         <nav aria-label="Pied de page" className="space-y-3 text-sm">
-          <p className="text-xs font-semibold uppercase tracking-[0.14em] text-ink-faint">Navigation</p>
+          <p className="text-xs font-semibold uppercase tracking-[0.14em] text-[#D4AF37]">Navigation</p>
           <ul className="space-y-2">
             {LINKS.map((link) => (
               <li key={link.href}>
-                <Link href={link.href} className="text-ink-soft transition-colors hover:text-accent-ink">
+                <Link href={link.href} className="text-ink-soft transition-colors hover:text-[#D4AF37]">
                   {link.label}
                 </Link>
               </li>
@@ -44,13 +46,13 @@ export function Footer() {
         </nav>
 
         <div className="space-y-3 text-sm">
-          <p className="text-xs font-semibold uppercase tracking-[0.14em] text-ink-faint">Contact</p>
+          <p className="text-xs font-semibold uppercase tracking-[0.14em] text-[#D4AF37]">Contact</p>
           {whatsapp ? (
             <a
               href={whatsapp}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 text-mint-ink transition-colors hover:text-accent-ink"
+              className="inline-flex items-center gap-2 text-[#D4AF37] transition-colors hover:text-[#F3D77A]"
             >
               <Icon name="whatsapp" className="h-4 w-4" />
               WhatsApp {displayPhone(CONTACT_WHATSAPP)}
@@ -61,7 +63,7 @@ export function Footer() {
           {CONTACT_EMAIL ? (
             <a
               href={`mailto:${CONTACT_EMAIL}`}
-              className="flex items-center gap-2 break-all text-ink-soft transition-colors hover:text-accent-ink"
+              className="flex items-center gap-2 break-all text-ink-soft transition-colors hover:text-[#D4AF37]"
             >
               <Icon name="mail" className="h-4 w-4 shrink-0" />
               {CONTACT_EMAIL}
@@ -76,7 +78,7 @@ export function Footer() {
         </div>
       </div>
 
-      <div className="container-page border-t border-line py-6 text-xs text-ink-faint">
+      <div className="container-page relative border-t border-[#D4AF37]/15 py-6 text-xs text-ink-faint">
         © {year} {BRAND_NAME}. Tous droits réservés.
       </div>
     </footer>

@@ -37,15 +37,15 @@ export default function CadreLegalPage() {
           <Reveal key={phase.id} delay={index * 80}>
             <Card className="h-full">
               <CardBody className="space-y-4">
-                <span className="inline-flex h-11 w-11 items-center justify-center rounded-xl border border-[#D4AF37]/25 bg-[#12513D] text-[#D4AF37]">
+                <span className="inline-flex h-11 w-11 items-center justify-center rounded-xl border border-[#D4AF37]/25 bg-[#F1EDE3] text-[#8A6D1F]">
                   <Icon name={index === 0 ? 'shield' : index === 1 ? 'route' : 'store'} className="h-5 w-5" />
                 </span>
-                <h2 className="text-lg font-semibold tracking-tightish text-[#F7F5EF]">{phase.title}</h2>
+                <h2 className="text-lg font-semibold tracking-tightish text-[#1B1F1D]">{phase.title}</h2>
                 <p className="text-sm leading-relaxed text-ink-soft">{phase.summary}</p>
                 <ol className="space-y-2 border-t border-[#D4AF37]/25 pt-4">
                   {phase.steps.map((step) => (
                     <li key={step.label} className="text-sm leading-relaxed text-ink-soft">
-                      <span className="font-medium text-[#F7F5EF]">{step.label}</span>
+                      <span className="font-medium text-[#1B1F1D]">{step.label}</span>
                       {step.note && <span className="block text-xs text-ink-faint">{step.note}</span>}
                     </li>
                   ))}
@@ -57,7 +57,7 @@ export default function CadreLegalPage() {
       </div>
 
       <Reveal delay={100}>
-        <h2 className="mt-14 text-xl font-semibold text-[#D4AF37]">
+        <h2 className="mt-14 text-xl font-semibold text-[#8A6D1F]">
           Produits légaux vs illégaux (ANAE, décret 25-170 art. 9)
         </h2>
         <div className="mt-5 grid gap-4 md:grid-cols-2">
@@ -69,15 +69,15 @@ export default function CadreLegalPage() {
                   ? 'rounded-xl border border-danger/30 bg-danger/5 p-4'
                   : row.status === 'licence'
                     ? 'rounded-xl border border-warn/25 bg-warn/5 p-4'
-                    : 'rounded-xl border border-[#D4AF37]/25 bg-[#0E4635] p-4'
+                    : 'rounded-xl border border-[#D4AF37]/25 bg-[#FCFBF7] p-4'
               }
             >
-              <p className="text-sm font-semibold text-[#F7F5EF]">{row.category}</p>
+              <p className="text-sm font-semibold text-[#1B1F1D]">{row.category}</p>
               <p className="mt-1 text-xs leading-relaxed text-ink-soft">{row.detail}</p>
               <p
                 className={
                   'mt-2 text-[11px] font-semibold uppercase tracking-[0.12em] ' +
-                  (row.status === 'illegal' ? 'text-danger' : row.status === 'licence' ? 'text-warn' : 'text-[#D4AF37]')
+                  (row.status === 'illegal' ? 'text-danger' : row.status === 'licence' ? 'text-warn' : 'text-[#8A6D1F]')
                 }
               >
                 {row.status === 'illegal' ? 'Interdit' : row.status === 'licence' ? 'Licence spéciale' : 'Autorisé'}

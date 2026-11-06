@@ -38,11 +38,11 @@ export default function MerciPage({ searchParams }: PageProps) {
       <ThankYouTracker eventId={eventId} contentName={productName || type || 'demande'} />
 
       <div className="mx-auto max-w-2xl text-center">
-        <span className="inline-flex h-16 w-16 items-center justify-center rounded-full border border-[#D4AF37]/30 bg-[#12513D] text-[#D4AF37]">
+        <span className="inline-flex h-16 w-16 items-center justify-center rounded-full border border-[#D4AF37]/30 bg-[#F1EDE3] text-[#8A6D1F]">
           <Icon name="check" className="h-8 w-8" />
         </span>
 
-        <h1 className="mt-6 text-3xl font-semibold tracking-display text-[#F7F5EF] sm:text-4xl">{title}</h1>
+        <h1 className="mt-6 text-3xl font-semibold tracking-display text-[#1B1F1D] sm:text-4xl">{title}</h1>
 
         <p className="mt-4 text-base leading-relaxed text-ink-soft">
           Nous vous rappelons au numéro indiqué pour confirmer
@@ -55,7 +55,7 @@ export default function MerciPage({ searchParams }: PageProps) {
               href={whatsapp}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex h-12 items-center justify-center gap-2 rounded-xl border border-[#D4AF37]/45 bg-[#0E4635] px-6 text-base font-semibold text-[#D4AF37] transition duration-200 ease-out-soft hover:-translate-y-0.5 hover:bg-[#D4AF37] hover:text-[#0B3D2E] active:translate-y-0"
+              className="inline-flex h-12 items-center justify-center gap-2 rounded-xl border border-[#D4AF37]/45 bg-[#FCFBF7] px-6 text-base font-semibold text-[#8A6D1F] transition duration-200 ease-out-soft hover:-translate-y-0.5 hover:bg-[#D4AF37] hover:text-[#1B1F1D] active:translate-y-0"
             >
               <Icon name="whatsapp" className="h-5 w-5" />
               Continuer sur WhatsApp
@@ -68,7 +68,7 @@ export default function MerciPage({ searchParams }: PageProps) {
 
         <p className="mt-8 text-xs text-ink-faint">
           Vous pouvez fermer cette page.{' '}
-          <Link href="/" className="underline underline-offset-2 hover:text-[#D4AF37]">
+          <Link href="/" className="underline underline-offset-2 hover:text-[#8A6D1F]">
             Revenir à l’accueil
           </Link>
           .

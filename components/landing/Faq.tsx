@@ -41,14 +41,14 @@ export function Faq() {
         </Reveal>
 
         <Reveal delay={80}>
-          <div className="divide-y divide-[#D4AF37]/15 overflow-hidden rounded-xl3 border border-[#D4AF37]/25 bg-[#0E4635]">
+          <div className="divide-y divide-[#D4AF37]/15 overflow-hidden rounded-xl3 border border-[#D4AF37]/25 bg-[#FCFBF7]">
             {FAQ.map((item) => (
               <details key={item.question} className="group px-6 py-5 [&_summary::-webkit-details-marker]:hidden">
-                <summary className="flex cursor-pointer list-none items-center justify-between gap-4 text-base font-semibold text-[#F7F5EF]">
+                <summary className="flex cursor-pointer list-none items-center justify-between gap-4 text-base font-semibold text-[#1B1F1D]">
                   {item.question}
                   <span
                     aria-hidden="true"
-                    className="inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-[#D4AF37]/30 text-[#D4AF37] transition-transform duration-200 group-open:rotate-45"
+                    className="inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-[#D4AF37]/30 text-[#8A6D1F] transition-transform duration-200 group-open:rotate-45"
                   >
                     <svg viewBox="0 0 24 24" className="h-3.5 w-3.5" fill="none" stroke="currentColor" strokeWidth={2}>
                       <path d="M12 5v14M5 12h14" strokeLinecap="round" />

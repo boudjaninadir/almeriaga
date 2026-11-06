@@ -26,7 +26,7 @@ export function PriceGrosButton({
         {t(locale, 'price_gros')}
       </Button>
       {open && (
-        <div className="rounded-xl3 border border-[#D4AF37]/25 bg-[#0B3D2E] p-5">
+        <div className="rounded-xl3 border border-[#D4AF37]/25 bg-[#F7F5EF] p-5">
           <p className="mb-4 text-xs leading-relaxed text-ink-faint">{t(locale, 'price_gros_note')}</p>
           <SubscriptionForm locale={locale} type="gros_price" productSlug={productSlug} productName={productName} />
         </div>

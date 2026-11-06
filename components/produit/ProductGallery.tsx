@@ -18,7 +18,7 @@ export function ProductGallery({ product }: { product: Product }) {
   return (
     <div className="space-y-4">
       <div className="scene-3d">
-        <div className="group relative overflow-hidden rounded-xl3 border border-[#D4AF37]/25 bg-gradient-to-br from-[#12513D] via-[#0E4635] to-[#0B3D2E] shadow-soft transition-transform duration-500 ease-out-soft [transform:rotateX(0deg)_rotateY(0deg)] hover:[transform:rotateX(2deg)_rotateY(-3deg)]">
+        <div className="group relative overflow-hidden rounded-xl3 border border-[#D4AF37]/25 bg-gradient-to-br from-[#F1EDE3] via-[#FCFBF7] to-[#F7F5EF] shadow-soft transition-transform duration-500 ease-out-soft [transform:rotateX(0deg)_rotateY(0deg)] hover:[transform:rotateX(2deg)_rotateY(-3deg)]">
           <div className="aspect-square w-full">
             {current ? (
               // eslint-disable-next-line @next/next/no-img-element
@@ -27,7 +27,7 @@ export function ProductGallery({ product }: { product: Product }) {
               <ProductVisual product={product} size="lg" className="p-8" />
             )}
           </div>
-          <span className="pointer-events-none absolute bottom-3 right-3 rounded-full bg-[#0B3D2E]/85 px-3 py-1 text-[11px] font-medium text-ink-faint">
+          <span className="pointer-events-none absolute bottom-3 right-3 rounded-full bg-[#F7F5EF]/85 px-3 py-1 text-[11px] font-medium text-ink-faint">
             {current ? 'Photo du produit' : 'Visuel de remplacement (photo à ajouter)'}
           </span>
         </div>
@@ -43,7 +43,7 @@ export function ProductGallery({ product }: { product: Product }) {
                 aria-label={`Voir la photo ${index + 1}`}
                 aria-pressed={index === active}
                 className={cn(
-                  'block aspect-square w-full overflow-hidden rounded-xl border bg-[#0E4635] transition',
+                  'block aspect-square w-full overflow-hidden rounded-xl border bg-[#FCFBF7] transition',
                   index === active
                     ? 'border-[#D4AF37] ring-2 ring-[#D4AF37]/30'
                     : 'border-[#D4AF37]/25 hover:border-[#D4AF37]/55',

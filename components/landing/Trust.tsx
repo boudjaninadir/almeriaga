@@ -42,7 +42,7 @@ export function Trust() {
           </p>
           <Link
             href="/cadre-legal"
-            className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-[#D4AF37] transition-colors hover:text-[#F3D77A]"
+            className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-[#8A6D1F] transition-colors hover:text-[#6E561A]"
           >
             Voir les étapes du cadre légal
             <Icon name="arrow" className="h-4 w-4" />
@@ -53,7 +53,7 @@ export function Trust() {
               <Reveal key={stat.label} delay={index * 80}>
                 <div>
                   <dt className="sr-only">{stat.label}</dt>
-                  <dd className="font-display text-3xl font-semibold tracking-display text-[#F7F5EF]">
+                  <dd className="font-display text-3xl font-semibold tracking-display text-[#1B1F1D]">
                     <Counter value={stat.value} suffix={stat.suffix ?? ''} />
                   </dd>
                   <p className="mt-1 text-xs leading-snug text-ink-faint">{stat.label}</p>
@@ -63,14 +63,14 @@ export function Trust() {
           </dl>
 
           {/* Carte pointillée des wilayas desservies (public/brand/algeria-dots.svg). */}
-          <div className="mt-8 rounded-xl3 border border-[#D4AF37]/25 bg-[#0E4635] p-5">
+          <div className="mt-8 rounded-xl3 border border-[#D4AF37]/25 bg-[#FCFBF7] p-5">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src="/brand/algeria-dots.svg"
               alt="Carte pointillée de l'Algérie : toutes les wilayas d’Algérie"
               className="mx-auto h-56 w-auto"
             />
-            <p className="mt-3 text-center text-xs font-semibold uppercase tracking-[0.14em] text-[#D4AF37]">
+            <p className="mt-3 text-center text-xs font-semibold uppercase tracking-[0.14em] text-[#8A6D1F]">
               Oran · Tlemcen · Sidi Bel Abbès
             </p>
           </div>
@@ -80,11 +80,11 @@ export function Trust() {
           {PILLARS.map((pillar, index) => (
             <Reveal key={pillar.title} delay={index * 80}>
               <div className="surface-card flex gap-4 p-6">
-                <span className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-[#D4AF37]/25 bg-[#12513D] text-[#D4AF37]">
+                <span className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-[#D4AF37]/25 bg-[#F1EDE3] text-[#8A6D1F]">
                   <Icon name={pillar.icon} className="h-5 w-5" />
                 </span>
                 <div className="space-y-1.5">
-                  <h3 className="text-base font-semibold tracking-tightish text-[#F7F5EF]">{pillar.title}</h3>
+                  <h3 className="text-base font-semibold tracking-tightish text-[#1B1F1D]">{pillar.title}</h3>
                   <p className="text-sm leading-relaxed text-ink-soft">{pillar.body}</p>
                 </div>
               </div>

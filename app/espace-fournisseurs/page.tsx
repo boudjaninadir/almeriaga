@@ -21,7 +21,7 @@ export default function EspaceFournisseursPage() {
       <div className="container-page space-y-12">
         <div className="mx-auto max-w-2xl text-center space-y-4">
           <Badge>Bientôt disponible</Badge>
-          <h1 className="text-3xl font-extrabold tracking-tight text-[#F7F5EF] sm:text-4xl">
+          <h1 className="text-3xl font-extrabold tracking-tight text-[#1B1F1D] sm:text-4xl">
             Espace fournisseurs & micro-importateurs
           </h1>
           <p className="text-ink-soft">
@@ -32,8 +32,8 @@ export default function EspaceFournisseursPage() {
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
           <Card>
             <CardBody className="space-y-4">
-              <div className="inline-flex rounded-2xl border border-[#D4AF37]/25 bg-[#12513D] p-3 text-[#D4AF37]"><Icon name="book" className="h-6 w-6" /></div>
-              <h3 className="font-bold text-[#F7F5EF]">Guides ANAE / CASNOS</h3>
+              <div className="inline-flex rounded-2xl border border-[#D4AF37]/25 bg-[#F1EDE3] p-3 text-[#8A6D1F]"><Icon name="book" className="h-6 w-6" /></div>
+              <h3 className="font-bold text-[#1B1F1D]">Guides ANAE / CASNOS</h3>
               <p className="text-sm text-ink-soft leading-relaxed">
                 Toutes les démarches administratives pour déclarer votre activité d'auto-entrepreneur sans ambiguïté.
               </p>
@@ -42,8 +42,8 @@ export default function EspaceFournisseursPage() {
 
           <Card>
             <CardBody className="space-y-4">
-              <div className="inline-flex rounded-2xl border border-[#D4AF37]/25 bg-[#12513D] p-3 text-[#D4AF37]"><Icon name="users" className="h-6 w-6" /></div>
-              <h3 className="font-bold text-[#F7F5EF]">Annuaire vérifié</h3>
+              <div className="inline-flex rounded-2xl border border-[#D4AF37]/25 bg-[#F1EDE3] p-3 text-[#8A6D1F]"><Icon name="users" className="h-6 w-6" /></div>
+              <h3 className="font-bold text-[#1B1F1D]">Annuaire vérifié</h3>
               <p className="text-sm text-ink-soft leading-relaxed">
                 Répertoire de contacts et grossistes de confiance testés sur le terrain.
               </p>
@@ -52,8 +52,8 @@ export default function EspaceFournisseursPage() {
 
           <Card>
             <CardBody className="space-y-4">
-              <div className="inline-flex rounded-2xl border border-[#D4AF37]/25 bg-[#12513D] p-3 text-[#D4AF37]"><Icon name="phone" className="h-6 w-6" /></div>
-              <h3 className="font-bold text-[#F7F5EF]">Modèles de messages</h3>
+              <div className="inline-flex rounded-2xl border border-[#D4AF37]/25 bg-[#F1EDE3] p-3 text-[#8A6D1F]"><Icon name="phone" className="h-6 w-6" /></div>
+              <h3 className="font-bold text-[#1B1F1D]">Modèles de messages</h3>
               <p className="text-sm text-ink-soft leading-relaxed">
                 Scripts professionnels pour négocier et communiquer efficacement avec vos fournisseurs à l'étranger.
               </p>
@@ -62,8 +62,8 @@ export default function EspaceFournisseursPage() {
 
           <Card>
             <CardBody className="space-y-4">
-              <div className="inline-flex rounded-2xl border border-[#D4AF37]/25 bg-[#12513D] p-3 text-[#D4AF37]"><Icon name="shield" className="h-6 w-6" /></div>
-              <h3 className="font-bold text-[#F7F5EF]">Check-list voyage & visa</h3>
+              <div className="inline-flex rounded-2xl border border-[#D4AF37]/25 bg-[#F1EDE3] p-3 text-[#8A6D1F]"><Icon name="shield" className="h-6 w-6" /></div>
+              <h3 className="font-bold text-[#1B1F1D]">Check-list voyage & visa</h3>
               <p className="text-sm text-ink-soft leading-relaxed">
                 Conseils logistiques et préparation de voyage. (Aucune vente de rendez-vous visa ou fausse invitation).
               </p>
@@ -76,7 +76,7 @@ export default function EspaceFournisseursPage() {
             <CardBody className="space-y-8 p-8 sm:p-10">
               <div className="space-y-2 text-center">
                 <Badge>Liste d'attente</Badge>
-                <h2 className="text-2xl font-bold tracking-tight text-[#F7F5EF]">Être prévenu(e) du lancement</h2>
+                <h2 className="text-2xl font-bold tracking-tight text-[#1B1F1D]">Être prévenu(e) du lancement</h2>
                 <p className="text-sm text-ink-soft">Inscrivez-vous pour recevoir l'accès dès l'ouverture des ressources.</p>
               </div>
 
@@ -84,7 +84,7 @@ export default function EspaceFournisseursPage() {
 
               {whatsapp && (
                 <p className="text-center text-xs text-ink-faint pt-2">
-                  Contact : <a href={whatsapp ?? undefined} target="_blank" rel="noopener noreferrer" className="text-[#D4AF37] underline">WhatsApp</a>
+                  Contact : <a href={whatsapp ?? undefined} target="_blank" rel="noopener noreferrer" className="text-[#8A6D1F] underline">WhatsApp</a>
                 </p>
               )}
             </CardBody>

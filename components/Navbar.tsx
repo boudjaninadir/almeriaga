@@ -62,7 +62,7 @@ export function Navbar({ ctaHref, labels }: { ctaHref: string; labels: Record<st
   }, [menuOpen]);
 
   return (
-    <header className="sticky top-0 z-40 border-b border-[#D4AF37]/20 bg-[#0B3D2E]/90 backdrop-blur">
+    <header className="sticky top-0 z-40 border-b border-[#D4AF37]/20 bg-[#F7F5EF]/90 backdrop-blur">
       <div className="container-page flex h-16 items-center justify-between gap-3">
         <Link href="/" aria-label={`${BRAND_NAME}, accueil`} onClick={() => setMenuOpen(false)}>
           <Logo />
@@ -78,7 +78,7 @@ export function Navbar({ ctaHref, labels }: { ctaHref: string; labels: Record<st
                 aria-current={active ? 'page' : undefined}
                 className={cn(
                   'relative rounded-lg px-3 py-2 text-sm font-medium transition-colors duration-200',
-                  active ? 'text-[#D4AF37]' : 'text-ink-soft hover:text-[#F7F5EF]',
+                  active ? 'text-[#8A6D1F]' : 'text-ink-soft hover:text-[#1B1F1D]',
                 )}
               >
                 {labels[link.key]}                <span
@@ -100,7 +100,7 @@ export function Navbar({ ctaHref, labels }: { ctaHref: string; labels: Record<st
 
           <button
             type="button"
-            className="inline-flex h-11 w-11 items-center justify-center rounded-xl border border-[#D4AF37]/25 bg-[#0E4635] text-[#F7F5EF] transition hover:bg-[#12513D] lg:hidden"
+            className="inline-flex h-11 w-11 items-center justify-center rounded-xl border border-[#D4AF37]/25 bg-[#FCFBF7] text-[#1B1F1D] transition hover:bg-[#F1EDE3] lg:hidden"
             aria-expanded={menuOpen}
             aria-controls={menuId}
             aria-label={menuOpen ? 'Fermer le menu' : 'Ouvrir le menu'}
@@ -121,7 +121,7 @@ export function Navbar({ ctaHref, labels }: { ctaHref: string; labels: Record<st
         </div>
       </div>
 
-      <div id={menuId} hidden={!menuOpen} className="border-t border-[#D4AF37]/20 bg-[#0E4635] lg:hidden">
+      <div id={menuId} hidden={!menuOpen} className="border-t border-[#D4AF37]/20 bg-[#FCFBF7] lg:hidden">
         <nav aria-label="Navigation mobile" className="container-page divide-y divide-[#D4AF37]/15 py-2">
           {LINKS.map((link) => {
             const active = isActive(pathname, link.href);
@@ -133,7 +133,7 @@ export function Navbar({ ctaHref, labels }: { ctaHref: string; labels: Record<st
                 aria-current={active ? 'page' : undefined}
                 className={cn(
                   'flex items-center justify-between py-3 text-sm font-medium',
-                  active ? 'text-[#D4AF37]' : 'text-[#F7F5EF]',
+                  active ? 'text-[#8A6D1F]' : 'text-[#1B1F1D]',
                 )}
               >
                 {labels[link.key]}                <svg
@@ -165,7 +165,7 @@ export function Navbar({ ctaHref, labels }: { ctaHref: string; labels: Record<st
               target="_blank"
               rel="noopener noreferrer"
               onClick={() => setMenuOpen(false)}
-              className="inline-flex h-11 items-center justify-center rounded-xl border border-[#D4AF37]/45 text-sm font-semibold text-[#D4AF37] transition-colors duration-200 hover:bg-[#D4AF37] hover:text-[#0B3D2E]"
+              className="inline-flex h-11 items-center justify-center rounded-xl border border-[#D4AF37]/45 text-sm font-semibold text-[#8A6D1F] transition-colors duration-200 hover:bg-[#D4AF37] hover:text-[#1B1F1D]"
             >
               Discuter sur WhatsApp
             </a>

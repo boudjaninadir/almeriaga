@@ -22,7 +22,7 @@ export function Logo({ compact = false }: { compact?: boolean }) {
     <span className="flex items-center gap-3">
       <LogoMark className={compact ? 'h-9 w-9' : 'h-10 w-10'} />
       <span className="leading-none">
-        <span className="block text-[15px] font-semibold uppercase tracking-[0.22em] text-[#D4AF37]">
+        <span className="block text-[15px] font-semibold uppercase tracking-[0.22em] text-[#8A6D1F]">
           {BRAND_NAME}
         </span>
         {!compact && (

@@ -1,11 +1,11 @@
 import type { HTMLAttributes } from 'react';
 import { cn } from '@/lib/cn';
 
-/** Carte épurée : fond émeraude, liseré or fin, ombre profonde. Base de toutes les cartes. */
+/** Carte épurée : fond blanc cassé, liseré or fin, ombre douce. Base de toutes les cartes. */
 export function Card({ className, ...rest }: HTMLAttributes<HTMLDivElement>) {
   return (
     <div
-      className={cn('rounded-xl3 border border-[#D4AF37]/25 bg-[#0E4635] shadow-soft', className)}
+      className={cn('rounded-xl3 border border-[#D4AF37]/25 bg-[#FCFBF7] shadow-soft', className)}
       {...rest}
     />
   );

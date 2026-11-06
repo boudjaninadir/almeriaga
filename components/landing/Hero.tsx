@@ -4,13 +4,14 @@ import { Reveal } from '@/components/ui/Reveal';
 import { ButtonLink } from '@/components/ui/Button';
 import { Badge } from '@/components/ui/Badge';
 import { whatsappLink } from '@/lib/site-config';
+import { t, type Locale } from '@/lib/i18n';
 import type { Product } from '@/types/product';
 
 /**
  * Hero de la landing consommateur : promesse courte, objet 3D décoratif en CSS pur
  * (6 faces translucides, rotation lente) et bouton principal vers la fiche pilote.
  */
-export function Hero({ pilot }: { pilot: Product }) {
+export function Hero({ pilot, locale }: { pilot: Product; locale: Locale }) {
   const whatsapp = whatsappLink(`Bonjour, je souhaite commander ${pilot.name}.`);
 
   return (
@@ -32,28 +33,24 @@ export function Hero({ pilot }: { pilot: Product }) {
           <Reveal>
             <span className="eyebrow">
               <Icon name="route" className="h-4 w-4" />
-              Espagne → Oran · Tlemcen · Sidi Bel Abbès
+              {t(locale, 'hero_eyebrow')}
             </span>
           </Reveal>
 
           <Reveal delay={80}>
             <h1 className="mt-5 text-balance font-display text-4xl font-semibold leading-[1.05] tracking-display text-[#F7F5EF] sm:text-5xl md:text-6xl">
-              Des produits choisis en Espagne,
-              <span className="text-[#D4AF37]"> livrés près de vous.</span>
+              {t(locale, 'hero_title')}
             </h1>
           </Reveal>
 
           <Reveal delay={160}>
-            <p className="section-lead">
-              Micro-importation en règle : vous choisissez un produit, nous confirmons par téléphone, vous payez à la
-              remise. Aucun paiement en ligne, prix affichés en dinars.
-            </p>
+            <p className="section-lead">{t(locale, 'hero_lead')}</p>
           </Reveal>
 
           <Reveal delay={240}>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
               <ButtonLink href={`/produit/${pilot.slug}`} size="lg">
-                Commander
+                {t(locale, 'cta_start')}
                 <Icon name="arrow" className="h-4 w-4" />
               </ButtonLink>
               {whatsapp && (
@@ -74,15 +71,15 @@ export function Hero({ pilot }: { pilot: Product }) {
             <div className="mt-8 flex flex-wrap gap-2">
               <Badge tone="mint">
                 <Icon name="shield" className="h-3.5 w-3.5" />
-                Cadre ANAE
+                {t(locale, 'badge_legal')}
               </Badge>
               <Badge tone="neutral">
                 <Icon name="truck" className="h-3.5 w-3.5" />
-                Livraison 3 wilayas
+                {t(locale, 'badge_delivery')}
               </Badge>
               <Badge tone="neutral">
                 <Icon name="tag" className="h-3.5 w-3.5" />
-                Prix en DZD
+                {t(locale, 'badge_dzd')}
               </Badge>
             </div>
           </Reveal>

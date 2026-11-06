@@ -71,6 +71,16 @@ const COPY: Record<
     messageLabel: 'Type de commerce',
     messageRequired: true,
   },
+  gros_price: {
+    submit: 'Recevoir le prix gros',
+    footnote: 'Le prix gros n’est pas public : nous vous rappelons avec les conditions.',
+    consent: 'J’accepte d’être contacté(e) au numéro indiqué au sujet de ce prix gros.',
+  },
+  abonnement: {
+    submit: 'Être rappelé(e)',
+    footnote: 'Un conseiller vous rappelle pour finaliser l’abonnement (WhatsApp ou e-mail).',
+    consent: 'J’accepte d’être contacté(e) au numéro indiqué au sujet de mon abonnement.',
+  },
 };
 
 export function LeadCaptureForm({

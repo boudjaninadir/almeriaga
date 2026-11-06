@@ -63,7 +63,7 @@ export function FlipCard({ rectoSrc = '/images/carte-recto.png', versoSrc = '/im
             <span className="font-mono text-xs font-semibold">Algérie</span>
           </div>
           <div className="relative z-10 space-y-1 text-center">
-            <p className="text-sm font-bold tracking-wider uppercase">De l'Espagne à votre porte</p>
+            <p className="text-sm font-bold tracking-wider uppercase">De l'Europe à votre porte</p>
             <p className="text-xs font-mono opacity-90">Paiement à la livraison · Facture & Garantie</p>
           </div>
           <div className="relative z-10 flex justify-between items-center text-[10px] font-mono opacity-80 pt-2 border-t border-[#D4AF37]/25">

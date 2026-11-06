@@ -8,7 +8,7 @@ const FAQ: ReadonlyArray<{ question: string; answer: string }> = [
   },
   {
     question: 'Dans quelles wilayas livrez-vous ?',
-    answer: 'Oran, Tlemcen et Sidi Bel Abbès. Le lieu exact et le créneau sont fixés lors de l’appel de confirmation.',
+    answer: 'toutes les wilayas d’Algérie. Le lieu exact et le créneau sont fixés lors de l’appel de confirmation.',
   },
   {
     question: 'Les prix sont-ils en euros ou en dinars ?',

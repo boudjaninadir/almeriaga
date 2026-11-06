@@ -6,11 +6,14 @@ import { findWilaya } from '@/lib/wilayas';
  * Aucune dépendance externe.
  */
 
-export const LEAD_TYPES = ['consommateur', 'devis', 'revendeur', 'gros'] as const;
+export const LEAD_TYPES = ['consommateur', 'devis', 'revendeur', 'gros', 'gros_price', 'abonnement'] as const;
 export type LeadType = (typeof LEAD_TYPES)[number];
 
 /** Types de demandes des professionnels : la société et le volume sont obligatoires. */
 const BUSINESS_TYPES: readonly LeadType[] = ['gros', 'revendeur'];
+
+/** Types sans wilaya obligatoire (spec V4 : Nom, Prénom, Téléphone suffisent). */
+const NO_WILAYA_TYPES: readonly LeadType[] = ['abonnement', 'gros_price'];
 
 /** Mobile algérien : préfixe 0, +213 ou 00213, puis 5/6/7 et 8 chiffres. */
 export const DZ_PHONE_PATTERN = '^(0|\\+213|00213)[567]\\d{8}$';
@@ -22,6 +25,7 @@ export const VOLUME_RANGES = ['1 à 9 unités', '10 à 49 unités', '50 à 199 u
 export type LeadFieldName =
   | 'type'
   | 'name'
+  | 'prenom'
   | 'phone'
   | 'wilaya'
   | 'business_name'
@@ -43,6 +47,8 @@ export type LeadPayload = {
   type: LeadType;
   product_slug: string;
   name: string;
+  /** Prénom (types gros_price / abonnement, spec V4 §3-§5). */
+  prenom: string;
   /** Format international : +213XXXXXXXXX */
   phone: string;
   wilaya: string;
@@ -121,7 +127,13 @@ export function validateLead(raw: unknown): LeadValidationResult {
 
   const wilayaCode = cleanText(input.wilaya, 2);
   const wilaya = findWilaya(wilayaCode);
-  if (!wilaya) errors.wilaya = 'Choisissez votre wilaya.';
+  const typeKnown = type !== null && NO_WILAYA_TYPES.includes(type);
+  if (!wilaya && !typeKnown) errors.wilaya = 'Choisissez votre wilaya.';
+
+  const prenom = cleanText(input.prenom, 60);
+  if ((type === 'abonnement' || type === 'gros_price') && prenom.length < 2) {
+    errors.prenom = 'Indiquez votre prénom.';
+  }
 
   const productSlug = cleanText(input.product_slug, 80).toLowerCase();
   if (productSlug && !SLUG_RE.test(productSlug)) errors.product_slug = 'Référence produit invalide.';
@@ -158,6 +170,7 @@ export function validateLead(raw: unknown): LeadValidationResult {
       type,
       product_slug: productSlug,
       name,
+      prenom,
       phone: phone as string,
       wilaya: wilaya ? `${wilaya.code} – ${wilaya.name}` : '',
       business_name: businessName,

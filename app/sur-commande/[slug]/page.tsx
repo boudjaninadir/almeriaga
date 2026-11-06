@@ -52,9 +52,8 @@ export default async function SurCommandePage({ params }: PageProps) {
   return (
     <div className="container-page py-10 md:py-16">
       <nav aria-label="Fil d’Ariane" className="mb-6 text-xs text-ink-faint">
-        <Link href="/catalogue" className="transition-colors hover:text-[#D4AF37]">
-          Catalogue
-        </Link>
+        <Link href="/produits" className="transition-colors hover:text-[#D4AF37]">
+          Produits        </Link>
         <span aria-hidden="true"> / </span>
         <span className="text-ink-soft">{product.name}</span>
       </nav>

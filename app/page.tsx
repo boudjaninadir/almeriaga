@@ -7,36 +7,35 @@ import { ProductCard } from '@/components/produit/ProductCard';
 import { ButtonLink } from '@/components/ui/Button';
 import { Icon } from '@/components/ui/Icons';
 import { Reveal } from '@/components/ui/Reveal';
-import { getPilotProduct } from '@/lib/products';
+import { getFeaturedProduct } from '@/lib/products';
+import { currentLocale } from '@/lib/locale-server';
 import { BRAND_NAME, whatsappLink } from '@/lib/site-config';
 
 export const metadata: Metadata = {
-  title: 'Micro-importation Espagne → Algérie, livrée chez vous',
+  title: 'Micro-importation Europe-Algérie, livrée chez vous',
   description:
-    'Produits sélectionnés en Espagne et livrés à Oran, Tlemcen et Sidi Bel Abbès. Commande sans paiement en ligne, confirmation par téléphone, prix en dinars.',
+    'Produits sélectionnés en Europe et livrés à toutes les wilayas d’Algérie. Commande sans paiement en ligne, confirmation par téléphone, prix en dinars.',
   alternates: { canonical: '/' },
 };
 
-/**
- * Landing consommateur.
- * Aucun lien vers /gros ni /revendeurs : ces parcours restent hors de la navigation publique.
- */
+/** Landing consommateur (spec V4 §2). */
 export default async function HomePage() {
-  const pilot = await getPilotProduct();
+  const pilot = await getFeaturedProduct();
+  const locale = currentLocale();
   const whatsapp = whatsappLink(`Bonjour ${BRAND_NAME}, je souhaite des informations sur vos produits.`);
 
   return (
     <>
-      <Hero pilot={pilot} />
+      <Hero pilot={pilot} locale={locale} />
       <HowItWorks />
 
       <section className="container-page py-16 md:py-20">
         <Reveal>
           <span className="eyebrow">À la une</span>
-          <h2 className="section-title mt-3">La fiche produit du moment</h2>
+          <h2 className="section-title mt-3">La sélection du moment</h2>
           <p className="section-lead">
-            Chaque produit possède sa propre page, avec son lien stable. Celle-ci est la fiche pilote : elle sert de
-            point d’entrée aux publicités et sera remplacée par le produit que vous choisirez.
+            Une sélection courte et vérifiée : chaque produit est contrôlé avant la remise et livré dans toutes les
+            wilayas d’Algérie.
           </p>
         </Reveal>
 
@@ -47,7 +46,7 @@ export default async function HomePage() {
 
           <Reveal delay={80}>
             <div className="space-y-5">
-              <h3 className="text-2xl font-semibold tracking-tightish text-[#F7F5EF]">Commander en trois minutes</h3>
+              <h3 className="text-2xl font-semibold tracking-tightish text-[#F7F5EF]">Démarrer en trois minutes</h3>
               <p className="text-sm leading-relaxed text-ink-soft">
                 Vous laissez votre nom, votre téléphone et votre wilaya. Nous vous rappelons pour confirmer la
                 disponibilité, le délai et le lieu de remise. Le paiement se fait à la remise, jamais en ligne.
@@ -57,8 +56,8 @@ export default async function HomePage() {
                   Voir la fiche
                   <Icon name="arrow" className="h-4 w-4" />
                 </ButtonLink>
-                <ButtonLink href="/catalogue" variant="secondary" size="lg">
-                  Parcourir le catalogue
+                <ButtonLink href="/produits" variant="secondary" size="lg">
+                  Parcourir les produits
                 </ButtonLink>
               </div>
             </div>

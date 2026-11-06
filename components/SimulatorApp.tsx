@@ -1,7 +1,6 @@
 'use client';
 
 import { useState } from 'react';
-import { Ar } from '@/components/Ar';
 import { Badge } from '@/components/ui/Badge';
 import { Button } from '@/components/ui/Button';
 import { Card, CardBody } from '@/components/ui/Card';
@@ -26,7 +25,7 @@ export function SimulatorApp() {
         <div>
           <Badge>Simulateur officiel</Badge>
           <h1 className="text-3xl font-extrabold tracking-tight text-[#F7F5EF] mt-2">
-            Simulateur de rentabilité <Ar>محاكي الربحية</Ar>
+            Simulateur de rentabilité
           </h1>
           <p className="text-sm text-ink-soft mt-1">Estimez vos coûts et marges par voyage (plafond légal 1 800 000 DA).</p>
         </div>

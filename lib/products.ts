@@ -1,5 +1,4 @@
-import { FALLBACK_ALL, FALLBACK_PILOT, FALLBACK_PRODUCTS } from '@/lib/product-fallback';
-import { PILOT_PRODUCT_SLUG } from '@/lib/site-config';
+import { FALLBACK_ALL, FALLBACK_PRODUCTS } from '@/lib/product-fallback';
 import { PRODUCT_STATUSES } from '@/types/product';
 import type { Product, ProductStatus } from '@/types/product';
 
@@ -79,12 +78,8 @@ async function queryProducts(filter: string): Promise<Product[] | null> {
 /** Produits publiés, du plus récent au plus ancien. */
 export async function getPublishedProducts(): Promise<{ products: Product[]; source: ProductsSource }> {
   const rows = await queryProducts('is_published=eq.true&order=created_at.desc');
-  if (rows === null) {
-    return { products: [FALLBACK_PILOT], source: 'fallback' };
-  }
-  if (rows.length === 0) {
-    // Table vide : la fiche pilote reste accessible pour ne pas casser le lien des publicités.
-    return { products: [FALLBACK_PILOT], source: 'fallback' };
+  if (rows === null || rows.length === 0) {
+    return { products: [...FALLBACK_PRODUCTS], source: 'fallback' };
   }
   return { products: rows, source: 'supabase' };
 }
@@ -101,13 +96,10 @@ export async function getProductBySlug(slug: string): Promise<Product | null> {
   return FALLBACK_ALL.find((product) => product.slug === clean) ?? null;
 }
 
-/**
- * Produit pilote : celui dont le slug est configuré, sinon le premier publié,
- * sinon la fiche de démonstration. Le lien de la landing reste donc toujours valide.
- */
-export async function getPilotProduct(): Promise<Product> {
+/** Produit mis en avant (landing, CTA) : premier produit publié. */
+export async function getFeaturedProduct(): Promise<Product> {
   const { products } = await getPublishedProducts();
-  return products.find((product) => product.slug === PILOT_PRODUCT_SLUG) ?? products[0] ?? FALLBACK_PILOT;
+  return products[0] ?? FALLBACK_PRODUCTS[0]!;
 }
 
 /** Toutes les fiches connues, publiées ou non, pour le gabarit « sur devis ». */

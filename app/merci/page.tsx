@@ -61,8 +61,8 @@ export default function MerciPage({ searchParams }: PageProps) {
               Continuer sur WhatsApp
             </a>
           )}
-          <ButtonLink href="/catalogue" variant="secondary" size="lg">
-            Retour au catalogue
+          <ButtonLink href="/produits" variant="secondary" size="lg">
+            Retour aux produits
           </ButtonLink>
         </div>
 

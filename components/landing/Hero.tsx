@@ -18,7 +18,7 @@ export function Hero({ pilot, locale }: { pilot: Product; locale: Locale }) {
     <section className="relative overflow-hidden">
       {/* Texture de vagues de la carte de visite, très discrète. */}
       <div aria-hidden="true" className="brand-waves" />
-      {/* Halos décoratifs : aucune image, uniquement des dégradés or/émeraude doux. */}
+      {/* Halos décoratifs : aucune image, uniquement des dégradés or doux. */}
       <div
         aria-hidden="true"
         className="pointer-events-none absolute -right-24 -top-24 h-80 w-80 rounded-full bg-[#D4AF37]/15 blur-3xl"
@@ -38,7 +38,7 @@ export function Hero({ pilot, locale }: { pilot: Product; locale: Locale }) {
           </Reveal>
 
           <Reveal delay={80}>
-            <h1 className="mt-5 text-balance font-display text-4xl font-semibold leading-[1.05] tracking-display text-[#F7F5EF] sm:text-5xl md:text-6xl">
+            <h1 className="mt-5 text-balance font-display text-4xl font-semibold leading-[1.05] tracking-display text-[#1B1F1D] sm:text-5xl md:text-6xl">
               {t(locale, 'hero_title')}
             </h1>
           </Reveal>
@@ -58,7 +58,7 @@ export function Hero({ pilot, locale }: { pilot: Product; locale: Locale }) {
                   href={whatsapp}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex h-12 items-center justify-center gap-2 rounded-xl border border-[#D4AF37]/45 bg-[#0E4635] px-6 text-base font-semibold text-[#D4AF37] transition duration-200 ease-out-soft hover:-translate-y-0.5 hover:bg-[#D4AF37] hover:text-[#0B3D2E] active:translate-y-0"
+                  className="inline-flex h-12 items-center justify-center gap-2 rounded-xl border border-[#D4AF37]/45 bg-[#FCFBF7] px-6 text-base font-semibold text-[#8A6D1F] transition duration-200 ease-out-soft hover:-translate-y-0.5 hover:bg-[#D4AF37] hover:text-[#1B1F1D] active:translate-y-0"
                 >
                   <Icon name="whatsapp" className="h-5 w-5" />
                   WhatsApp
@@ -96,7 +96,7 @@ export function Hero({ pilot, locale }: { pilot: Product; locale: Locale }) {
                   src="/brand/latch.svg"
                   alt=""
                   aria-hidden="true"
-                  className="relative h-64 w-auto drop-shadow-[0_28px_56px_rgb(3_20_14/0.65)]"
+                  className="relative h-64 w-auto drop-shadow-[0_28px_56px_rgb(27_31_29/0.35)]"
                 />
               </div>
             </Parallax>

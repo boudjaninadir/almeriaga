@@ -19,15 +19,15 @@ export function SupplierOffers({ locale, market }: { locale: Locale; market: 'eu
             key={offer.id}
             className={
               offer.highlight
-                ? 'rounded-xl3 border border-[#D4AF37] bg-[#12513D] p-6 shadow-gold'
-                : 'rounded-xl3 border border-[#D4AF37]/25 bg-[#0E4635] p-6 shadow-soft'
+                ? 'rounded-xl3 border border-[#D4AF37] bg-[#F1EDE3] p-6 shadow-gold'
+                : 'rounded-xl3 border border-[#D4AF37]/25 bg-[#FCFBF7] p-6 shadow-soft'
             }
           >
             <div className="flex items-center justify-between">
-              <h3 className="text-lg font-semibold text-[#F7F5EF]">{offer.name}</h3>
+              <h3 className="text-lg font-semibold text-[#1B1F1D]">{offer.name}</h3>
               {offer.highlight && <Badge tone="mint">Populaire</Badge>}
             </div>
-            <p className="mt-3 font-display text-3xl font-semibold text-[#D4AF37]">
+            <p className="mt-3 font-display text-3xl font-semibold text-[#8A6D1F]">
               {formatDzd(offer.price_dzd_month)}
               <span className="text-sm font-medium text-ink-faint"> / mois</span>
             </p>
@@ -40,8 +40,8 @@ export function SupplierOffers({ locale, market }: { locale: Locale; market: 'eu
         ))}
       </div>
 
-      <div className="mx-auto max-w-xl rounded-xl3 border border-[#D4AF37]/25 bg-[#0E4635] p-6 sm:p-8">
-        <h3 className="text-xl font-semibold text-[#F7F5EF]">{t(locale, 'offers_title')}</h3>
+      <div className="mx-auto max-w-xl rounded-xl3 border border-[#D4AF37]/25 bg-[#FCFBF7] p-6 sm:p-8">
+        <h3 className="text-xl font-semibold text-[#1B1F1D]">{t(locale, 'offers_title')}</h3>
         <p className="mb-5 mt-1 text-sm text-ink-soft">{t(locale, 'offers_lead')}</p>
         <SubscriptionForm locale={locale} type="abonnement" offer={offers.find((o) => o.highlight)?.name ?? offers[0]?.name} />
       </div>

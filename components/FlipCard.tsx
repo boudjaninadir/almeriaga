@@ -43,21 +43,21 @@ export function FlipCard({ rectoSrc = '/images/carte-recto.png', versoSrc = '/im
         <div className="absolute inset-0 w-full h-full backface-hidden rounded-2xl bg-dark-block p-6 flex flex-col justify-between border border-gold/40 overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-tr from-brand-strong to-brand opacity-90" />
           <div className="relative z-10 flex items-center justify-between">
-            <span className="font-mono text-xs uppercase tracking-widest text-gold-light">ALMERÍAGA</span>
+            <span className="font-mono text-xs uppercase tracking-widest text-gold-deep">ALMERÍAGA</span>
             <span className="h-2 w-2 rounded-full bg-gold animate-pulse" />
           </div>
           <div className="relative z-10 space-y-1">
-            <h3 className="text-xl font-bold tracking-tight text-[#F7F5EF]">ALMERÍAGA</h3>
-            <p className="text-xs text-gold-light font-mono">Auto-entrepreneur | Micro-importateur</p>
+            <h3 className="text-xl font-bold tracking-tight text-[#1B1F1D]">ALMERÍAGA</h3>
+            <p className="text-xs text-gold-deep font-mono">Auto-entrepreneur | Micro-importateur</p>
           </div>
-          <div className="relative z-10 flex justify-between items-end text-[11px] font-mono text-[#F7F5EF]/70 pt-2 border-t border-gold/20">
+          <div className="relative z-10 flex justify-between items-end text-[11px] font-mono text-[#1B1F1D]/70 pt-2 border-t border-gold/20">
             <span>Importation déclarée</span>
             <span>Micro-importation</span>
           </div>
         </div>
 
         {/* Verso (Gold Card) */}
-        <div className="absolute inset-0 w-full h-full backface-hidden rounded-2xl bg-gradient-to-br from-gold-light via-gold to-[#8A6E1E] p-6 flex flex-col justify-between rotate-y-180 text-[#0B3D2E] shadow-lift overflow-hidden border border-[#0B3D2E]/20">
+        <div className="absolute inset-0 w-full h-full backface-hidden rounded-2xl bg-gradient-to-br from-gold-light via-gold to-[#8A6E1E] p-6 flex flex-col justify-between rotate-y-180 text-[#1B1F1D] shadow-lift overflow-hidden border border-[#1B1F1D]/20">
           <div className="relative z-10 flex items-center justify-between">
             <span className="font-mono text-xs uppercase tracking-widest font-bold">Sourcing & Logistique</span>
             <span className="font-mono text-xs font-semibold">Algérie</span>

@@ -4,44 +4,45 @@
 
 /* ─────────────────────────────────────────────────────────────
    Design tokens ALMERÍAGA — « Rich Minimalist » (Luxe-Tech)
-   Fond vert émeraude profond #0B3D2E, accents or #D4AF37,
-   texte blanc cassé, cartes épurées à liseré doré.
+   Fond blanc cassé #F7F5EF, accents or #D4AF37,
+   texte anthracite #1B1F1D, cartes épurées à liseré doré.
    Les animations ne touchent que transform et opacity.
    ───────────────────────────────────────────────────────────── */
 @layer base {
   :root {
-    /* Échelle d'élévation : plus la surface est haute, plus l'émeraude s'éclaircit. */
-    --canvas: 11 61 46; /* #0B3D2E vert émeraude profond — fonds principaux */
-    --surface: 14 70 53; /* #0E4635 cartes épurées */
-    --surface-2: 18 81 61; /* #12513D surfaces imbriquées / survol */
+    /* Échelle d'élévation : plus la surface est haute, plus le blanc cassé s'éclaircit. */
+    --canvas: 247 245 239; /* #F7F5EF blanc cassé — fonds principaux */
+    --surface: 252 251 247; /* #FCFBF7 cartes épurées */
+    --surface-2: 241 237 227; /* #F1EDE3 surfaces imbriquées / survol */
     --line: 212 175 55; /* #D4AF37 or — filets et bordures fines */
 
-    /* Texte : blanc cassé, jamais de blanc pur sur fond sombre. */
-    --ink: 247 245 239; /* #F7F5EF blanc cassé */
-    --ink-soft: 216 226 219; /* #D8E2DB */
-    --ink-faint: 165 184 172; /* #A5B8AC */
+    /* Texte : anthracite, jamais de gris pur sur fond blanc cassé. */
+    --ink: 27 31 29; /* #1B1F1D anthracite */
+    --ink-soft: 74 81 77; /* #4A514D */
+    --ink-faint: 123 130 125; /* #7B827D */
 
-    /* Or luxe : accent unique (titres, filets, boutons, icônes). */
+    /* Or luxe : accent unique (filets, boutons, icônes). */
     --accent: 212 175 55; /* #D4AF37 */
     --accent-vivid: 243 215 122; /* #F3D77A or clair décoratif */
-    --accent-soft: 18 81 61; /* #12513D pastille sombre derrière l'or */
-    --accent-ink: 212 175 55; /* #D4AF37 texte doré (AA sur émeraude) */
+    --accent-soft: 241 237 227; /* #F1EDE3 pastille claire derrière l'or */
+    --accent-ink: 138 109 31; /* #8A6D1F texte doré (AA sur blanc cassé) */
 
-    /* Secondaire : boutons et badges dorés, texte émeraude dessus. */
+    /* Secondaire : boutons et badges dorés, texte anthracite dessus. */
     --mint: 212 175 55; /* #D4AF37 */
-    --mint-ink: 11 61 46; /* #0B3D2E */
+    --mint-ink: 27 31 29; /* #1B1F1D */
 
-    --ok: 134 202 158;
-    --warn: 232 176 62;
-    --danger: 255 143 133;
+    /* Statuts sémantiques : teintes conservées, assombries pour rester lisibles (AA). */
+    --ok: 46 125 82;
+    --warn: 154 107 15;
+    --danger: 194 57 52;
   }
 
   html {
     scroll-behavior: smooth;
     -webkit-text-size-adjust: 100%;
     scroll-padding-top: 5.5rem;
-    /* Thème sombre : contrôles natifs (select, scrollbars) assortis. */
-    color-scheme: dark;
+    /* Thème clair : contrôles natifs (select, scrollbars) assortis. */
+    color-scheme: light;
   }
 
   body {
@@ -49,7 +50,7 @@
     text-rendering: optimizeLegibility;
   }
 
-  /* Options des listes déroulantes : fond émeraude explicite. */
+  /* Options des listes déroulantes : fond blanc cassé explicite. */
   option {
     background-color: rgb(var(--surface));
     color: rgb(var(--ink));
@@ -86,12 +87,12 @@
   }
 
   .eyebrow {
-    @apply inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.16em] text-[#D4AF37];
+    @apply inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.16em] text-[#8A6D1F];
   }
 
   .section-title {
     font-family: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
-    @apply text-balance text-3xl font-semibold tracking-display text-[#F7F5EF] sm:text-4xl md:text-[2.75rem];
+    @apply text-balance text-3xl font-semibold tracking-display text-[#1B1F1D] sm:text-4xl md:text-[2.75rem];
     line-height: 1.08;
   }
 
@@ -99,9 +100,9 @@
     @apply mt-4 max-w-2xl text-pretty text-base leading-relaxed text-ink-soft sm:text-lg;
   }
 
-  /* Carte épurée : fond émeraude légèrement plus clair, liseré or discret. */
+  /* Carte épurée : fond blanc cassé légèrement plus clair, liseré or discret. */
   .surface-card {
-    @apply rounded-xl3 border border-[#D4AF37]/25 bg-[#0E4635] shadow-soft;
+    @apply rounded-xl3 border border-[#D4AF37]/25 bg-[#FCFBF7] shadow-soft;
   }
 
   .hairline {
@@ -151,10 +152,10 @@
     border-radius: 1.4rem;
     border: 1px solid rgb(var(--accent) / 0.38);
     background:
-      linear-gradient(152deg, rgb(18 81 61 / 0.92) 0%, rgb(11 61 46 / 0.72) 55%, rgb(212 175 55 / 0.14) 100%);
+      linear-gradient(152deg, rgb(241 237 227 / 0.92) 0%, rgb(247 245 239 / 0.72) 55%, rgb(212 175 55 / 0.14) 100%);
     box-shadow:
       inset 0 0 34px rgb(212 175 55 / 0.1),
-      0 18px 40px -32px rgb(3 20 14 / 0.9);
+      0 18px 40px -32px rgb(27 31 29 / 0.3);
   }
 
   .object-3d__face--front  { transform: translateZ(4.75rem); }
@@ -188,7 +189,7 @@
   .tilt-card--active {
     box-shadow:
       0 0 0 1px rgb(var(--accent) / 0.32),
-      0 26px 50px -34px rgb(3 20 14 / 0.9);
+      0 26px 50px -34px rgb(27 31 29 / 0.32);
   }
 
   /* Texture de vagues (carte de visite) posée en fond des blocs sombres. */
@@ -225,9 +226,9 @@
 
 
 /* ─────────────────────────────────────────────────────────────
-   Charte « Rich Minimalist » (Luxe-Tech) : vert émeraude profond
-   #0B3D2E, or #D4AF37, blanc cassé #F7F5EF. Les anciennes chartes
-   (vert plat v2, thème clair v3) sont remplacées par les tokens
+   Charte « Rich Minimalist » (Luxe-Tech) : blanc cassé #F7F5EF,
+   or #D4AF37, texte anthracite #1B1F1D. Les anciennes chartes
+   (vert émeraude v2, vert plat v3) sont remplacées par les tokens
    définis plus haut.
    ───────────────────────────────────────────────────────────── */
 

@@ -47,21 +47,21 @@ export function AuthModal({ isOpen, onClose }: Props) {
   }
 
   return (
-    <div className="fixed inset-0 z-50 flex items-end justify-center bg-[#06241B]/70 backdrop-blur-sm sm:items-center sm:p-6" role="dialog" aria-modal="true" aria-labelledby="auth-title">
-      <div className="w-full max-w-md space-y-6 rounded-t-3xl border border-[#D4AF37]/25 bg-[#0E4635] p-6 shadow-2xl sm:rounded-3xl sm:p-8">
+    <div className="fixed inset-0 z-50 flex items-end justify-center bg-[#1B1F1D]/45 backdrop-blur-sm sm:items-center sm:p-6" role="dialog" aria-modal="true" aria-labelledby="auth-title">
+      <div className="w-full max-w-md space-y-6 rounded-t-3xl border border-[#D4AF37]/25 bg-[#FCFBF7] p-6 shadow-2xl sm:rounded-3xl sm:p-8">
         <div className="flex items-start justify-between">
           <div>
-            <p className="text-xs font-semibold uppercase tracking-wider text-[#D4AF37]">Espace sécurisé</p>
-            <h2 id="auth-title" className="mt-1 text-xl font-bold text-[#F7F5EF]">Connexion ALMERÍAGA</h2>
+            <p className="text-xs font-semibold uppercase tracking-wider text-[#8A6D1F]">Espace sécurisé</p>
+            <h2 id="auth-title" className="mt-1 text-xl font-bold text-[#1B1F1D]">Connexion ALMERÍAGA</h2>
           </div>
-          <button type="button" onClick={onClose} aria-label="Fermer" className="rounded-full p-2 text-ink-faint transition-colors hover:bg-[#12513D] hover:text-[#D4AF37]">✕</button>
+          <button type="button" onClick={onClose} aria-label="Fermer" className="rounded-full p-2 text-ink-faint transition-colors hover:bg-[#F1EDE3] hover:text-[#8A6D1F]">✕</button>
         </div>
 
         <button
           type="button"
           onClick={loginWithGoogle}
           disabled={busy}
-          className="flex h-12 w-full items-center justify-center gap-2 rounded-xl border border-[#D4AF37]/30 text-sm font-semibold text-[#F7F5EF] transition hover:border-[#D4AF37]/60 hover:bg-[#12513D] disabled:opacity-60"
+          className="flex h-12 w-full items-center justify-center gap-2 rounded-xl border border-[#D4AF37]/30 text-sm font-semibold text-[#1B1F1D] transition hover:border-[#D4AF37]/60 hover:bg-[#F1EDE3] disabled:opacity-60"
         >
           Continuer avec Google (Gmail)
         </button>
@@ -73,7 +73,7 @@ export function AuthModal({ isOpen, onClose }: Props) {
         </div>
 
         <form onSubmit={requestCode} className="space-y-3" noValidate>
-          <label htmlFor="auth-phone" className="block text-sm font-medium text-[#F7F5EF]">Numéro mobile (+213)</label>
+          <label htmlFor="auth-phone" className="block text-sm font-medium text-[#1B1F1D]">Numéro mobile (+213)</label>
           <input
             id="auth-phone"
             type="tel"
@@ -83,10 +83,10 @@ export function AuthModal({ isOpen, onClose }: Props) {
             onChange={(e) => setPhone(e.target.value)}
             placeholder="0550 12 34 56"
             aria-invalid={phoneError ? true : undefined}
-            className="h-12 w-full rounded-xl border border-[#D4AF37]/25 bg-[#0B3D2E] px-4 text-base text-[#F7F5EF] placeholder:text-ink-faint focus:border-[#D4AF37] focus:outline-none focus:ring-2 focus:ring-[#D4AF37]/40"
+            className="h-12 w-full rounded-xl border border-[#D4AF37]/25 bg-[#F7F5EF] px-4 text-base text-[#1B1F1D] placeholder:text-ink-faint focus:border-[#D4AF37] focus:outline-none focus:ring-2 focus:ring-[#D4AF37]/40"
           />
           {phoneError && <p role="alert" className="text-xs font-medium text-danger">{phoneError}</p>}
-          <button type="submit" className="h-12 w-full rounded-xl bg-[#D4AF37] text-sm font-semibold text-[#0B3D2E] transition hover:bg-[#F3D77A]">
+          <button type="submit" className="h-12 w-full rounded-xl bg-[#D4AF37] text-sm font-semibold text-[#1B1F1D] transition hover:bg-[#F3D77A]">
             Recevoir le code
           </button>
           {simulated && (

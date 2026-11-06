@@ -6,7 +6,7 @@ import { cn } from '@/lib/cn';
 import { Icon } from '@/components/ui/Icons';
 
 const CONTROL =
-  'h-12 w-full rounded-xl border bg-[#0B3D2E] px-4 text-base text-[#F7F5EF] placeholder:text-ink-faint ' +
+  'h-12 w-full rounded-xl border bg-[#F7F5EF] px-4 text-base text-[#1B1F1D] placeholder:text-ink-faint ' +
   'transition focus:outline-none focus:ring-2 focus:ring-[#D4AF37]/40 disabled:opacity-60';
 
 function controlClasses(hasError: boolean): string {
@@ -31,10 +31,10 @@ type ShellProps = {
 function FieldShell({ id, label, hint, error, required, children }: ShellProps) {
   return (
     <div className="space-y-1.5">
-      <label htmlFor={id} className="block text-sm font-medium text-[#F7F5EF]">
+      <label htmlFor={id} className="block text-sm font-medium text-[#1B1F1D]">
         {label}
         {required && (
-          <span aria-hidden="true" className="text-[#D4AF37]">
+          <span aria-hidden="true" className="text-[#8A6D1F]">
             {' '}
             *
           </span>

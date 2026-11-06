@@ -1,7 +1,7 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 460" role="img" aria-label="Carte pointillée de l'Algérie : Oran, Tlemcen et Sidi Bel Abbès">
   <defs>
     <pattern id="dz-dots" width="10" height="10" patternUnits="userSpaceOnUse">
-      <circle cx="3" cy="3" r="1.7" fill="#2E8B6A" />
+      <circle cx="3" cy="3" r="1.7" fill="#B8962E" />
     </pattern>
     <radialGradient id="dz-glow" cx="0.5" cy="0.5" r="0.5">
       <stop offset="0" stop-color="#D4AF37" stop-opacity="0.45" />
@@ -11,10 +11,10 @@
   <path
     d="M120,52 C160,40 210,34 252,40 L268,52 C292,74 306,104 314,140 L322,186 C330,224 344,262 352,300 L330,352 C318,382 306,408 296,428 L268,436 C246,440 224,432 208,420 L150,376 C110,344 74,308 52,268 L40,236 C36,214 44,190 56,170 L78,132 C92,104 104,76 120,52 Z"
     fill="url(#dz-dots)"
-    stroke="#35B08A"
+    stroke="#8A6E1E"
     stroke-width="1.5"
   />
-  <g fill="#7FE0C3">
+  <g fill="#A67C00">
     <circle cx="150" cy="60" r="3" /><circle cx="180" cy="52" r="3" /><circle cx="214" cy="58" r="3" />
     <circle cx="244" cy="66" r="3" /><circle cx="168" cy="84" r="3" /><circle cx="204" cy="92" r="3" />
     <circle cx="238" cy="110" r="3" /><circle cx="186" cy="128" r="3" /><circle cx="150" cy="150" r="3" />
@@ -25,7 +25,7 @@
     <circle cx="96" cy="106" r="16" fill="url(#dz-glow)" /><circle cx="96" cy="106" r="6" fill="#D4AF37" />
     <circle cx="130" cy="110" r="16" fill="url(#dz-glow)" /><circle cx="130" cy="110" r="6" fill="#D4AF37" />
   </g>
-  <g fill="#F3D77A" font-family="sans-serif" font-size="13" font-weight="600">
+  <g fill="#6E561A" font-family="sans-serif" font-size="13" font-weight="600">
     <text x="132" y="82">Oran</text>
     <text x="40" y="126">Tlemcen</text>
     <text x="144" y="116">Sidi Bel Abbès</text>

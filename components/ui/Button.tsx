@@ -9,23 +9,23 @@ type Size = 'sm' | 'md' | 'lg';
 /**
  * Boutons du thème « Rich Minimalist » : ils se soulèvent au survol et
  * s'enfoncent au clic. Seules transform et box-shadow sont animées.
- * - primary : or plein #D4AF37, texte émeraude #0B3D2E (contraste maximal).
- * - secondary : carte émeraude, liseré or fin.
+ * - primary : or plein #D4AF37, texte anthracite #1B1F1D (contraste maximal).
+ * - secondary : carte blanc cassé, liseré or fin.
  * - ghost : texte discret qui se dore au survol.
  * - mint : contour or qui se remplit au survol.
  */
 const BASE =
   'inline-flex items-center justify-center gap-2 rounded-xl font-semibold tracking-tightish transition duration-200 ease-out-soft ' +
   'hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.99] ' +
-  'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#D4AF37] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0B3D2E] ' +
+  'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#D4AF37] focus-visible:ring-offset-2 focus-visible:ring-offset-[#F7F5EF] ' +
   'disabled:pointer-events-none disabled:opacity-60';
 
 const VARIANTS: Record<Variant, string> = {
-  primary: 'bg-[#D4AF37] text-[#0B3D2E] shadow-soft hover:bg-[#F3D77A] hover:shadow-accent',
+  primary: 'bg-[#D4AF37] text-[#1B1F1D] shadow-soft hover:bg-[#F3D77A] hover:shadow-accent',
   secondary:
-    'border border-[#D4AF37]/30 bg-[#0E4635] text-[#F7F5EF] hover:border-[#D4AF37]/60 hover:bg-[#12513D] hover:text-[#D4AF37]',
-  ghost: 'text-ink-soft hover:bg-[#12513D] hover:text-[#D4AF37]',
-  mint: 'border border-[#D4AF37]/45 text-[#D4AF37] hover:bg-[#D4AF37] hover:text-[#0B3D2E]',
+    'border border-[#D4AF37]/30 bg-[#FCFBF7] text-[#1B1F1D] hover:border-[#D4AF37]/60 hover:bg-[#F1EDE3] hover:text-[#8A6D1F]',
+  ghost: 'text-ink-soft hover:bg-[#F1EDE3] hover:text-[#8A6D1F]',
+  mint: 'border border-[#D4AF37]/45 text-[#8A6D1F] hover:bg-[#D4AF37] hover:text-[#1B1F1D]',
 };
 
 const SIZES: Record<Size, string> = {

@@ -10,9 +10,9 @@ export function FaqSection() {
       </div>
 
       <div className="grid gap-4 max-w-3xl mx-auto">
-        <Card><CardBody className="space-y-2"><h3 className="font-bold text-[#F7F5EF]">Le paiement se fait-il en ligne ?</h3><p className="text-xs text-ink-soft leading-relaxed">Non. Aucun paiement en ligne n'est demandé. Vous réglez directement à la livraison lors de la réception de votre pack dans votre wilaya.</p></CardBody></Card>
-        <Card><CardBody className="space-y-2"><h3 className="font-bold text-[#F7F5EF]">Quand serai-je rappelé après ma réservation ?</h3><p className="text-xs text-ink-soft leading-relaxed">Notre équipe vous contacte dans la journée pour confirmer les détails de votre commande et planifier l'acheminement.</p></CardBody></Card>
-        <Card><CardBody className="space-y-2"><h3 className="font-bold text-[#F7F5EF]">Les consoles sont-elles garanties ?</h3><p className="text-xs text-ink-soft leading-relaxed">Oui, chaque console neuve bénéficie d'une garantie vendeur de 12 mois avec facture officielle.</p></CardBody></Card>
+        <Card><CardBody className="space-y-2"><h3 className="font-bold text-[#1B1F1D]">Le paiement se fait-il en ligne ?</h3><p className="text-xs text-ink-soft leading-relaxed">Non. Aucun paiement en ligne n'est demandé. Vous réglez directement à la livraison lors de la réception de votre pack dans votre wilaya.</p></CardBody></Card>
+        <Card><CardBody className="space-y-2"><h3 className="font-bold text-[#1B1F1D]">Quand serai-je rappelé après ma réservation ?</h3><p className="text-xs text-ink-soft leading-relaxed">Notre équipe vous contacte dans la journée pour confirmer les détails de votre commande et planifier l'acheminement.</p></CardBody></Card>
+        <Card><CardBody className="space-y-2"><h3 className="font-bold text-[#1B1F1D]">Les consoles sont-elles garanties ?</h3><p className="text-xs text-ink-soft leading-relaxed">Oui, chaque console neuve bénéficie d'une garantie vendeur de 12 mois avec facture officielle.</p></CardBody></Card>
       </div>
     </section>
   );

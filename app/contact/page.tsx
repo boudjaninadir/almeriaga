@@ -35,10 +35,10 @@ export default function ContactPage() {
         <Reveal>
           <Card className="h-full">
             <CardBody className="space-y-3">
-              <span className="inline-flex h-11 w-11 items-center justify-center rounded-xl border border-[#D4AF37]/25 bg-[#12513D] text-[#D4AF37]">
+              <span className="inline-flex h-11 w-11 items-center justify-center rounded-xl border border-[#D4AF37]/25 bg-[#F1EDE3] text-[#8A6D1F]">
                 <Icon name="whatsapp" className="h-5 w-5" />
               </span>
-              <h2 className="text-lg font-semibold tracking-tightish text-[#F7F5EF]">WhatsApp</h2>
+              <h2 className="text-lg font-semibold tracking-tightish text-[#1B1F1D]">WhatsApp</h2>
               {whatsapp ? (
                 <>
                   <p className="text-sm text-ink-soft">{displayPhone(CONTACT_WHATSAPP)}</p>
@@ -46,14 +46,14 @@ export default function ContactPage() {
                     href={whatsapp}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 text-sm font-semibold text-[#D4AF37] transition-colors hover:text-[#D4AF37]"
+                    className="inline-flex items-center gap-2 text-sm font-semibold text-[#8A6D1F] transition-colors hover:text-[#8A6D1F]"
                   >
                     Ouvrir la conversation
                     <Icon name="arrow" className="h-4 w-4" />
                   </a>
                 </>
               ) : (
-                <p className="rounded-lg border border-[#D4AF37]/25 bg-[#12513D] p-3 text-xs leading-relaxed text-ink-faint">
+                <p className="rounded-lg border border-[#D4AF37]/25 bg-[#F1EDE3] p-3 text-xs leading-relaxed text-ink-faint">
                   Non configuré (TODO) : renseignez NEXT_PUBLIC_CONTACT_WHATSAPP dans les variables d’environnement.
                 </p>
               )}
@@ -64,23 +64,23 @@ export default function ContactPage() {
         <Reveal delay={80}>
           <Card className="h-full">
             <CardBody className="space-y-3">
-              <span className="inline-flex h-11 w-11 items-center justify-center rounded-xl border border-[#D4AF37]/25 bg-[#12513D] text-[#D4AF37]">
+              <span className="inline-flex h-11 w-11 items-center justify-center rounded-xl border border-[#D4AF37]/25 bg-[#F1EDE3] text-[#8A6D1F]">
                 <Icon name="mail" className="h-5 w-5" />
               </span>
-              <h2 className="text-lg font-semibold tracking-tightish text-[#F7F5EF]">E-mail</h2>
+              <h2 className="text-lg font-semibold tracking-tightish text-[#1B1F1D]">E-mail</h2>
               {CONTACT_EMAIL ? (
                 <>
                   <p className="break-all text-sm text-ink-soft">{CONTACT_EMAIL}</p>
                   <a
                     href={`mailto:${CONTACT_EMAIL}`}
-                    className="inline-flex items-center gap-2 text-sm font-semibold text-[#D4AF37] transition-colors hover:text-[#F3D77A]"
+                    className="inline-flex items-center gap-2 text-sm font-semibold text-[#8A6D1F] transition-colors hover:text-[#6E561A]"
                   >
                     Écrire un e-mail
                     <Icon name="arrow" className="h-4 w-4" />
                   </a>
                 </>
               ) : (
-                <p className="rounded-lg border border-[#D4AF37]/25 bg-[#12513D] p-3 text-xs leading-relaxed text-ink-faint">
+                <p className="rounded-lg border border-[#D4AF37]/25 bg-[#F1EDE3] p-3 text-xs leading-relaxed text-ink-faint">
                   Non configuré (TODO) : renseignez NEXT_PUBLIC_CONTACT_EMAIL dans les variables d’environnement.
                 </p>
               )}
@@ -91,7 +91,7 @@ export default function ContactPage() {
 
       <Reveal delay={120}>
         <div className="mt-12 surface-card p-6">
-          <h2 className="text-base font-semibold tracking-tightish text-[#F7F5EF]">Délais de réponse</h2>
+          <h2 className="text-base font-semibold tracking-tightish text-[#1B1F1D]">Délais de réponse</h2>
           <p className="mt-2 text-sm leading-relaxed text-ink-soft">
             Les demandes envoyées depuis le site sont rappelées dans l’ordre d’arrivée. Aucun engagement n’est pris
             avant la confirmation téléphonique.
@@ -102,11 +102,11 @@ export default function ContactPage() {
       <div className="mt-16 border-t border-[#D4AF37]/25 pt-6 text-xs text-ink-faint">
         <p>
           Vous êtes un professionnel ?{' '}
-          <Link href="/gros" className="underline underline-offset-2 transition-colors hover:text-[#D4AF37]">
+          <Link href="/gros" className="underline underline-offset-2 transition-colors hover:text-[#8A6D1F]">
             Achat en gros
           </Link>{' '}
           ·{' '}
-          <Link href="/revendeurs" className="underline underline-offset-2 transition-colors hover:text-[#D4AF37]">
+          <Link href="/revendeurs" className="underline underline-offset-2 transition-colors hover:text-[#8A6D1F]">
             Programme revendeur
           </Link>
         </p>

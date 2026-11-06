@@ -1,24 +1,26 @@
 import type { Config } from 'tailwindcss';
 
 /**
- * Thème ALMERÍAGA — « Rich Minimalist » (Luxe-Tech).
- * Fond vert émeraude profond (#0B3D2E), accents or (#D4AF37), texte blanc
- * cassé (#F7F5EF), cartes épurées à liseré doré.
+ * Thème ALMERÍAGA — « Rich Minimalist » (Luxe-Tech), charte claire.
+ * Fond blanc cassé (#F7F5EF), accents or (#D4AF37), texte anthracite
+ * (#1B1F1D), cartes épurées à liseré doré.
  *
  * Toutes les couleurs sémantiques passent par des variables CSS
  * (voir app/globals.css) : pour changer la charte, modifiez uniquement
  * les variables --canvas / --surface / --line / --ink* / --accent* / --mint*.
  *
- * La palette explicite (`emerald`, `gold`, `cream`) permet d'écrire directement
+ * La palette explicite (`offwhite`, `gold`, `cream`) permet d'écrire directement
  * les valeurs de la charte validée, et les alias hérités (`brand`, `dark-block`)
  * maintiennent les composants historiques dans la même identité visuelle.
  */
 const rgb = (name: string) => `rgb(var(--${name}) / <alpha-value>)`;
 
-/** Vert émeraude profond — fonds principaux et sections. */
-const EMERALD = '#0B3D2E';
-/** Or / jaune luxe — bordures fines, titres, accents, boutons. */
+/** Blanc cassé — fonds principaux et sections (ex-fond vert émeraude). */
+const BLANC_CASSE = '#F7F5EF';
+/** Or / jaune luxe — bordures fines, filets, accents décoratifs. */
 const GOLD = '#D4AF37';
+/** Or discret — texte doré lisible sur blanc cassé (contraste AA). */
+const GOLD_INK = '#8A6D1F';
 
 const config: Config = {
   content: ['./app/**/*.{ts,tsx}', './components/**/*.{ts,tsx}', './lib/**/*.{ts,tsx}'],
@@ -43,38 +45,38 @@ const config: Config = {
         danger: rgb('danger'),
 
         /* ── Charte validée : valeurs explicites ── */
-        emerald: {
-          DEFAULT: EMERALD,
-          deep: '#06241B',
-          soft: '#0E4635',
-          mute: '#12513D',
+        offwhite: {
+          DEFAULT: BLANC_CASSE,
+          deep: '#EDE9DF',
+          soft: '#FCFBF7',
+          mute: '#F1EDE3',
         },
         gold: {
           DEFAULT: GOLD,
           light: '#F3D77A',
-          deep: '#A67C00',
+          deep: GOLD_INK,
         },
         cream: {
           DEFAULT: '#F7F5EF',
-          soft: '#D8E2DB',
-          mute: '#A5B8AC',
+          soft: '#E6E0D2',
+          mute: '#B0A790',
         },
 
         /* ── Alias hérités (composants historiques) : même identité ── */
         brand: {
           DEFAULT: GOLD,
-          soft: '#12513D',
-          strong: EMERALD,
+          soft: '#F1EDE3',
+          strong: BLANC_CASSE,
         },
-        'dark-block': '#0E4635',
+        'dark-block': '#FCFBF7',
       },
       fontFamily: {
         sans: ['var(--font-geist-sans)', 'ui-sans-serif', 'system-ui', '-apple-system', 'Segoe UI', 'Roboto', 'sans-serif'],
         display: ['var(--font-geist-sans)', 'ui-sans-serif', 'system-ui', 'sans-serif'],
       },
       boxShadow: {
-        soft: '0 1px 2px rgb(3 20 14 / 0.35), 0 14px 30px -22px rgb(3 20 14 / 0.75)',
-        lift: '0 2px 6px rgb(3 20 14 / 0.4), 0 26px 50px -28px rgb(3 20 14 / 0.85)',
+        soft: '0 1px 2px rgb(27 31 29 / 0.08), 0 14px 30px -22px rgb(27 31 29 / 0.3)',
+        lift: '0 2px 6px rgb(27 31 29 / 0.1), 0 26px 50px -28px rgb(27 31 29 / 0.38)',
         accent: '0 18px 38px -20px rgb(212 175 55 / 0.35)',
         gold: '0 0 0 1px rgb(212 175 55 / 0.28), 0 20px 45px -30px rgb(212 175 55 / 0.45)',
       },

@@ -38,8 +38,8 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: '#0B3D2E',
-  colorScheme: 'dark',
+  themeColor: '#F7F5EF',
+  colorScheme: 'light',
   width: 'device-width',
   initialScale: 1,
 };
@@ -65,10 +65,10 @@ export default async function RootLayout({
 
   return (
     <html lang={locale === 'fr-DZ' ? 'fr' : locale} className={`${GeistSans.variable} h-full antialiased`}>
-      <body className="flex min-h-full flex-col bg-[#0B3D2E] font-sans text-[#F7F5EF]">
+      <body className="flex min-h-full flex-col bg-[#F7F5EF] font-sans text-[#1B1F1D]">
         <a
           href="#contenu"
-          className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded-lg focus:border focus:border-[#D4AF37]/40 focus:bg-[#0E4635] focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-[#F7F5EF] focus:shadow-soft"
+          className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded-lg focus:border focus:border-[#D4AF37]/40 focus:bg-[#FCFBF7] focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-[#1B1F1D] focus:shadow-soft"
         >
           Aller au contenu
         </a>

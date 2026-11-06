@@ -33,7 +33,7 @@ export default function AnneProcedurePage() {
         {phases.map((phase) => (
           <section key={phase}>
             <Reveal>
-              <h2 className="text-xl font-semibold text-[#D4AF37]">
+              <h2 className="text-xl font-semibold text-[#8A6D1F]">
                 {phase === 'legal' ? '1. Cadre légal' : phase === 'mobilite' ? '2. Mobilité & visa' : '3. Terrain & douane'}
               </h2>
             </Reveal>
@@ -42,12 +42,12 @@ export default function AnneProcedurePage() {
                 <Reveal key={step.id} delay={index * 60}>
                   <Card className="h-full">
                     <CardBody className="space-y-3">
-                      <span className="inline-flex h-11 w-11 items-center justify-center rounded-xl border border-[#D4AF37]/25 bg-[#12513D] text-[#D4AF37]">
+                      <span className="inline-flex h-11 w-11 items-center justify-center rounded-xl border border-[#D4AF37]/25 bg-[#F1EDE3] text-[#8A6D1F]">
                         <Icon name={PHASE_ICON[phase]} className="h-5 w-5" />
                       </span>
-                      <h3 className="text-base font-semibold text-[#F7F5EF]">{step.title}</h3>
+                      <h3 className="text-base font-semibold text-[#1B1F1D]">{step.title}</h3>
                       <p className="text-sm text-ink-soft">
-                        <span className="font-medium text-[#D4AF37]">{step.organism}</span>
+                        <span className="font-medium text-[#8A6D1F]">{step.organism}</span>
                       </p>
                       <p className="text-sm leading-relaxed text-ink-soft">Documents : {step.documents}</p>
                       <p className="text-xs leading-relaxed text-ink-faint">{step.note}</p>

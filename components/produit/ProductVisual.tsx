@@ -34,7 +34,7 @@ export function ProductVisual({
     <div className={cn('flex h-full w-full items-center justify-center', className)}>
       <div
         className={cn(
-          'flex items-center justify-center rounded-2xl border border-[#D4AF37]/30 bg-[#0B3D2E]/70 font-semibold text-[#D4AF37] shadow-soft',
+          'flex items-center justify-center rounded-2xl border border-[#D4AF37]/30 bg-[#F7F5EF]/70 font-semibold text-[#8A6D1F] shadow-soft',
           box,
         )}
         aria-hidden="true"

@@ -34,26 +34,26 @@ export default function AdminSuiviPage() {
       <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
         <div className="space-y-2">
           <Badge tone="neutral">Espace privé</Badge>
-          <h1 className="text-3xl font-semibold tracking-display text-[#F7F5EF]">Suivi administratif</h1>
+          <h1 className="text-3xl font-semibold tracking-display text-[#1B1F1D]">Suivi administratif</h1>
           <p className="max-w-xl text-sm leading-relaxed text-ink-soft">
             Colonnes de la feuille « Suivi administratif » : phase, tâche, statut, établissement, date de dépôt,
             terminé, durée, notes et coût. Données locales (<code>lib/admin-steps.ts</code>), non connectées à la base.
           </p>
         </div>
 
-        <div className="rounded-xl2 border border-[#D4AF37]/25 bg-[#0E4635] px-5 py-4 text-sm shadow-soft">
-          <p className="font-semibold text-[#F7F5EF]">
+        <div className="rounded-xl2 border border-[#D4AF37]/25 bg-[#FCFBF7] px-5 py-4 text-sm shadow-soft">
+          <p className="font-semibold text-[#1B1F1D]">
             {done} / {total} terminées
           </p>
           <p className="text-xs text-ink-faint">{BRAND_NAME} — usage interne</p>
         </div>
       </div>
 
-      <div className="mt-8 overflow-x-auto rounded-xl3 border border-[#D4AF37]/25 bg-[#0E4635] shadow-soft">
+      <div className="mt-8 overflow-x-auto rounded-xl3 border border-[#D4AF37]/25 bg-[#FCFBF7] shadow-soft">
         <table className="w-full min-w-[1100px] border-collapse text-left text-sm">
           <caption className="sr-only">Étapes administratives du projet</caption>
           <thead>
-            <tr className="border-b border-[#D4AF37]/25 bg-[#12513D] text-xs uppercase tracking-[0.08em] text-ink-faint">
+            <tr className="border-b border-[#D4AF37]/25 bg-[#F1EDE3] text-xs uppercase tracking-[0.08em] text-ink-faint">
               <th scope="col" className="px-4 py-3 font-semibold">Phase</th>
               <th scope="col" className="px-4 py-3 font-semibold">Tâche</th>
               <th scope="col" className="px-4 py-3 font-semibold">Statut</th>
@@ -69,7 +69,7 @@ export default function AdminSuiviPage() {
             {ADMIN_STEPS.map((step) => (
               <tr key={step.id} className="border-b border-[#D4AF37]/20 align-top last:border-b-0">
                 <td className="whitespace-nowrap px-4 py-3 text-xs font-medium text-ink-soft">{step.phase}</td>
-                <td className="px-4 py-3 font-medium text-[#F7F5EF]">{step.task}</td>
+                <td className="px-4 py-3 font-medium text-[#1B1F1D]">{step.task}</td>
                 <td className="px-4 py-3">
                   <Badge tone={TONE[step.status] ?? 'neutral'}>{step.status}</Badge>
                 </td>

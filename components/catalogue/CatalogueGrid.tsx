@@ -38,8 +38,8 @@ export function CatalogueGrid({ products }: { products: Product[] }) {
                 className={cn(
                   'shrink-0 rounded-full border px-4 py-2 text-sm font-medium transition duration-200',
                   active
-                    ? 'border-[#D4AF37] bg-[#D4AF37] text-[#0B3D2E]'
-                    : 'border-[#D4AF37]/25 bg-[#0E4635] text-ink-soft hover:border-[#D4AF37]/60 hover:text-[#F7F5EF]',
+                    ? 'border-[#D4AF37] bg-[#D4AF37] text-[#1B1F1D]'
+                    : 'border-[#D4AF37]/25 bg-[#FCFBF7] text-ink-soft hover:border-[#D4AF37]/60 hover:text-[#1B1F1D]',
                 )}
               >
                 {category}
@@ -50,7 +50,7 @@ export function CatalogueGrid({ products }: { products: Product[] }) {
       )}
 
       {visible.length === 0 ? (
-        <p className="rounded-xl3 border border-[#D4AF37]/25 bg-[#0E4635] p-8 text-center text-sm text-ink-soft">
+        <p className="rounded-xl3 border border-[#D4AF37]/25 bg-[#FCFBF7] p-8 text-center text-sm text-ink-soft">
           Aucun produit publié dans cette catégorie pour le moment.
         </p>
       ) : (
